@@ -1,0 +1,7 @@
+.metadata/.plugins/
+sfm/.settings/
+.metadata/
+WorklightServerConfig/
+Servers/Tomcat v7.0 Server at localhost-config/catalina.policy
+Servers/
+sfm/target/
