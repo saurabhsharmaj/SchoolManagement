@@ -4,17 +4,53 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
     <definition name="base.definition"
-        template="/WEB-INF/jsp/layout.jsp">
+        template="/WEB-INF/jsp/template/layout.jsp">
         <put-attribute name="title" value="" />
-        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
-        <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
+        <put-attribute name="header" value="/WEB-INF/jsp/template/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/template/menu.jsp" />
         <put-attribute name="body" value="" />
-        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/template/footer.jsp" />
     </definition>
  
-    <definition name="home" extends="base.definition">
+    <definition name="editUser" extends="base.definition">
         <put-attribute name="title" value="Home" />
-        <put-attribute name="body" value="/WEB-INF/jsp/hello.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/user.jsp" />
     </definition>
- 
+    
+     <definition name="viewUserList" extends="base.definition">
+        <put-attribute name="title" value="Home" />
+        <put-attribute name="body" value="/WEB-INF/jsp/viewUsers.jsp" />
+    </definition>
+    
+    <definition name="addUserProfile" extends="base.definition">
+        <put-attribute name="title" value="Home" />
+        <put-attribute name="body" value="/WEB-INF/jsp/userProfile.jsp" />
+    </definition>
+    
+    <definition name="viewExpensesList" extends="base.definition">
+        <put-attribute name="title" value="Additional Charges" />
+        <put-attribute name="body" value="/WEB-INF/jsp/viewExpenses.jsp" />
+    </definition>
+    
+    <definition name="viewExpensesPage" extends="base.definition">
+        <put-attribute name="title" value="Additional Charges" />
+        <put-attribute name="body" value="/WEB-INF/jsp/expenses.jsp" />
+    </definition>
+    
+    <definition name="feesPayment" extends="base.definition">
+        <put-attribute name="title" value="fees" />
+        <put-attribute name="body" value="/WEB-INF/jsp/fees.jsp" />
+    </definition>
+    
+    <definition name="viewFeesPaymentList" extends="base.definition">
+        <put-attribute name="title" value="Home" />
+        <put-attribute name="body" value="/WEB-INF/jsp/viewFeesPayments.jsp" />
+    </definition>
+    
+    
+    <definition name="paymentRecived" extends="base.definition">
+        <put-attribute name="title" value="Payment Received" />
+        <put-attribute name="body" value="/WEB-INF/jsp/paymentReceived.jsp" />
+    </definition>
+     
 </tiles-definitions>
