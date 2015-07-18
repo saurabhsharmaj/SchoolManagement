@@ -10,6 +10,7 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,firstName varchar(50)
 ,middleName varchar(50)
 ,lastName varchar(50)
+,fatherName varchar(150)
 ,userName varchar(50)
 ,password varchar(50)
 ,Batch varchar(25)
@@ -31,6 +32,10 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,dob timestamp
 ,email varchar(25)
 ,contactno varchar(15)
+,stream integer(2)
+,percentage varchar(5)
+,marksInEnglish int(5)
+,groupType int(2)
 ,addmissionDate TIMESTAMP 
 ,status boolean
 ,updateBy varchar(50)

@@ -17,9 +17,9 @@
 					<th width="60">UserID</th>
 					<th width="160">UserName</th>
 					<th width="160">Total Fees</th>
+					<th width="160">Total Expenses</th>
 					<th width="160">Paid Fees</th>
 					<th width="160">Pending Fees</th>
-					<th width="160">Additional Fees</th>
 					<th width="160">Next Due</th>
 					<th width="60">Action</th>
 				</tr>

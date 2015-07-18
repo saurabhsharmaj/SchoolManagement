@@ -1,0 +1,51 @@
+<html>
+<body>
+<br>
+<table style="width:100%;">
+<tr >
+	<td width="60%" rowspan=2>
+		<span style="vertical-align: middle;">
+		Kuchaman Defence Academy
+		<br>Gaytri Nagar,Jusari-Makrana Road,Megha Highway>
+		<br>Kuchaman City(341508)
+		<br>Nagaur(Rajasthan)
+		<br>Cont.No- 9649656599, 9887373477, 9672601061, 9587590650
+		<br>E-Mail-kuchamandefence@gmail.com, kuchamandefence@yahoo.com
+	</span>
+	</td>	
+	<td width="40%" align="right"><img src=$logoURL ></td>
+</tr>
+<tr>
+	<td colspan=2 align="right"><b>Registration No</b>- 09/NAGAUR/2011-2012</td>
+</tr>
+</table>
+<div class="clear-all"/>
+<div style="padding-bottom:10px;">--------------------------------------------------------------------------------------------------------------------------</div>​​​​​
+<table border=1>
+<tr>
+	<th>UserName/FatherName</th>
+	<th>Total Fees</th>
+	<th>Total Expenses</th>
+	<th>Total Payment Received</th>
+	<th>Pending Amount</th>
+	<th>Next Fees Due Date</th>
+</tr>
+<tr>
+ #if ($feesList.size() > 0)
+	#foreach( $fees in $feesList )
+		<td>$fees.UserName/$fees.FatherName</td>
+		<td>$fees.totalFees</td>
+		<td>$fees.totalExpenses</td>
+		<td>$fees.totalPaymentReceived</td>
+		<td>$fees.pendingAmount</td>
+		<td>$fees.nextDueDate</td>
+	</tr>
+	#end
+  #else
+  <tr>
+    <td colspan="6" align="center"><b>No Record Found</b></td>
+  </tr>
+  #end
+</table>
+</body>
+</html>

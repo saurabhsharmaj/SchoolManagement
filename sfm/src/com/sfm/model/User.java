@@ -27,6 +27,7 @@ public class User implements java.io.Serializable {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	private String fatherName;
 	private String userName;
 	private String password;
 	private String batch;
@@ -48,13 +49,14 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String firstName, String middleName, String lastName,
-			String userName, String password, String batch, String session,
+			String fatherName,String userName, String password, String batch, String session,
 			Date addmissionDate, Boolean status, String updateBy,
 			Date updatedOn, Set<Fees> feeses, Set<Charges> chargeses,
 			Set<Payment> payments, Set<Userprofile> userprofiles) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
+		this.fatherName=fatherName;
 		this.userName = userName;
 		this.password = password;
 		this.batch = batch;
@@ -105,6 +107,15 @@ public class User implements java.io.Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	@Column(name = "fatherName", length = 150)
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
 	}
 
 	@Column(name = "userName", length = 50)

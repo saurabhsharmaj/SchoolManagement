@@ -48,9 +48,9 @@
     </definition>
     
     
-    <definition name="paymentRecived" extends="base.definition">
+    <definition name="viewReports" extends="base.definition">
         <put-attribute name="title" value="Payment Received" />
-        <put-attribute name="body" value="/WEB-INF/jsp/paymentReceived.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/reports.jsp" />
     </definition>
      
 </tiles-definitions>

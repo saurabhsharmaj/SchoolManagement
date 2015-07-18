@@ -49,7 +49,16 @@
 			<form:input path="lastName"  placeholder="last name" />
 		</td>
 	</tr>
-		
+	<tr>	
+		<td>
+			<form:label path="fatherName" cssClass="nameLabel">
+				<spring:message code="label.fathername" />
+			</form:label>
+		</td>	
+		<td>
+			<form:input path="fatherName"  placeholder="fatherName" />
+		</td> 
+	</tr>	
 	<tr>	
 		<td>
 			<form:label path="userName" cssClass="nameLabel">
@@ -110,6 +119,21 @@
 					    <form:options items="${statusList}" />
 					</form:select>
 		</td> 
+	</tr>
+	<tr>
+	<td>
+		<c:if test="${!empty user.id}">
+				<input type="submit"
+					value="<spring:message code="label.edituser"/>" class="button"/>
+			</c:if>
+			<c:if test="${empty user.id}">
+				<input type="submit"
+					value="<spring:message code="label.adduser"/>" class="button"/>
+			</c:if>        
+	</td>
+	<td>
+		<a href="<c:url value="/viewUserList" />" class="button">Cancel</a>
+	</td>
 	</tr>
 </table>
 <c:if test="${!empty user.id}">

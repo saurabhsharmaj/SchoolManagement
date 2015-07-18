@@ -105,7 +105,7 @@ header { margin: 0px 0; float: left; width: 100%; }
 /* ------Left Column-----*/
 
 #container #left_column{float:left; width:20%;   border-right: 1px solid #FFFFFF;
-  height: 600px;}
+  }
 #container #left_column h2.title{margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #DEDEDE;}
 
 #container #left_column nav{display:block; width:100%; margin-bottom:30px;}
@@ -145,3 +145,23 @@ bottom:0;
 .register-btn a { background: #b61225; color: #fff; display: inline-block; font-weight: bold; /*margin-left: 10px;*/ }
 .register-btn a:hover { background: #585858; }
 .partners-link { background: #585858; display: inline-block; }
+
+.button {
+    font-family: Arial;
+    background: linear-gradient(to bottom, #FCB97E 0%, #F07605 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #F07605;
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 13px;
+    outline: medium none;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    vertical-align: baseline;
+}

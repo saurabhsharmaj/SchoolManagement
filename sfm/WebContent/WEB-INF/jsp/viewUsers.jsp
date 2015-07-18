@@ -15,8 +15,9 @@
 <table class="bookTable">
 				<tr>
 					<th width="60">UserID</th>
-					<th width="160">First Name</th>
-					<th width="160">Middle Name</th>
+					<th width="160">Name</th>
+					<th width="">Stream</th>/
+					<th width="160">Session</th>
 					<th width="160">Last Name</th>
 					<th width="60">Action</th>
 				</tr>
@@ -25,9 +26,7 @@
 				<c:forEach items="${userList}" var="user">
 					<tr>
 						<td>${user.id}</td>
-						<td><a href="<c:url value='/edituser/${user.id}' />">${user.firstName}</a></td>
-						<td>${user.middleName}</td>
-						<td>${user.lastName}</td>
+						<td><a href="<c:url value='/edituser/${user.id}' />">${user.firstName}&nbsp;${user.middleName}&nbsp;${user.lastName}/${user.fatherName }</a></td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${user.id})" />
 							<a href="<c:url value='/edituser/${user.id}' />"> <img
