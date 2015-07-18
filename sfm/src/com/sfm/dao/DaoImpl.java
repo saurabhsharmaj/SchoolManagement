@@ -19,7 +19,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 
 	@Override
 	public void add(Object t) {
-		sessionFactory.getCurrentSession().save(t);		
+		sessionFactory.getCurrentSession().saveOrUpdate(t);		
 	}
 
 	@Override

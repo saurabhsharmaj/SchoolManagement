@@ -7,7 +7,7 @@ import org.hibernate.Session;
 
 import com.sfm.model.Fees;
 import com.sfm.model.User;
-import com.sfm.model.Userprofile;
+import com.sfm.model.UserProfile;
 import com.sfm.util.HibernateUtil;
  
 public class App {

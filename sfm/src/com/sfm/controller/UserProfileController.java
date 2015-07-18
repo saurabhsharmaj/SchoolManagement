@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sfm.model.User;
-import com.sfm.model.Userprofile;
+import com.sfm.model.UserProfile;
 import com.sfm.service.UserService;
 import com.sfm.util.Utils;
 
@@ -26,7 +26,7 @@ public class UserProfileController {
 		map.put("user", user);
 		map.put("userId", userId);
 		map.put("roleList", Utils.roleList());
-		map.put("userProfile", new Userprofile());
+		map.put("userProfile", new UserProfile());
 		return "addUserProfile";
 	}	
 }

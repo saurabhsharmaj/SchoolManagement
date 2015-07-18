@@ -2,15 +2,16 @@ package com.sfm.model;
 
 // Generated Jul 16, 2015 11:21:28 AM by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "userprofile", catalog = "sfm")
-public class Userprofile implements java.io.Serializable {
+public class UserProfile implements java.io.Serializable {
 
 	private Integer id;
 	private User user;
@@ -30,15 +31,19 @@ public class Userprofile implements java.io.Serializable {
 	private Date dob;
 	private String email;
 	private String contactno;
+	private int stream;
+	private String percentage;
+	private int marksInEnglish;
+	private int groupType;
 	private Date addmissionDate;
 	private Boolean status;
 	private String updateBy;
 	private Date updatedOn;
 
-	public Userprofile() {
+	public UserProfile() {
 	}
 
-	public Userprofile(User user, int roleId, Date dob, Date addmissionDate,
+	public UserProfile(User user, int roleId, Date dob, Date addmissionDate,
 			Date updatedOn) {
 		this.user = user;
 		this.roleId = roleId;
@@ -47,7 +52,7 @@ public class Userprofile implements java.io.Serializable {
 		this.updatedOn = updatedOn;
 	}
 
-	public Userprofile(User user, int roleId, Boolean gender, String imageUrl,
+	public UserProfile(User user, int roleId, Boolean gender, String imageUrl,
 			Date dob, String email, String contactno, Date addmissionDate,
 			Boolean status, String updateBy, Date updatedOn) {
 		this.user = user;
@@ -74,8 +79,8 @@ public class Userprofile implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "userId")
 	public User getUser() {
 		return this.user;
 	}
@@ -176,5 +181,43 @@ public class Userprofile implements java.io.Serializable {
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
+
+	@Column(name = "stream", length = 15)
+	public int getStream() {
+		return stream;
+	}
+
+	public void setStream(int stream) {
+		this.stream = stream;
+	}
+
+	@Column(name = "percentage", length = 5)
+	public String getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(String percentage) {
+		this.percentage = percentage;
+	}
+
+	@Column(name = "marksInEnglish")
+	public int getMarksInEnglish() {
+		return marksInEnglish;
+	}
+
+	public void setMarksInEnglish(int marksInEnglish) {
+		this.marksInEnglish = marksInEnglish;
+	}
+
+	@Column(name = "groupType")
+	public int getGroupType() {
+		return groupType;
+	}
+
+	public void setGroupType(int groupType) {
+		this.groupType = groupType;
+	}
+	
+	
 
 }

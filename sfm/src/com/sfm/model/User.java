@@ -2,16 +2,21 @@ package com.sfm.model;
 
 // Generated Jul 16, 2015 11:21:28 AM by Hibernate Tools 4.0.0
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +44,7 @@ public class User implements java.io.Serializable {
 	private Set<Fees> feeses = new HashSet<Fees>(0);
 	private Set<Charges> chargeses = new HashSet<Charges>(0);
 	private Set<Payment> payments = new HashSet<Payment>(0);
-	private Set<Userprofile> userprofiles = new HashSet<Userprofile>(0);
+	private UserProfile userProfile;
 
 	public User() {
 	}
@@ -52,7 +57,7 @@ public class User implements java.io.Serializable {
 			String fatherName,String userName, String password, String batch, String session,
 			Date addmissionDate, Boolean status, String updateBy,
 			Date updatedOn, Set<Fees> feeses, Set<Charges> chargeses,
-			Set<Payment> payments, Set<Userprofile> userprofiles) {
+			Set<Payment> payments, UserProfile userprofile) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -68,7 +73,7 @@ public class User implements java.io.Serializable {
 		this.feeses = feeses;
 		this.chargeses = chargeses;
 		this.payments = payments;
-		this.userprofiles = userprofiles;
+		this.userProfile = userprofile;
 	}
 
 	@Id
@@ -219,13 +224,15 @@ public class User implements java.io.Serializable {
 		this.payments = payments;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Userprofile> getUserprofiles() {
-		return this.userprofiles;
+	@OneToOne(mappedBy = "user", targetEntity = UserProfile.class,
+	/* fetch=FetchType.LAZY, */cascade = CascadeType.ALL)
+	@JoinColumn(name = "id", nullable = true)
+	public UserProfile getUserProfile() {
+		return this.userProfile;
 	}
 
-	public void setUserprofiles(Set<Userprofile> userprofiles) {
-		this.userprofiles = userprofiles;
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
 	}
 
 	@Override
@@ -237,7 +244,7 @@ public class User implements java.io.Serializable {
 				+ ", status=" + status + ", updateBy=" + updateBy
 				+ ", updatedOn=" + updatedOn + ", feeses=" + feeses
 				+ ", chargeses=" + chargeses + ", payments=" + payments
-				+ ", userprofiles=" + userprofiles + "]";
+				+ ", userprofile=" + userProfile + "]";
 	}
 
 }

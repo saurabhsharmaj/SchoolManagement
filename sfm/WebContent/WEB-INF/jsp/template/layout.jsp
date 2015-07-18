@@ -20,6 +20,11 @@
       buttonImageOnly: true,
       buttonText: "Select date"
       });
+    
+    $('input:file').change(
+    function(e){
+    		$('#fileName').val(e.target.files[0].name);       
+    });
   });
 </script>
 

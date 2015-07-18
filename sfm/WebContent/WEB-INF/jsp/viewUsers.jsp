@@ -14,12 +14,11 @@
 
 <table class="bookTable">
 				<tr>
-					<th width="60">UserID</th>
-					<th width="160">Name</th>
-					<th width="">Stream</th>/
-					<th width="160">Session</th>
-					<th width="160">Last Name</th>
-					<th width="60">Action</th>
+					<th width="10">UserID</th>
+					<th width="40">Name</th>
+					<th width="20">Stream</th>
+					<th width="20">Session</th>
+					<th width="10">Action</th>
 				</tr>
 	<c:choose>	
     <c:when test="${!empty userList}">			
@@ -27,6 +26,8 @@
 					<tr>
 						<td>${user.id}</td>
 						<td><a href="<c:url value='/edituser/${user.id}' />">${user.firstName}&nbsp;${user.middleName}&nbsp;${user.lastName}/${user.fatherName }</a></td>
+						<td>${user.userProfile.stream}</td>
+						<td>${user.session} \ ${user.batch}</td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${user.id})" />
 							<a href="<c:url value='/edituser/${user.id}' />"> <img
