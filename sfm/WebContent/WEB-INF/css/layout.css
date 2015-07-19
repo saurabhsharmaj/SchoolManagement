@@ -125,7 +125,7 @@ div.wrapper {
 	text-align: left;
 }
 
-.row1,.row1 a {
+/* .row1,.row1 a {
 	color: #979797;
 	background-color: #FFFFFF;
 }
@@ -143,7 +143,7 @@ div.wrapper {
 	color: #979797;
 	background-color: #FFFFFF;
 }
-
+ */
 /*----------------------------------------------Generalise-------------------------------------*/
 #header,#container,#footer {
 	display: block;
@@ -299,14 +299,14 @@ header {
 	margin-right: 0;
 }
 
-#header nav li a {
+/* #header nav li a {
 	
 }
 
 #header nav li a:hover {
 	color: #FF9900;
 	background-color: #FFFFFF;
-}
+} */
 
 /*----------------------------------------------Content Area-------------------------------------*/
 #container {

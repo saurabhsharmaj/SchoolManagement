@@ -1,10 +1,8 @@
 package com.sfm.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,21 +29,26 @@ public class FeesController {
 	 private String noOfInstallmentProperty;
 	 
 	@RequestMapping(value="viewFeesPayments")
-	public String viewFeesPayments(Map<String, Object> map) {	
-		List<Fees> feesPaymentList = new ArrayList<Fees>();
-		/*
-		User user, BigDecimal totalFees, Integer noOfInstallment,
-		BigDecimal paidFees, BigDecimal pendingFees,
-		BigDecimal additionCharges, Date nextPaymentDueDate,
-		String updateBy, Date updatedOn*/
-		Fees f = new Fees(userService.getUserById(2),new BigDecimal(3000),3,new BigDecimal(2000),new BigDecimal(1000),new BigDecimal(0),new Date(),"saurabh",new Date());
-		f.setId(2);
-		feesPaymentList.add(f);
-		Fees f2 = new Fees(userService.getUserById(2),new BigDecimal(5000),1,new BigDecimal(5000),new BigDecimal(0),new BigDecimal(0),new Date(),"saurabh",new Date());
-		f2.setId(2);
-		feesPaymentList.add(f2);
-		map.put("feesPaymentList", feesPaymentList);
-		return "viewFeesPaymentList";
+	public String viewFeesPayments(Map<String, Object> map) {			
+//		map.put("feesPaymentList", feesService.getFeesById(18));
+		User user = userService.getUserById(18);
+		Set<Fees> feesList = user.getFeeses();
+		for (Fees fee : feesList) {
+			System.out.println(fee.getId());
+		}
+		
+		map.put("fees", new Fees());
+		map.put("user", userService.getUserById(18));
+		return "feesPayment";
+	}
+	
+	@RequestMapping(value="viewFeeDetailByUserId/{userId}")
+	public String viewFeesPayments(Map<String, Object> map,
+			@PathVariable("userId")Integer userId) {			
+		User user = userService.getUserById(userId);		
+		map.put("fees", new Fees());
+		map.put("user", user);
+		return "feesPayment";
 	}
 	
 	@RequestMapping(value="addfees")
@@ -64,14 +67,11 @@ public class FeesController {
 			@PathVariable("userId")Integer userId,@PathVariable("feesId")Integer feesId,
 			Map<String, Object> map)
 	{
+		User user = userService.getUserById(userId);
+		map.put("user", user);
 		map.put("noOfInstallmentList", Utils.stringToArray(noOfInstallmentProperty));	
-		map.put("action","edit");
-		Fees f= new Fees();//Retieve Fees Objet from DB.
-		f.setId(2);
-		f.setUser(userService.getUserById(userId));
-		map.put("fees", f);
-		map.put("userId", 2);
-
+		map.put("action","edit");		
+		map.put("fees", feesService.getFeesById(feesId));
 		return "feesPayment";
 	}
 }

@@ -101,3 +101,56 @@
 </table>
 </form:form>
 </fieldset>
+<fieldset>
+	<legend>View Fees Payment</legend>
+	<p style="color: green; font-weight: bold;">
+		Add Fees <a
+			href="<c:url value='/addfees' />"> <img
+			src="<c:url value='/images/vcard_add.png' />"
+			title="Add fees" />
+		</a>
+	</p>
+	<c:url var="action" value="/user/add.html"></c:url>
+
+<table class="bookTable">
+				<tr>
+					<th width="5">UserID</th>
+					<th width="20">UserName</th>
+					<th width="12">Total Fees</th>
+					<th width="12.5">Total Expenses</th>
+					<th width="12.5">Paid Fees</th>
+					<th width="12.5">Pending Fees</th>
+					<th width="12.5">Next Due</th>
+					<th width="12.5">Action</th>
+				</tr>
+	<c:choose>	
+    <c:when test="${!empty user.feeses}">			
+				<c:forEach items="${user.feeses}" var="fees">
+					<tr>
+						<td>${fees.user.id}</td>
+						<td><a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>
+						<td>${fees.totalFees}</td>
+						<td>${fees.paidFees}</td>
+						<td>${fees.pendingFees}</td>
+						<td>${fees.additionCharges}</td>
+						<td>${fees.nextPaymentDueDate}</td>
+						<td><img src="<c:url value='/images/vcard_delete.png' />"
+							title="Delete User" onclick="javascript:deleteUser(${fees.id})" />
+							<a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />"> <img
+								src="<c:url value='/images/vcard_add.png' />" title="Edit Fees" />
+						</a></td>
+					</tr>
+				</c:forEach>
+			
+	</c:when>
+	<c:otherwise>
+		<tr>
+			<td colspan=8 style="  text-align: center;border: 1px solid;">
+				No Record Available
+			</td>
+		</tr>
+	</c:otherwise>	
+	</c:choose>
+	</table>
+	<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${user.id}" css="button">user Fees Report</a>
+</fieldset>

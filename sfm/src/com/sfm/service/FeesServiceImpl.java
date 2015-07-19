@@ -29,7 +29,7 @@ public class FeesServiceImpl implements FeesService {
 
 	@Transactional
 	public List<Fees> listFees() {
-		return dao.list(Fees.class);
+		return dao.listFees();
 	}
 
 	@Transactional

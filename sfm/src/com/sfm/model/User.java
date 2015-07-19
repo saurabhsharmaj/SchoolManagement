@@ -197,7 +197,7 @@ public class User implements java.io.Serializable {
 		this.updatedOn = updatedOn;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Fees> getFeeses() {
 		return this.feeses;
 	}

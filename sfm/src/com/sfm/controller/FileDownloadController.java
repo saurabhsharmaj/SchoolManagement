@@ -71,6 +71,7 @@ public class FileDownloadController {
         
     	Map<Object, Object> params = new HashMap<Object, Object>();
     	params.put("test", "test");
+    	getParamsByReport(userService.getUserById(userId), reportName,params);
        String logoURL = getContextPath(request,"/images/logo.png");
         FileInputStream fin = new FileInputStream(PdfWriterUtil.createPdf(reportName,logoURL,params));
         byte[] contents = IOUtils.toByteArray(fin);
@@ -84,6 +85,15 @@ public class FileDownloadController {
         return response;
     }
 
+
+	private void getParamsByReport(User user, String reportName, Map<Object, Object> params) {
+		if(reportName.equalsIgnoreCase("user_fees_report")){
+			params.put("user", user);
+			params.put("totalfees", 5000);
+			params.put("paymentList", user.getFeeses());
+		}
+		
+	}
 
 	private String getContextPath(HttpServletRequest request, String resource) throws Exception {
 		URL url = new URL(request.getRequestURL().toString());

@@ -22,8 +22,8 @@
 <div style="padding-bottom:10px;">--------------------------------------------------------------------------------------------------------------------------</div>​​​​​
 
 
-<p><b>Name</b>:$firstNaem &nbsp; $middleName &nbsp; $lastName / $fatherName</p>
-</p><b>Total Fees</b>:$total</p>
+<p><b>Name</b>:$user.firstName &nbsp; $user.middleName &nbsp; $user.lastName / $user.fatherName</p>
+</p><b>Total Fees</b>:$totalfees</p>
 
 <table border=1>
 <tr>
@@ -33,15 +33,21 @@
 	<th>Additional Payment</th>
 	<th>Total Amount</th>	
 </tr>
+
 #if ($paymentList.size() > 0)
+			#set ($rowNumber = 1)
+			#set ($grandTotal = 0)
 			#foreach( $fees in $paymentList )
+			#set ($total = $fees.paidFees + $fees.additionCharges)
 			<tr>
-				<td>$fees.installmentNo</td>
-				<td>$fees.paymentDate</td>
-				<td>$fees.amount</td>
-				<td>$fees.additionalAmount</td>
-				<td>$fees.Total</td>
+				<td>$rowNumber</td>
+				<td>$fees.updatedOn</td>
+				<td>$fees.paidFees</td>
+				<td>$fees.additionCharges</td>
+				<td>$total</td>
 			</tr>
+			#set ($grandTotal = $grandTotal + $total)
+			#set($rowNumber = $rowNumber +1)
 			#end
 			<tr>	
 				<td colspan="4" align="right"><B>GrandTotal</b></td>

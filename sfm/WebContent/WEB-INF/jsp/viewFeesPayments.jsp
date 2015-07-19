@@ -14,14 +14,14 @@
 
 <table class="bookTable">
 				<tr>
-					<th width="60">UserID</th>
-					<th width="160">UserName</th>
-					<th width="160">Total Fees</th>
-					<th width="160">Total Expenses</th>
-					<th width="160">Paid Fees</th>
-					<th width="160">Pending Fees</th>
-					<th width="160">Next Due</th>
-					<th width="60">Action</th>
+					<th width="5">UserID</th>
+					<th width="20">UserName</th>
+					<th width="12">Total Fees</th>
+					<th width="12.5">Total Expenses</th>
+					<th width="12.5">Paid Fees</th>
+					<th width="12.5">Pending Fees</th>
+					<th width="12.5">Next Due</th>
+					<th width="12.5">Action</th>
 				</tr>
 	<c:choose>	
     <c:when test="${!empty feesPaymentList}">			
@@ -45,7 +45,7 @@
 	</c:when>
 	<c:otherwise>
 		<tr>
-			<td colspan=5 style="  text-align: center;border: 1px solid;">
+			<td colspan=8 style="  text-align: center;border: 1px solid;">
 				No Record Available
 			</td>
 		</tr>
