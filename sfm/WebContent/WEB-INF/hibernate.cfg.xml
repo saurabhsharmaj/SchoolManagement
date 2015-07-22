@@ -17,5 +17,7 @@
 		<mapping class="com.sfm.model.Role" />
 		<mapping class="com.sfm.model.User" />
 		<mapping class="com.sfm.model.UserProfile" />
+		<mapping class="com.sfm.model.CompoundFees" />
+		<mapping class="com.sfm.model.CompoundExpenses" />			
     </session-factory>
 </hibernate-configuration>

@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <fieldset>
   	<legend>fees</legend>
+  	<c:url var="action" value="/user/add.html" ></c:url>
   	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm">
 	<table>
 	<c:if test="${!empty fees.id}">
@@ -27,6 +28,16 @@
 		</td>
 		<td colspan="2">
 			<form:input path="user.id" id="userId"  placeholder="user Id"/>
+		</td> 
+	</tr>
+	<tr>
+		<td>			
+			<form:label path="user.fullName" cssClass="userNameLabel">
+				<spring:message code="label.username" />
+			</form:label>
+		</td>
+		<td colspan="2">
+			<form:input path="user.fullName" id="userName" cssClass="autoComplte"  placeholder="User Name"/>
 		</td> 
 	</tr>
 	<tr>
@@ -97,6 +108,21 @@
 		<td colspan="2">
 			<form:input path="nextPaymentDueDate" id="nextPaymentDueDate" cssClass="datepicker" placeholder="nextPaymentDueDate"/>		
 		</td> 
+	</tr>
+	<tr>
+	<td>
+		<c:if test="${!empty user.id}">
+				<input type="submit"
+					value="<spring:message code="label.editfees"/>" class="button"/>
+			</c:if>
+			<c:if test="${empty user.id}">
+				<input type="submit"
+					value="<spring:message code="label.addfees"/>" class="button"/>
+			</c:if>        
+	</td>
+	<td>
+		<a href="<c:url value="/viewUserList" />" class="button">Cancel</a>
+	</td>
 	</tr>	
 </table>
 </form:form>

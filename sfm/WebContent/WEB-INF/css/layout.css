@@ -158,8 +158,8 @@ nav ul {
 
 h1,h2,h3,h4,h5,h6 {
 	margin: 0;
-	padding: 0;
-	font-size: 16px;
+	padding: 0 0 20px;
+  	font-size: 14px;
 	font-weight: bold;
 	font-style: normal;
 	line-height: normal;
@@ -454,7 +454,7 @@ footer {
 	float: right;
 	line-height: 27px;
 	color: #787878;
-	padding: 20px 0 0 0;
+	padding: 20px 10px 0 0;
 }
 
 .top-links a {
@@ -479,7 +479,7 @@ footer {
 	display: inline-block;
 }
 
-.button {
+#button .button {
 	font-family: Arial;
 	background: linear-gradient(to bottom, #FCB97E 0%, #F07605 100%) repeat
 		scroll 0 0 transparent;
@@ -506,4 +506,38 @@ footer {
   padding: 1px;
   height: 128px;
   width: 128px;
+}
+
+.error {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+.msg {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+
+#login-box {
+	width: 350px;
+	padding: 20px;
+	margin: 100px auto;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border: 1px solid #000;
+	background: #f8f8f8;
+	padding: 30px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }

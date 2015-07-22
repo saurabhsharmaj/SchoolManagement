@@ -2,6 +2,7 @@ package com.sfm.service;
 
 import java.util.List;
 
+import com.sfm.model.CompoundFees;
 import com.sfm.model.Fees;
 
 
@@ -12,6 +13,7 @@ public interface FeesService {
 	public void updateFees(Fees fees);
 	public Fees getFeesById(Integer feesId);
 	public List<Fees> listFees();
+	public List<CompoundFees> listCompoundFees();
 	public List<Fees> listFees(Integer deptId, Integer year, Integer semester);
 	public void removeFees(Integer id);
 

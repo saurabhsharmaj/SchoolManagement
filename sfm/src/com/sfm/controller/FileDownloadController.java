@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lowagie.text.pdf.codec.Base64;
 import com.sfm.model.User;
+import com.sfm.service.FeesService;
 import com.sfm.service.UserService;
 import com.sfm.util.PdfWriterUtil;
  
@@ -41,6 +42,9 @@ public class FileDownloadController {
  
     @Autowired
 	private UserService userService;
+    
+    @Autowired
+	private FeesService feesService;
    
     @RequestMapping(value = "/profile/{userId}")
     @ResponseBody
@@ -91,6 +95,9 @@ public class FileDownloadController {
 			params.put("user", user);
 			params.put("totalfees", 5000);
 			params.put("paymentList", user.getFeeses());
+		} else if(reportName.equalsIgnoreCase("fees_report")){
+			params.put("user", user);
+			params.put("feesList", feesService.listCompoundFees());
 		}
 		
 	}

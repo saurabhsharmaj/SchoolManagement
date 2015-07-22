@@ -1,9 +1,7 @@
 package com.sfm.controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +29,15 @@ public class ExpensesController {
 	 
 	@RequestMapping(value="viewExpenses")
 	public String listRoutes(Map<String, Object> map) {	
-		List<Charges> expensesList = new ArrayList<Charges>();
-		
-		Charges c1 = new Charges(userService.getUserById(2), 1, "Stationary", new BigDecimal(2000), "saurabh", new Date());
-		c1.setId(1);
-		expensesList.add(c1);
-		
-		Charges c2 = new Charges(userService.getUserById(2), 1, "Medical", new BigDecimal(1000), "saurabh", new Date());
-		c1.setId(2);
-		expensesList.add(c2);
-		
-		map.put("expensesList", expensesList);
-		return "viewExpensesList";
+		map.put("expensesList", expenseService.listCompoundExpenses());
+		return "viewExpensesList";	
+	}
+	
+	@RequestMapping(value="viewExpensesByUserId/{userId}")
+	public String listRoutes(@PathVariable("userId")Integer userId,Map<String, Object> map) {		
+		map.put("expensesList", expenseService.getChargesByUserId(userId));
+		map.put("expense", new Charges());
+		return "viewExpensesPage";
 	}
 	
 	@RequestMapping(value="addExpense")
@@ -54,18 +49,15 @@ public class ExpensesController {
 		return "viewExpensesPage";
 	}
 	
-	@RequestMapping("/editExpense/{userId}/{feesId}")
+	@RequestMapping("/editExpense/{userId}/{expenseId}")
 	public String editUser(
-			@PathVariable("userId")Integer userId,@PathVariable("feesId")Integer feesId,
+			@PathVariable("userId")Integer userId,@PathVariable("expenseId")Integer expenseId,
 			Map<String, Object> map)
 	{
 		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty));	
 		map.put("action","edit");
-		Charges c1 = new Charges(userService.getUserById(2), 1, "Stationary", new BigDecimal(2000), "saurabh", new Date());
-		c1.setId(1);
-		c1.setUser(userService.getUserById(userId));
-		map.put("expense", c1);
-		map.put("userId", 2);
+		map.put("expensesList", expenseService.getChargesByUserId(userId));
+		map.put("expense", expenseService.getChargesById(expenseId));
 
 		return "viewExpensesPage";
 	}

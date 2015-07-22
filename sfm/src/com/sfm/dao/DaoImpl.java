@@ -5,13 +5,19 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sfm.model.Fees;
-import com.sfm.util.HibernateUtil;
+import com.sfm.model.Charges;
+import com.sfm.model.CompoundExpenses;
+import com.sfm.model.CompoundFees;
+import com.sfm.model.User;
 
 @Repository
 public class DaoImpl<T, PK extends Serializable> implements Dao {
@@ -24,28 +30,28 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 
 	@Override
 	public void add(Object t) {
-		sessionFactory.getCurrentSession().saveOrUpdate(t);		
+		getSession().saveOrUpdate(t);		
 	}
 
 	@Override
 	public void update(Object t) {
-		sessionFactory.getCurrentSession().update(t);		
+		getSession().update(t);		
 	}
 
 	@Override
 	public List list(Class clazz) {
-		return sessionFactory.getCurrentSession().createQuery( "from " + clazz.getName() ).list();
+		return getSession().createQuery( "from " + clazz.getName() +" order by updatedOn desc" ).list();
 	}
 
 	@Override
 	public Object getById(Integer id, Class clazz) {
-		return (T) sessionFactory.getCurrentSession().get( clazz, id );
+		return (T) getSession().get( clazz, id );
 	}
 
 
 	@Override
 	public void remove(Object t) {
-		sessionFactory.getCurrentSession().delete(t);		
+		getSession().delete(t);		
 	}
 
 	@Override
@@ -77,31 +83,69 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		} else {
 			sql  = "from "+ clazz.getName();
 		}
-		return sessionFactory.getCurrentSession().createQuery( sql ).list();
+		return getSession().createQuery( sql ).list();
 	}
 
 	@Override
 	public List listFees() {
-		Criteria criteria = 
-				sessionFactory.getCurrentSession()
-			        .createCriteria(Fees.class)
-			        .setProjection(Projections.projectionList()            
-			            .add(Projections.sum("paidFees"))
-			            .add(Projections.sum("pendingFees"))
-			            .add(Projections.sum("additionCharges"))
-			            .add(Projections.groupProperty("user")));			        
-			return (List<Fees>) criteria.list();	}
-
-
-public static void main(String[] args) throws Exception {
-	List<Object> list = (List<Object>)HibernateUtil.getSessionFactory().openSession().createCriteria(Fees.class)
-    .setProjection(Projections.projectionList()            
-            .add(Projections.sum("paidFees"))
-            .add(Projections.sum("pendingFees"))
-            .add(Projections.sum("additionCharges"))
-            .add(Projections.groupProperty("user"))).list();	
-	for (Object fees : list) {
-		System.out.println((Fees)fees);
+		// TODO Auto-generated method stub
+		return null;
 	}
-}
+
+	@Override
+	public List<CompoundFees> listCompoundFees() {
+		String SQL="Select u.id id," +
+				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
+				"u.fatherName fatherName,"+
+				"totalFees, " +
+				"count(noOfInstallment)," +
+				"sum(paidFees) totalPaidFees," +
+				"sum(additionCharges) totalAdditionCharges," +
+				"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
+				"nextPaymentDueDate nextDueDate, " +
+				"totalExpenses  " +
+				"from " +
+				"fees f " +
+				"inner join User u on u.id=f.userId " +
+				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
+				"group by f.userId order by u.id asc";
+		return getSession().createSQLQuery(SQL).addEntity("f", CompoundFees.class).list();
+	}
+
+	@Override
+	public List<CompoundExpenses> listCompoundExpenses() {
+		String SQL= "Select " +
+				"c.userId id , " +
+				"concat(u.firstName,' ',u.middleName,' ',u.lastName) fullName ," +
+				"u.fatherName, sum(c.Amount) totalAmount " +
+				"from " +
+				"charges c " +
+				"left outer join user u on c.userId = u.id " +
+				"group by userId order by userId asc;";
+		return getSession().createSQLQuery(SQL).addEntity("f", CompoundExpenses.class).list();
+	}
+
+	private Session getSession() {
+		try{
+			return sessionFactory.getCurrentSession();
+		}catch(Exception ex){
+			return sessionFactory.openSession();
+		}
+	}
+
+	@Override
+	public List<Charges> getChargesByUserId(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Charges.class);
+		criteria.add(Expression.eq("user",(User)getById(userId,User.class)));
+		criteria.addOrder(Order.asc("updatedOn"));
+		return criteria.list();
+	}
+
+	@Override
+	public  List<User>  listUsersByName(String userName) {
+		 Criteria criteria = getSession().createCriteria(User.class);
+		 criteria.add(Restrictions.ilike("firstName", userName, MatchMode.START));
+		 return criteria.list();
+	}
+	
 }

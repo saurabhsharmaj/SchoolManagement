@@ -27,17 +27,19 @@
 	<th>Total Fees</th>
 	<th>Total Expenses</th>
 	<th>Total Payment Received</th>
+	<th>Total Additional Charges</th>
 	<th>Pending Amount</th>
 	<th>Next Fees Due Date</th>
 </tr>
 <tr>
  #if ($feesList.size() > 0)
 	#foreach( $fees in $feesList )
-		<td>$fees.UserName/$fees.FatherName</td>
+		<td>$fees.fullName/$fees.fatherName</td>
 		<td>$fees.totalFees</td>
 		<td>$fees.totalExpenses</td>
-		<td>$fees.totalPaymentReceived</td>
-		<td>$fees.pendingAmount</td>
+		<td>$fees.totalPaidFees</td>
+		<td>$fees.totalAdditionCharges</td>
+		<td>$fees.totalPendingFees</td>
 		<td>$fees.nextDueDate</td>
 	</tr>
 	#end

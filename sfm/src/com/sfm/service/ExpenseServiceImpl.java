@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sfm.dao.Dao;
 import com.sfm.model.Charges;
+import com.sfm.model.CompoundExpenses;
 
 
 
@@ -45,5 +46,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<Charges> listCharges(Integer deptId, Integer year, Integer semester) {
 		return dao.list(deptId, year, semester,Charges.class);
+	}
+
+	@Override
+	public List<CompoundExpenses> listCompoundExpenses() {
+		return dao.listCompoundExpenses();
+	}
+
+	@Override
+	public List<Charges> getChargesByUserId(Integer userId) {
+		return dao.getChargesByUserId(userId);
 	}
 }

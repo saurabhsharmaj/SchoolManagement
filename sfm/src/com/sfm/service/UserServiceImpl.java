@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
 	public List<User> listUsers(Integer deptId, Integer year, Integer semester) {
 		return dao.list(deptId, year, semester,User.class);
 	}
+
+	@Override
+	public List<User> listUsersByName(String userName) {
+		return dao.listUsersByName(userName) ;
+	}
 }

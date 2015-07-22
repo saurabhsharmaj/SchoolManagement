@@ -10,8 +10,11 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.min.css" type="text/css">
-<script src="${pageContext.request.contextPath}/js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+<script src="${pageContext.request.contextPath}/js/jquery.1.10.2.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.autocomplete.min.js"></script>
+
 <script type="text/javascript">
   $(function() {
   	$('.datepicker').datepicker({
@@ -25,7 +28,29 @@
     function(e){
     		$('#fileName').val(e.target.files[0].name);       
     });
-  });
+    
+    $('.autoComplte').autocomplete({
+			serviceUrl: '${pageContext.request.contextPath}/getUserNames',
+			paramName: "userName",
+			delimiter: ",",
+		    transformResult: function(response) {		    	
+		        return {		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {		            	
+		                return { value: item.firstName +"/"+item.fatherName, data: item.id };
+		            })
+		            
+		        };
+		        
+		    },
+		    click: function (event, ui) {
+					    var name = ui.item.value
+					   alert(name);
+					}
+		    
+		});
+	
+	
+    });
 </script>
 
 

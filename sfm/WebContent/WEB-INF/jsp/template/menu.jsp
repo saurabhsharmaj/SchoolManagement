@@ -3,8 +3,8 @@
         <ul>
           <li><a href="${pageContext.request.contextPath}/viewUserList">User Management</a></li>
           <li><a href="${pageContext.request.contextPath}/viewExpenses">Expenses</a></li>
-          <%-- <li><a href="${pageContext.request.contextPath}/viewFeesPayments">Fees Management</a></li> --%>
-          <li><a href="${pageContext.request.contextPath}/viewFeeDetailByUserId/18">Fees Management</a></li>          
+          <li><a href="${pageContext.request.contextPath}/viewFeesPayments">Fees Management</a></li>
+          <%-- <li><a href="${pageContext.request.contextPath}/viewFeeDetailByUserId/18">Fees Management</a></li> --%>          
           <li><a href="${pageContext.request.contextPath}/paymentRecived">Reports</a></li>         
         </ul>
       </nav>

@@ -3,6 +3,8 @@ package com.sfm.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sfm.model.User;
@@ -41,6 +44,21 @@ public class UserController {
 	 @Value("${STREAM}")
 	 private String stream;
 	 
+	  
+	 @RequestMapping(value = "/getUserNames",  produces="application/json", method = RequestMethod.GET)
+		public @ResponseBody
+		List<User> getTags(@RequestParam String userName) {
+		 	List<User> users= getSearchUserNames(userName);
+			return users;
+
+		}
+
+	 
+		
+	private List<User> getSearchUserNames(String userName) {
+		return userService.listUsersByName(userName);
+	}
+
 	@RequestMapping(value="viewUserList")
 	public String listRoutes(Map<String, Object> map) {
 		map.put("userList", userService.listUsers());

@@ -25,7 +25,7 @@ public class Fees implements java.io.Serializable {
 
 	private Integer id;
 	private User user;
-	private BigDecimal totalFees;
+	private Double totalFees;
 	private Integer noOfInstallment;
 	private BigDecimal paidFees;
 	private BigDecimal pendingFees;
@@ -43,7 +43,7 @@ public class Fees implements java.io.Serializable {
 		this.updatedOn = updatedOn;
 	}
 
-	public Fees(User user, BigDecimal totalFees, Integer noOfInstallment,
+	public Fees(User user, Double totalFees, Integer noOfInstallment,
 			BigDecimal paidFees, BigDecimal pendingFees,
 			BigDecimal additionCharges, Date nextPaymentDueDate,
 			String updateBy, Date updatedOn) {
@@ -80,12 +80,12 @@ public class Fees implements java.io.Serializable {
 	}
 
 	@Column(name = "totalFees", precision = 11)
-	public BigDecimal getTotalFees() {
+	public Double getTotalFees() {
 		return this.totalFees;
 	}
 
-	public void setTotalFees(BigDecimal totalFees) {
-		this.totalFees = totalFees;
+	public void setTotalFees(Double double1) {
+		this.totalFees = double1;
 	}
 
 	@Column(name = "noOfInstallment")

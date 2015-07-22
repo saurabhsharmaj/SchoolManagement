@@ -1,8 +1,6 @@
 package com.sfm.controller;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,25 +26,24 @@ public class FeesController {
 	 @Value("${NoOfInstallment}")
 	 private String noOfInstallmentProperty;
 	 
+	 @Value("${TOTAL_FEES}")
+	 private String totalFees;
+	 
+	 
 	@RequestMapping(value="viewFeesPayments")
-	public String viewFeesPayments(Map<String, Object> map) {			
-//		map.put("feesPaymentList", feesService.getFeesById(18));
-		User user = userService.getUserById(18);
-		Set<Fees> feesList = user.getFeeses();
-		for (Fees fee : feesList) {
-			System.out.println(fee.getId());
-		}
-		
-		map.put("fees", new Fees());
-		map.put("user", userService.getUserById(18));
-		return "feesPayment";
+	public String viewFeesPayments(Map<String, Object> map) {	
+		map.put("user", userService.getUserById(18));	
+		map.put("feesPaymentList", feesService.listCompoundFees());		
+		return "viewFeesPaymentList";
 	}
 	
 	@RequestMapping(value="viewFeeDetailByUserId/{userId}")
 	public String viewFeesPayments(Map<String, Object> map,
 			@PathVariable("userId")Integer userId) {			
-		User user = userService.getUserById(userId);		
-		map.put("fees", new Fees());
+		User user = userService.getUserById(userId);	
+		Fees fees = new Fees();
+		fees.setTotalFees(Double.valueOf(totalFees));
+		map.put("fees", fees);
 		map.put("user", user);
 		return "feesPayment";
 	}

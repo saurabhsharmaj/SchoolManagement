@@ -15,9 +15,7 @@
 <table class="bookTable">
 				<tr>
 					<th width="60">UserID</th>
-					<th width="160">UserName</th>
-					<th width="160">Expense Type</th>
-					<th width="160">Description</th>
+					<th width="160">UserName</th>					
 					<th width="160">Amount</th>
 					<th width="60">Action</th>
 				</tr>
@@ -25,16 +23,13 @@
     <c:when test="${!empty expensesList}">			
 				<c:forEach items="${expensesList}" var="expense">
 					<tr>
-						<td>${expense.user.id}</td>
-						<td><a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />">${expense.user.firstName} &nbsp;${expense.user.middleName} &nbsp;${expense.user.lastName}</a></td>
-						<td>${expense.expenseType}</td>
-						<td>${expense.description}</td>
-						<td>${expense.amount}</td>
-						<td><img src="<c:url value='/images/vcard_delete.png' />"
-							title="Delete User" onclick="javascript:deleteexpensees(${expense.id})" />
-							<a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />"> <img
-								src="<c:url value='/images/vcard_add.png' />" title="Edit Fees" />
-						</a></td>
+						<td>${expense.id}</td>
+						<td><a href="<c:url value='/viewExpensesByUserId/${expense.id}' />">${expense.fullName} &nbsp;/ &nbsp;${expense.fatherName}</a></td>
+						<td>${expense.totalAmount}</td>
+						<td>
+							<a href="<c:url value='/viewExpensesByUserId/${expense.id}' />"> Show Details
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			

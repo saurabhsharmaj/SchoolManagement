@@ -10,7 +10,6 @@
 			title="Add fees" />
 		</a>
 	</p>
-	<c:url var="action" value="/user/add.html"></c:url>
 
 <table class="bookTable">
 				<tr>
@@ -19,6 +18,7 @@
 					<th width="12">Total Fees</th>
 					<th width="12.5">Total Expenses</th>
 					<th width="12.5">Paid Fees</th>
+					<th width="12.5">Additional Fees</th>
 					<th width="12.5">Pending Fees</th>
 					<th width="12.5">Next Due</th>
 					<th width="12.5">Action</th>
@@ -27,18 +27,17 @@
     <c:when test="${!empty feesPaymentList}">			
 				<c:forEach items="${feesPaymentList}" var="fees">
 					<tr>
-						<td>${fees.user.id}</td>
-						<td><a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>
+						<td>${fees.id}</td>
+						<td><a href="<c:url value='/viewFeeDetailByUserId/${fees.id}' />">${fees.fullName}&nbsp; / &nbsp;${fees.fatherName}</a></td>
 						<td>${fees.totalFees}</td>
-						<td>${fees.paidFees}</td>
-						<td>${fees.pendingFees}</td>
-						<td>${fees.additionCharges}</td>
-						<td>${fees.nextPaymentDueDate}</td>
-						<td><img src="<c:url value='/images/vcard_delete.png' />"
-							title="Delete User" onclick="javascript:deleteUser(${fees.id})" />
-							<a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />"> <img
-								src="<c:url value='/images/vcard_add.png' />" title="Edit Fees" />
-						</a></td>
+						<td>${fees.totalExpenses}</td>
+						<td>${fees.totalPaidFees}</td>
+						<td>${fees.totalAdditionCharges}</td>
+						<td>${fees.totalPendingFees}</td>
+						<td>${fees.nextDueDate}</td>
+						<td>
+							<a href="<c:url value='/viewFeeDetailByUserId/${fees.id}' />">Show Detail </a>
+						</td>
 					</tr>
 				</c:forEach>
 			
@@ -53,3 +52,4 @@
 	</c:choose>
 	</table>
 </fieldset>
+<a href="${pageContext.request.contextPath}/pdf/fees_report/${user.id}" css="button">Fees Report</a>

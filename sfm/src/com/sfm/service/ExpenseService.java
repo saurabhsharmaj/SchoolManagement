@@ -3,6 +3,7 @@ package com.sfm.service;
 import java.util.List;
 
 import com.sfm.model.Charges;
+import com.sfm.model.CompoundExpenses;
 
 
 
@@ -14,5 +15,7 @@ public interface ExpenseService {
 	public List<Charges> listCharges();
 	public List<Charges> listCharges(Integer deptId, Integer year, Integer semester);
 	public void removeCharges(Integer id);
+	public List<CompoundExpenses> listCompoundExpenses();
+	public List<Charges> getChargesByUserId(Integer userId);
 
 }

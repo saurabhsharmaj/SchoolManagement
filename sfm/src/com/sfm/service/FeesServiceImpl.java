@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sfm.dao.Dao;
+import com.sfm.model.CompoundFees;
 import com.sfm.model.Fees;
 
 
@@ -45,5 +46,10 @@ public class FeesServiceImpl implements FeesService {
 	@Override
 	public List<Fees> listFees(Integer deptId, Integer year, Integer semester) {
 		return dao.list(deptId, year, semester,Fees.class);
+	}
+
+	@Override
+	public List<CompoundFees> listCompoundFees() {
+		return dao.listCompoundFees();
 	}
 }
