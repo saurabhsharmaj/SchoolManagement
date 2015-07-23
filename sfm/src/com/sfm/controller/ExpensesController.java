@@ -1,7 +1,5 @@
 package com.sfm.controller;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,8 @@ public class ExpensesController {
 	 private String expenseTypeProperty;
 	 
 	@RequestMapping(value="viewExpenses")
-	public String listRoutes(Map<String, Object> map) {	
+	public String listRoutes(Map<String, Object> map) {
+		map.put("user", userService.getUserById(18));
 		map.put("expensesList", expenseService.listCompoundExpenses());
 		return "viewExpensesList";	
 	}

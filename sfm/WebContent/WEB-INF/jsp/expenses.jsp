@@ -131,4 +131,5 @@
 	</c:otherwise>	
 	</c:choose>
 	</table>
+	<a href="${pageContext.request.contextPath}/pdf/user_exense_report/${user.id}" css="button">user Expenses Report</a>
 </fieldset>
