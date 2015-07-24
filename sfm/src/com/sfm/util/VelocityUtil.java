@@ -9,6 +9,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.tools.generic.DateTool;
 
 public class VelocityUtil {
 
@@ -30,6 +31,7 @@ public class VelocityUtil {
 					context.put(key.toString(), value);
 				}
 				context.put("logoURL", logoURL);
+				context.put("date", new DateTool());
 				Velocity.init();
 				Velocity.evaluate(context, writer, "convertString", template);
 			} catch (Exception e) {

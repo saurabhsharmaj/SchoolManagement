@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lowagie.text.pdf.codec.Base64;
 import com.sfm.model.User;
+import com.sfm.service.ExpenseService;
 import com.sfm.service.FeesService;
 import com.sfm.service.UserService;
 import com.sfm.util.PdfWriterUtil;
@@ -46,6 +46,9 @@ public class FileDownloadController {
     @Autowired
 	private FeesService feesService;
    
+    @Autowired
+    private ExpenseService expenseService;
+    
     @RequestMapping(value = "/profile/{userId}")
     @ResponseBody
     public byte[] helloWorld(@PathVariable int userId) throws Exception  {
@@ -95,9 +98,13 @@ public class FileDownloadController {
 			params.put("user", user);
 			params.put("totalfees", 5000);
 			params.put("paymentList", user.getFeeses());
+			params.put("compoundFees", feesService.getCompoundFees(user.getId()));
 		} else if(reportName.equalsIgnoreCase("fees_report")){
 			params.put("user", user);
 			params.put("feesList", feesService.listCompoundFees());
+		} else if(reportName.equalsIgnoreCase("user_exense_report")){
+			params.put("user", user);
+			params.put("expensesList", expenseService.getChargesByUserId(user.getId()));
 		}
 		
 	}

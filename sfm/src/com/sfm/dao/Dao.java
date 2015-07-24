@@ -20,7 +20,13 @@ public interface Dao<T, PK extends Serializable> {
 	public List<Fees> listFees();
 	
 	public List<CompoundFees> listCompoundFees();
+	public List<Fees> listFeesByUserId(Integer userId);
+	
 	public List<CompoundExpenses> listCompoundExpenses();
 	public List<Charges> getChargesByUserId(Integer userId);
+	
 	public List<User> listUsersByName(String userName);
+	public CompoundFees getCompoundFees(Integer id);
+	
+	public List<Object[]> getUserByNextPaymentDate();
 }

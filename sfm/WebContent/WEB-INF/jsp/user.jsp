@@ -185,7 +185,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="userProfile.dob" placeholder="dob"/>
+			<form:input path="userProfile.dob" placeholder="dob" cssClass="datepicker"/>
 		</td>		
 	</tr>
 	

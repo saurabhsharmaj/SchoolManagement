@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Fees;
 import com.sfm.model.User;
 
 @Repository
@@ -41,6 +43,22 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	@Override
 	public List list(Class clazz) {
 		return getSession().createQuery( "from " + clazz.getName() +" order by updatedOn desc" ).list();
+	}
+	
+	protected List listByPage(Class clazz, int firstResult, int maxResult, String orderBy, boolean direction) {
+        String strQry = "from " + clazz.getName() + " order by "+orderBy+" " + getDirection(direction);
+ 
+        Query query = this.sessionFactory.getCurrentSession().createQuery(strQry);
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResult);
+ 
+        return query.list();
+    }
+	
+	
+
+	private String getDirection(boolean direction) {
+		return direction?"ASC":"DESC";
 	}
 
 	@Override
@@ -92,6 +110,26 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		return null;
 	}
 
+	@Override
+	public CompoundFees getCompoundFees(Integer id) {
+		String SQL="Select u.id id," +
+				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
+				"u.fatherName fatherName,"+
+				"totalFees, " +
+				"count(noOfInstallment)," +
+				"sum(paidFees) totalPaidFees," +
+				"sum(additionCharges) totalAdditionCharges," +
+				"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
+				"nextPaymentDueDate nextDueDate, " +
+				"totalExpenses  " +
+				"from " +
+				"fees f " +
+				"inner join User u on u.id=f.userId and u.id="+id +" "+
+				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
+				"group by f.userId order by u.id asc";
+		return (CompoundFees) getSession().createSQLQuery(SQL).addEntity(CompoundFees.class).uniqueResult();
+	}
+	
 	@Override
 	public List<CompoundFees> listCompoundFees() {
 		String SQL="Select u.id id," +
@@ -147,5 +185,23 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		 criteria.add(Restrictions.ilike("firstName", userName, MatchMode.START));
 		 return criteria.list();
 	}
+
+	@Override
+	public List<Fees> listFeesByUserId(Integer userId) {
+		Criteria criteria = getSession().createCriteria(Fees.class);
+		criteria.add(Expression.eq("user",(User)getById(userId,User.class)));
+		criteria.addOrder(Order.asc("updatedOn"));
+		return criteria.list();
 	
+	}
+
+	@Override
+	public List<Object[]> getUserByNextPaymentDate() {
+		String SQL = "Select * from User u right outer join" +
+				" (select * from fees where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month )" +
+				" group by userId order by nextPaymentDueDate) f" +
+				" on u.id = f.userId";
+		
+		return getSession().createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
+	}	
 }

@@ -1,5 +1,7 @@
-<toolbox>
+<toolbox scope="application">
   <xhtml>true</xhtml>
+     <tool class="org.apache.velocity.tools.generic.DateTool"
+              format="dd-MMM-yyyy"/>
   <tool>
      <key>toytool</key>
      <class>ToyTool</class>

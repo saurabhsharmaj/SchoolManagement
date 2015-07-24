@@ -12,9 +12,11 @@ public interface FeesService {
 	public void addFees(Fees fees);
 	public void updateFees(Fees fees);
 	public Fees getFeesById(Integer feesId);
+	public List<Fees> getFeesByUserId(Integer userId);
 	public List<Fees> listFees();
 	public List<CompoundFees> listCompoundFees();
 	public List<Fees> listFees(Integer deptId, Integer year, Integer semester);
 	public void removeFees(Integer id);
+	public CompoundFees getCompoundFees(Integer id);
 
 }

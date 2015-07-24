@@ -2,6 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,6 +24,19 @@
       buttonImageOnly: true,
       buttonText: "Select date"
       });
+    
+    $.datepicker.formatDate('dd/MMM/yy', new Date());
+    
+    var now = new Date();
+	var current;
+	if (now.getMonth() == 11) {
+	    current = new Date(now.getFullYear() + 1, 0, now.getDate());
+	} else {
+	    current = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
+	}
+
+    $('#nextPaymentDueDate').datepicker("setDate", current);
+    $('#AddmissionDate').datepicker("setDate", new Date());
     
     $('input:file').change(
     function(e){

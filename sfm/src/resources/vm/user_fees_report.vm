@@ -23,8 +23,8 @@
 
 
 <p><b>Name</b>:$user.firstName &nbsp; $user.middleName &nbsp; $user.lastName / $user.fatherName</p>
-</p><b>Total Fees</b>:$totalfees</p>
-
+</p><b>Total Fees</b>: $compoundFees.totalFees </p>
+<p/>
 <table border=1>
 <tr>
 	<th>InstallmentNo</th>
@@ -41,12 +41,13 @@
 			#set ($total = $fees.paidFees + $fees.additionCharges)
 			<tr>
 				<td>$rowNumber</td>
-				<td>$fees.updatedOn</td>
+				<td>$date.format('dd-MMM-yyyy', $fees.updatedOn)</td>
 				<td>$fees.paidFees</td>
 				<td>$fees.additionCharges</td>
 				<td>$total</td>
 			</tr>
 			#set ($grandTotal = $grandTotal + $total)
+			#set ($total=0)
 			#set($rowNumber = $rowNumber +1)
 			#end
 			<tr>	
@@ -57,6 +58,6 @@
 			<tr><td colspan="5" align="center"><b>no Fee record</b></td></tr>
 #end
 </table>
-<p><b>Total Fees</b>: $totalFees &nbsp; <b>Total Expenses</b>:$totalExpenses &nbsp; <b>Pending Amount</b>:$pendingAmount</p>
+<p><b>Total Fees</b>: $compoundFees.totalFees &nbsp; <b>Total Expenses</b>:$compoundFees.totalExpenses &nbsp; <b>Pending Amount</b>:$compoundFees.totalPendingFees</p>
 </body>
 </html>

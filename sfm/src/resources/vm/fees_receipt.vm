@@ -28,7 +28,7 @@
 	<li><b>Total Fees</b>: $totalFees</li>
 	<li><b>Fees Paid</b>:$amount</li>
 	<li><b>Additional Payment</b>:$addtionAmount</li>
-	<li><b>Next Due Date</b>:$nextDueDate</li>
+	<li><b>Next Due Date</b>: $date.format('dd-MMM-yyyy',$nextDueDate)</li>
 </ul>
 </body>
 </html>

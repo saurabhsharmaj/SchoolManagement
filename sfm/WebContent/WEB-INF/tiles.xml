@@ -51,12 +51,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/expenses.jsp" />
     </definition>
     
-    <definition name="feesPayment" extends="base.definition">
+    <definition name="viewFeesPage" extends="base.definition">
         <put-attribute name="title" value="fees" />
         <put-attribute name="body" value="/WEB-INF/jsp/fees.jsp" />
     </definition>
     
-    <definition name="viewFeesPaymentList" extends="base.definition">
+    <definition name="viewFeeslist" extends="base.definition">
         <put-attribute name="title" value="Home" />
         <put-attribute name="body" value="/WEB-INF/jsp/viewFeesPayments.jsp" />
     </definition>

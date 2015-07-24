@@ -5,7 +5,7 @@
 	<legend>View Fees Payment</legend>
 	<p style="color: green; font-weight: bold;">
 		Add Fees <a
-			href="<c:url value='/addfees' />"> <img
+			href="<c:url value='/addFees' />"> <img
 			src="<c:url value='/images/vcard_add.png' />"
 			title="Add fees" />
 		</a>
@@ -24,11 +24,11 @@
 					<th width="12.5">Action</th>
 				</tr>
 	<c:choose>	
-    <c:when test="${!empty feesPaymentList}">			
-				<c:forEach items="${feesPaymentList}" var="fees">
+    <c:when test="${!empty feesList}">			
+				<c:forEach items="${feesList}" var="fees">
 					<tr>
 						<td>${fees.id}</td>
-						<td><a href="<c:url value='/viewFeeDetailByUserId/${fees.id}' />">${fees.fullName}&nbsp; / &nbsp;${fees.fatherName}</a></td>
+						<td><a href="<c:url value='/viewFeesByUserId/${fees.id}' />">${fees.fullName}&nbsp; / &nbsp;${fees.fatherName}</a></td>
 						<td>${fees.totalFees}</td>
 						<td>${fees.totalExpenses}</td>
 						<td>${fees.totalPaidFees}</td>
@@ -36,7 +36,7 @@
 						<td>${fees.totalPendingFees}</td>
 						<td>${fees.nextDueDate}</td>
 						<td>
-							<a href="<c:url value='/viewFeeDetailByUserId/${fees.id}' />">Show Detail </a>
+							<a href="<c:url value='/viewFeesByUserId/${fees.id}' />">Show Detail </a>
 						</td>
 					</tr>
 				</c:forEach>

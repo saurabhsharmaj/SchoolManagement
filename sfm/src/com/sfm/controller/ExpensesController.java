@@ -5,10 +5,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sfm.model.Charges;
+import com.sfm.model.User;
 import com.sfm.service.ExpenseService;
 import com.sfm.service.UserService;
 import com.sfm.util.Utils;
@@ -35,7 +38,9 @@ public class ExpensesController {
 	@RequestMapping(value="viewExpensesByUserId/{userId}")
 	public String listRoutes(@PathVariable("userId")Integer userId,Map<String, Object> map) {		
 		map.put("expensesList", expenseService.getChargesByUserId(userId));
-		map.put("expense", new Charges());
+		Charges charges = new Charges();
+		charges.setUser(userService.getUserById(userId));
+		map.put("expense", charges);
 		return "viewExpensesPage";
 	}
 	
@@ -43,7 +48,7 @@ public class ExpensesController {
 	public String listFees(Map<String, Object> map) {
 		Charges c1 = new Charges();
 		map.put("expense", c1);
-		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty));
+		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty,"expenseTypeProperty"));
 		
 		return "viewExpensesPage";
 	}
@@ -53,11 +58,22 @@ public class ExpensesController {
 			@PathVariable("userId")Integer userId,@PathVariable("expenseId")Integer expenseId,
 			Map<String, Object> map)
 	{
-		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty));	
+		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty,"expenseTypeProperty"));	
 		map.put("action","edit");
+		User user = userService.getUserById(userId);
+		map.put("user", user);
 		map.put("expensesList", expenseService.getChargesByUserId(userId));
-		map.put("expense", expenseService.getChargesById(expenseId));
+		Charges expense = expenseService.getChargesById(expenseId);
+		expense.setUser(user);
+		map.put("expense", expense);
 
 		return "viewExpensesPage";
-	}
+	}	
+		
+		@RequestMapping(value = "/saveExpense/{userId}", method = RequestMethod.POST)
+		public String addExpense(@ModelAttribute("expense") 
+		Charges expense,Map<String, Object> map) {			
+			expenseService.addCharges(expense);			
+			return "redirect:/viewExpensesByUserId/"+expense.getUser().getId();
+		}
 }

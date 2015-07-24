@@ -21,30 +21,29 @@
 <div class="clear-all"/>
 <div style="padding-bottom:10px;">--------------------------------------------------------------------------------------------------------------------------</div>​​​​​
 
-
-<hr>
-
-<p><b>Name:</b>$firstNaem &nbsp; $middleName &nbsp; $lastName / $fatherName</p>
-<p><b>Total Expense</b>:$totalExpense</p>
-	<table border=1>
+<p><b>Name</b>:$user.firstName &nbsp; $user.middleName &nbsp; $user.lastName / $user.fatherName</p>
+ <table border=1>
 	<tr>
 		<th>ExpenseType</th>
 		<th>Description</th>	
 		<th>Date</th>
 		<th>Amount</th>		
 	</tr>
-		 #if ($expenseList.size() > 0)
-			#foreach( $expense in $expenseList )
+		 #if ($expensesList.size() > 0)
+		 #set ($total = 0)
+			#foreach( $expense in $expensesList )
+			#set ($amount = $expense.amount)
 					<tr>
 						<td>$expense.expenseType</td>
 						<td>$expense.description</td>
-						<td>$expense.date</td>
+						<td>$date.format('dd-MMM-yyyy',$expense.updatedOn)</td>
 						<td>$expense.amount</td>
 					</tr>
+					#set ($total = $total + $amount)
 			#end
 			<tr>	
 				<td colspan="4" align="right">Grand Total</td>
-				<td>$grandTotal</td>
+				<td>:$total</td>
 			</tr>
 		#else
 			<tr><td colspan="4" align="center"><b>no expense record</b></td></tr>

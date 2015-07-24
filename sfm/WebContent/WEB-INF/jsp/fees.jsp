@@ -1,10 +1,25 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script>
+function getPendingValue(value){
+
+$('#pendingFees').val($('#totalFees').val() - value);
+}
+
+function checkUrl(){
+	var action = $('form').attr('action');
+	var patt = new RegExp("[0-9]+$");    
+	if(!patt.test(action)){
+			$('form').attr('action', action+'/'+$('#userId'));
+	}
+}
+</script>
 <fieldset>
   	<legend>fees</legend>
-  	<c:url var="action" value="/user/add.html" ></c:url>
-  	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm">
+  	<c:url var="action" value="/saveFees/${user.id}" ></c:url>
+  	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm" onsubmit="checkUrl();">
 	<table>
 	<c:if test="${!empty fees.id}">
 	<tr>
@@ -73,7 +88,7 @@
 		</td>
 		
 		<td colspan="2">
-			<form:input path="paidFees" id="paidFees"  placeholder="paidFees"/>		
+			<form:input path="paidFees" id="paidFees"  placeholder="paidFees" onblur="getPendingValue(this.value);"/>		
 		</td> 
 	</tr>
 	<tr>
@@ -121,7 +136,9 @@
 			</c:if>        
 	</td>
 	<td>
-		<a href="<c:url value="/viewUserList" />" class="button">Cancel</a>
+		<c:if test="${!empty user.id}">
+			<a href="<c:url value="/viewFeesByUserId/${user.id}" />" class="button">Cancel</a>
+		</c:if>
 	</td>
 	</tr>	
 </table>
@@ -136,7 +153,6 @@
 			title="Add fees" />
 		</a>
 	</p>
-	<c:url var="action" value="/user/add.html"></c:url>
 
 <table class="bookTable">
 				<tr>
@@ -150,19 +166,19 @@
 					<th width="12.5">Action</th>
 				</tr>
 	<c:choose>	
-    <c:when test="${!empty user.feeses}">			
-				<c:forEach items="${user.feeses}" var="fees">
+    <c:when test="${!empty feesList}">			
+				<c:forEach items="${feesList}" var="fees">
 					<tr>
 						<td>${fees.user.id}</td>
-						<td><a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>
+						<td><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>
 						<td>${fees.totalFees}</td>
 						<td>${fees.paidFees}</td>
 						<td>${fees.pendingFees}</td>
 						<td>${fees.additionCharges}</td>
-						<td>${fees.nextPaymentDueDate}</td>
+						<td><fmt:formatDate pattern="dd-MMM-yyyy" value="${fees.nextPaymentDueDate}" /></td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${fees.id})" />
-							<a href="<c:url value='/editfees/${fees.user.id}/${fees.id}' />"> <img
+							<a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />"> <img
 								src="<c:url value='/images/vcard_add.png' />" title="Edit Fees" />
 						</a></td>
 					</tr>
@@ -178,5 +194,5 @@
 	</c:otherwise>	
 	</c:choose>
 	</table>
-	<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${user.id}" css="button">user Fees Report</a>
+	<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${fees.user.id}" css="button">user Fees Report</a>
 </fieldset>

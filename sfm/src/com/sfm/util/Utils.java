@@ -1,10 +1,15 @@
 package com.sfm.util;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.taglibs.standard.extra.spath.Step;
  
  
 public class Utils {
+	
+	static Map<Integer,String> streamMap = new HashMap<Integer,String>();
 	
 	public static Map<Integer,StatusEnum> statusList(){
 		Map<Integer,StatusEnum> semester = new LinkedHashMap<Integer,StatusEnum>();
@@ -20,12 +25,25 @@ public class Utils {
 		return semester;
 	}
 	
-	public static Map<Integer,String> stringToArray(String property){
+	public static Map<Integer,String> stringToArray(String property,String key){
 		Map<Integer,String> installments = new LinkedHashMap<Integer,String>();
 		String []value = property.split(",");
 		for (int i = 0 ;i < value.length ; i++) {			
-			installments.put(i, value[i]);
-		}		
+			if(key.equalsIgnoreCase("stream")){
+				streamMap.put(i, value[i]);
+			} else {
+				installments.put(i, value[i]);
+			}
+			
+		}
+		if(key.equalsIgnoreCase("stream")){
+			return streamMap;
+		}
 		return installments;
+	}
+
+	public static String getStreamName(String id) {
+		// ARTS,COMMERCE,SCIENCE,OTHER		
+		return "arts";// streamMap.get(new Integer(id));
 	}
 }

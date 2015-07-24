@@ -3,16 +3,20 @@ package com.sfm.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +29,7 @@ import com.sfm.model.User;
 import com.sfm.model.UserProfile;
 import com.sfm.service.UserService;
 import com.sfm.util.Utils;
+
 
 @Controller
 public class UserController {
@@ -60,18 +65,24 @@ public class UserController {
 	}
 
 	@RequestMapping(value="viewUserList")
-	public String listRoutes(Map<String, Object> map) {
+	public String listRoutes(HttpServletRequest request, HttpServletResponse response,Map<String, Object> map) {
+		PagedListHolder pagedListHolder = new PagedListHolder(userService.listUsers());
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 3;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
 		map.put("userList", userService.listUsers());
 		return "viewUserList";
 	}
 
 	private void addStatisFields(Map<String, Object> map) {
-		map.put("sessionYearList", Utils.stringToArray(yearProperties));
-		map.put("batchList", Utils.stringToArray(batchProperty));
+		map.put("sessionYearList", Utils.stringToArray(yearProperties,"year"));
+		map.put("batchList", Utils.stringToArray(batchProperty,"batch"));
 		map.put("statusList", Utils.statusList());
 		//userprofile
 		map.put("roleList", Utils.roleList());
-		map.put("streamList", Utils.stringToArray(stream));
+		map.put("streamList", Utils.stringToArray(stream,"stream"));
 	}
 
 	@RequestMapping(

@@ -1,55 +1,54 @@
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.transform.AliasToBeanResultTransformer;
 
 import com.sfm.model.CompoundFees;
-import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.util.HibernateUtil;
 
 
 public class HibernateCriteriaExamples {
 
+	
+	SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	Session session = getSession(sessionFactory);
+	Transaction tx = session.beginTransaction();
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		// Prep work
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = getSession(sessionFactory);
-		Transaction tx = session.beginTransaction();
-
-		//Get All Employees
-		//        Criteria criteria = session.createCriteria(Fees.class);
-		//        List<Fees> empList = criteria.list();
-		//        for(Fees emp : empList){
-		//            System.out.println("ID="+emp.getId()+", name:="+emp.getUser().getFirstName()+"-> "+emp.getTotalFees()+"," + emp.getPaidFees());
-		//        }
-		//
-		String SQL=" Select u.id id,totalFees, count(noOfInstallment),sum(paidFees) totalPaidFees,sum(additionCharges),totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees,nextPaymentDueDate nextDueDate, totalExpenses  from fees f inner join User u on u.id=f.userId inner join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId group by f.userId order by u.id";
-
-		/*private User user;
-   	private BigDecimal totalFees;
-   	private BigDecimal totalExpenses;
-   	private BigDecimal totalPaidFees;
-   	private BigDecimal totalPendingFees;
-   	private Date nextDueDate;*/
-
-		List<CompoundFees> results =  session.createSQLQuery(SQL).addEntity("f", CompoundFees.class).list();
-
-		for (CompoundFees cf : results) {
-			
-			
-			System.out.println(cf);
-		}
+		/*int recNo =1;
+		for (int i = 1; i <= 4; i++) {			
+			System.out.println("-page-"+i+"-");
+			List<User> userList = new HibernateCriteriaExamples().listByPage(User.class, i, 3, "firstName", true);
+			for (User user : userList) {
+				System.out.println(recNo++  +":" + user.getFirstName());
+			}
+		}*/
+		
+		 CompoundFees c= new HibernateCriteriaExamples().test();
+		 System.out.println(c.getTotalFees());
 	}
 
 
+	protected List listByPage(Class clazz, int pageNumber, int pageSize, String orderBy, boolean direction) {
+        String strQry = "from " + clazz.getName() + " order by "+orderBy+" " + getDirection(direction);
+ 
+        Query query = getSession(sessionFactory).createQuery(strQry);
+        query.setFirstResult(pageSize * (pageNumber - 1));
+        query.setMaxResults(pageSize);
+       
+        return query.list();
+    }
+	
+	private String getDirection(boolean direction) {
+		return direction?"ASC":"DESC";
+	}
+
+	
 	public static Session getSession(SessionFactory sessionFactory) throws HibernateException {         
 		Session sess = null;       
 		try {         
@@ -58,6 +57,27 @@ public class HibernateCriteriaExamples {
 			sess = sessionFactory.openSession();     
 		}             
 		return sess;
+	}
+	
+	public CompoundFees test(){
+		
+		String SQL="Select u.id id," +
+				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
+				"u.fatherName fatherName,"+
+				"totalFees, " +
+				"count(noOfInstallment)," +
+				"sum(paidFees) totalPaidFees," +
+				"sum(additionCharges) totalAdditionCharges," +
+				"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
+				"nextPaymentDueDate nextDueDate, " +
+				"totalExpenses  " +
+				"from " +
+				"fees f " +
+				"inner join User u on u.id=f.userId and u.id="+18 +" "+
+				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
+				"group by f.userId order by u.id asc";
+		return (CompoundFees) getSession(sessionFactory).createSQLQuery(SQL).addEntity(CompoundFees.class).uniqueResult();
+				
 	}
 
 }

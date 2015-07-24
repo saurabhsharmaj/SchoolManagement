@@ -52,4 +52,14 @@ public class FeesServiceImpl implements FeesService {
 	public List<CompoundFees> listCompoundFees() {
 		return dao.listCompoundFees();
 	}
+
+	@Override
+	public List<Fees> getFeesByUserId(Integer userId) {		
+		return dao.listFeesByUserId(userId);
+	}
+
+	@Override
+	public CompoundFees getCompoundFees(Integer id) {
+		return dao.getCompoundFees(id);
+	}
 }

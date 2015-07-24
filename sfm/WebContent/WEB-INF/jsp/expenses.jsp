@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <fieldset>
   	<legend>Expenses</legend>
+  	<c:url var="action" value="/saveExpense/{user.id}" ></c:url>
   	<form:form method="post" action="${action}" commandName="expense" cssClass="bookForm">
 	<table>
 	<c:if test="${!empty expense.id}">
@@ -90,7 +91,9 @@
 			</c:if>        
 	</td>
 	<td>
-		<a href="<c:url value="/viewUserList" />" class="button">Cancel</a>
+		<c:if test="${!empty user.id}">
+				<a href="<c:url value="/viewExpensesByUserId/${user.id}" />" class="button">Cancel</a>
+		</c:if>
 	</td>
 	</tr>
 </table>
@@ -131,5 +134,5 @@
 	</c:otherwise>	
 	</c:choose>
 	</table>
-	<a href="${pageContext.request.contextPath}/pdf/user_exense_report/${user.id}" css="button">user Expenses Report</a>
+	<a href="${pageContext.request.contextPath}/pdf/user_exense_report/${expense.user.id}" css="button">user Expenses Report</a>
 </fieldset>

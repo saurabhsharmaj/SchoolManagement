@@ -40,7 +40,7 @@
 		<td>$fees.totalPaidFees</td>
 		<td>$fees.totalAdditionCharges</td>
 		<td>$fees.totalPendingFees</td>
-		<td>$fees.nextDueDate</td>
+		<td>$date.format('dd-MMM-yyyy',$fees.nextDueDate)</td>
 	</tr>
 	#end
   #else
