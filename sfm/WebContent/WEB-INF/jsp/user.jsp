@@ -148,7 +148,7 @@
   	<table>	
 	<tr>
 		<td>
-			<form:hidden path="userProfile.user.id"/>
+			<form:hidden path="userProfile.id" readonly="true" size="8"  />	
 			<form:label path="userProfile.roleId" cssClass="nameLabel">
 				<spring:message code="label.role" />
 			</form:label>
@@ -162,7 +162,7 @@
 		</td> 
 		<td rowspan=4>
 		   <%--  <img src="<c:url value='${pageContext.request.contextPath}\${userProfile.imageUrl}'/>" class="profile-image"/> --%>
-		   <img src='data:image/jpeg;base64,../profile/15' class="profile-image"/>			
+		   <img src='${pageContext.request.contextPath}/${userProfile.imageUrl}' class="profile-image"/>			
 		</td>
 	</tr>
 	<tr>

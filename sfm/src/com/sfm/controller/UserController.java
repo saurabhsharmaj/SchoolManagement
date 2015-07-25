@@ -98,14 +98,17 @@ public class UserController {
 	public String addRoute(@ModelAttribute("user") 
 	User user, BindingResult result,@RequestParam("fileName")String fileName,@RequestParam("file") MultipartFile file) 
 	{
-		UserProfile profile = user.getUserProfile();
-		profile.setImageUrl(uploadImage(fileName,file));
-		user.setUserProfile(profile);
-		profile.setUser(user);
+		
 		if(null == user.getId()) {
+			UserProfile profile = user.getUserProfile();
+			profile.setImageUrl(uploadImage(fileName,file));
+			user.setUserProfile(profile);
+			profile.setUser(user);
 			userService.addUser(user);	
 		}
 		else {
+			System.out.println("## u :"+user.getId() + "### Profile Id:"+user.getUserProfile().getId());
+			user.getUserProfile().setUser(user);
 			userService.updateUser(user);
 		}
 		return "redirect:/viewUserList";
