@@ -5,14 +5,14 @@
 <script>
 function getPendingValue(value){
 
-$('#pendingFees').val($('#totalFees').val() - value);
+$('#pendingFees').val($('#studentFees').val() - value);
 }
 
 function checkUrl(){
 	var action = $('form').attr('action');
 	var patt = new RegExp("[0-9]+$");    
 	if(!patt.test(action)){
-			$('form').attr('action', action+'/'+$('#userId'));
+			$('form').attr('action', action+$('#userId').val());
 	}
 }
 </script>
@@ -57,13 +57,13 @@ function checkUrl(){
 	</tr>
 	<tr>
 		<td>
-			<form:label path="totalFees" cssClass="nameLabel">
-				<spring:message code="label.totalFees" />
+			<form:label path="user.studentFees" cssClass="nameLabel">
+				<spring:message code="label.studentFees" />
 			</form:label>
 		</td>
 		
 		<td colspan="2">
-			<form:input path="totalFees" id="totalFees"  placeholder="Total Fees"/>		
+			<form:input path="user.studentFees" id="studentFees" readonly="true" disabled="true" placeholder="Total Fees"/>		
 		</td> 
 	</tr>
 	<tr>
@@ -74,10 +74,7 @@ function checkUrl(){
 		</td>
 		
 		<td colspan="2">
-			<form:select id="noOfInstallment" path="noOfInstallment">
-				<form:option value="0" label="-Select No Of Intallment-"/>			
-			    <form:options items="${noOfInstallmentList}" />
-			</form:select>			
+			<form:input path="noOfInstallment" id="noOfInstallment"  value = "1" />		
 		</td> 
 	</tr>
 	<tr>

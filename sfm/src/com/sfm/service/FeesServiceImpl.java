@@ -62,4 +62,9 @@ public class FeesServiceImpl implements FeesService {
 	public CompoundFees getCompoundFees(Integer id) {
 		return dao.getCompoundFees(id);
 	}
+
+	@Override
+	public List<Object[]> getUserByNextPaymentDate() {
+		return dao.getUserByNextPaymentDate();
+	}
 }

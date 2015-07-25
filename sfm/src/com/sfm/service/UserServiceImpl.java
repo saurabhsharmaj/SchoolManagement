@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService {
 	public List<User> listUsersByName(String userName) {
 		return dao.listUsersByName(userName) ;
 	}
+
+	@Override
+	public User validateUser(String username, String password) {
+		// TODO Auto-generated method stub
+		return dao.validateUser(username,password);
+	}
 }

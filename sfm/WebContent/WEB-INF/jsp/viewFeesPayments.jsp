@@ -44,7 +44,7 @@
 	</c:when>
 	<c:otherwise>
 		<tr>
-			<td colspan=8 style="  text-align: center;border: 1px solid;">
+			<td colspan=9 style="  text-align: center;border: 1px solid;">
 				No Record Available
 			</td>
 		</tr>

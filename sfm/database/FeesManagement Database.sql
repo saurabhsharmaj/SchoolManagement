@@ -3,6 +3,8 @@
 --drop table fees;
 --drop table userProfile;
 --drop Table User;
+--drop Table role;
+--drop Table databaseBackup;
 
 -- User 
 Create Table User(
@@ -16,12 +18,13 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,Batch varchar(25)
 ,session varchar(10)
 ,addmissionDate TIMESTAMP 
-,status boolean
+,status int
+,studentFees DECIMAL(11,2) default 0.0
 ,updateBy varchar(50)
 ,updatedOn datetime
 ,PRIMARY KEY (id));
 
-
+-- ALTER TABLE `sfm`.`user`  ADD COLUMN `studentFees` DOUBLE NULL DEFAULT 0.0 AFTER `fatherName`;
 -- userProfile
 Create Table userProfile(
 id int(11) NOT NULL AUTO_INCREMENT
@@ -89,3 +92,10 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,updatedOn TIMESTAMP 
 ,FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
 ,PRIMARY KEY (id));
+
+
+-- Database backup
+Create Table databaseBackup(
+id int(11) NOT NULL AUTO_INCREMENT,
+lastBackUpDate TIMESTAMP
+);

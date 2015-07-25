@@ -203,5 +203,13 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				" on u.id = f.userId";
 		
 		return getSession().createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
+	}
+
+	@Override
+	public User validateUser(String username, String password) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.add(Expression.eq("userName",username));
+		criteria.add(Expression.eq("password",password));		
+		return (User)criteria.uniqueResult();
 	}	
 }

@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.taglibs.standard.extra.spath.Step;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
  
  
 public class Utils {
@@ -43,7 +44,15 @@ public class Utils {
 	}
 
 	public static String getStreamName(String id) {
+		// ARTS,COMMERCE,SCIENCE,OTHER	
+		if(StringUtils.isEmpty(id)){
+			return id;
+		}
+		return streamMap.get(new Integer(id));
+	}
+	
+	public static String getExpenseTypeName(String id) {
 		// ARTS,COMMERCE,SCIENCE,OTHER		
-		return "arts";// streamMap.get(new Integer(id));
+		return streamMap.get(new Integer(id));
 	}
 }

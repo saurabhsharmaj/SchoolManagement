@@ -104,8 +104,8 @@
 <legend>Expenses List:</legend>
 <table class="bookTable">
 				<tr>
-					<th width="60">UserID</th>
-					<th width="160">UserName</th>					
+					<th width="60">Expense Type</th>
+					<th width="160">Description</th>					
 					<th width="160">Amount</th>
 					<th width="60">Action</th>
 				</tr>
@@ -113,8 +113,8 @@
     <c:when test="${!empty expensesList}">			
 				<c:forEach items="${expensesList}" var="expense">
 					<tr>
-						<td>${expense.id}</td>
-						<td><a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />">${expense.user.firstName} &nbsp;/ &nbsp;${expense.user.fatherName}</a></td>
+						<td>${expense.expenseType}</td>
+						<td><a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />">${expense.description}</a></td>
 						<td>${expense.amount}</td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${expense.id})" />

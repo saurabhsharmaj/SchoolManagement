@@ -31,7 +31,8 @@ public class VelocityUtil {
 					context.put(key.toString(), value);
 				}
 				context.put("logoURL", logoURL);
-				context.put("date", new DateTool());
+				context.put("date", new DateTool());				
+				
 				Velocity.init();
 				Velocity.evaluate(context, writer, "convertString", template);
 			} catch (Exception e) {

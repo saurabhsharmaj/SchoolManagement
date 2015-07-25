@@ -9,7 +9,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class DailyJobSchedular implements Job {
+public class HourlyJobSchedular implements Job {
 
     @Override
     public void execute(final JobExecutionContext ctx)

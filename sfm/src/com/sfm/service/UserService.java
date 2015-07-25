@@ -15,5 +15,6 @@ public interface UserService {
 	public List<User> listUsers(Integer deptId, Integer year, Integer semester);
 	public void removeUser(Integer id);
 	public List<User> listUsersByName(String userName);
+	public User validateUser(String username, String password);
 
 }

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.util.HibernateUtil;
 
@@ -29,8 +30,13 @@ public class HibernateCriteriaExamples {
 			}
 		}*/
 		
-		 CompoundFees c= new HibernateCriteriaExamples().test();
-		 System.out.println(c.getTotalFees());
+		 List<Object[]> data= new HibernateCriteriaExamples().getUserByNextPaymentDate();
+		 for (Object[] objects : data) {
+			User u = (User) objects[0];
+			Fees f = (Fees) objects[1];
+			
+			System.out.println(u.getFirstName()+" - "+f.getNextPaymentDueDate());
+		}
 	}
 
 
@@ -77,7 +83,16 @@ public class HibernateCriteriaExamples {
 				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
 				"group by f.userId order by u.id asc";
 		return (CompoundFees) getSession(sessionFactory).createSQLQuery(SQL).addEntity(CompoundFees.class).uniqueResult();
-				
+		
 	}
+	
+	public List<Object[]> getUserByNextPaymentDate() {
+		String SQL = "Select * from User u right outer join" +
+				" (select * from fees where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month )" +
+				" group by userId order by nextPaymentDueDate) f" +
+				" on u.id = f.userId";
+		
+		return getSession(sessionFactory).createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
+	}	
 
 }

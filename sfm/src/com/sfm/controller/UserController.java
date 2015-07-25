@@ -49,6 +49,12 @@ public class UserController {
 	 @Value("${STREAM}")
 	 private String stream;
 	 
+	 @Value("${TOTAL_FEES}")
+	 private Double totalFees;
+	 
+	 
+	 @Value("${Page_Size}")
+	 private int PAGE_SIZE =10;
 	  
 	 @RequestMapping(value = "/getUserNames",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
@@ -69,7 +75,7 @@ public class UserController {
 		PagedListHolder pagedListHolder = new PagedListHolder(userService.listUsers());
 		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
 		pagedListHolder.setPage(page);
-		int pageSize = 3;
+		int pageSize = PAGE_SIZE;
 		pagedListHolder.setPageSize(pageSize);
 		map.put("pagedListHolder", pagedListHolder);
 		map.put("userList", userService.listUsers());
@@ -153,7 +159,13 @@ public class UserController {
 	{		
 		addStatisFields(map);
 		map.put("action","add");
-		map.put("user", new User());			
+		User user = new User();
+		user.setStudentFees(totalFees);
+		user.setStatus(0);
+		UserProfile profile = new UserProfile();
+		profile.setRoleId(2);
+		user.setUserProfile(profile);
+		map.put("user", user);			
 		return "editUser";
 	}
 

@@ -2,6 +2,26 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="login-box">
+<script type="text/javascript">
+function validateform(){
+	var msg ='';
+	var valid = true;
+	if($('#username').val()==''){
+		valid = false;
+		msg = 'Please Enter valid User name. <br>';
+	}
+	
+	if($('#password').val()==''){
+		valid = false;
+		msg = msg +'Please Enter valid password.';
+	}
+	 
+   if(!valid){
+   	 alert(msg);
+   }
+   return valid;
+}
+</script>
 
 	<h3>Login with Username and Password</h3>
 
@@ -12,16 +32,16 @@
 		<div class="msg">${msg}</div>
 	</c:if>
 
-	<form name='loginForm' action="<c:url value='/login' />" method='POST'>
+	<form name='loginForm' action="<c:url value='/login' />" method='POST' onsubmit="validateform();">
 
 		<table>
 			<tr>
 				<td>User:</td>
-				<td><input type='text' name='username' value=''></td>
+				<td><input type='text' id="username" name='username' value=''></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><input type='password' name='password' /></td>
+				<td><input type='password' id="password" name='password' /></td>
 			</tr>
 			<tr>
 				<td colspan='2'><input name="submit" type="submit"

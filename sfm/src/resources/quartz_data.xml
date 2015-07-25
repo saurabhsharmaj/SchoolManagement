@@ -9,7 +9,7 @@
     <schedule>
         <job>
             <name>DailyJobSchedular</name>
-            <job-class>com.sfm.schedular.DailyJobSchedular</job-class>
+            <job-class>com.sfm.schedular.HourlyJobSchedular</job-class>
         </job>
         <trigger>
             <cron>

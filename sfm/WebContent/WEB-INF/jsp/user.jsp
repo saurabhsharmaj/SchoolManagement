@@ -111,6 +111,18 @@
 			<form:input path="AddmissionDate" cssClass="datepicker" placeholder="Addmission Date" />
 		</td>
 	</tr>
+	
+	<tr>	
+		<td>
+			<form:label path="studentFees" cssClass="nameLabel">
+				<spring:message code="label.studentFees" />
+			</form:label>
+		</td>
+		<td>
+			<form:input path="studentFees"  placeholder="total Fees" />
+		</td> 
+	</tr>
+	
 	<tr> 
 		<td>
 			<form:label path="status" cssClass="nameLabel">

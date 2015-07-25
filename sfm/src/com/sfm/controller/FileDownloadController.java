@@ -96,8 +96,8 @@ public class FileDownloadController {
 	private void getParamsByReport(User user, String reportName, Map<Object, Object> params) {
 		if(reportName.equalsIgnoreCase("user_fees_report")){
 			params.put("user", user);
-			params.put("totalfees", 5000);
-			params.put("paymentList", user.getFeeses());
+            params.put("totalfees", user.getStudentFees());
+            params.put("paymentList",  feesService.getFeesByUserId(user.getId()));
 			params.put("compoundFees", feesService.getCompoundFees(user.getId()));
 		} else if(reportName.equalsIgnoreCase("fees_report")){
 			params.put("user", user);

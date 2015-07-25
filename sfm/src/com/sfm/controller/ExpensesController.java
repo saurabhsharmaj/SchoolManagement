@@ -47,6 +47,7 @@ public class ExpensesController {
 	@RequestMapping(value="addExpense")
 	public String listFees(Map<String, Object> map) {
 		Charges c1 = new Charges();
+		c1.setExpenseType(2);
 		map.put("expense", c1);
 		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty,"expenseTypeProperty"));
 		

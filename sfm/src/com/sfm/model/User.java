@@ -50,7 +50,8 @@ public class User implements java.io.Serializable {
 	private String batch;
 	private String session;
 	private Date addmissionDate;
-	private Boolean status;
+	private Integer status;
+	private Double studentFees;
 	private String updateBy;
 	private Date updatedOn;
 	@JsonIgnore
@@ -71,7 +72,7 @@ public class User implements java.io.Serializable {
 
 	public User(String firstName, String middleName, String lastName,
 			String fatherName,String userName, String password, String batch, String session,
-			Date addmissionDate, Boolean status, String updateBy,
+			Date addmissionDate, Integer status, String updateBy,
 			Date updatedOn, Set<Fees> feeses, Set<Charges> chargeses,
 			Set<Payment> payments, UserProfile userprofile) {
 		this.firstName = firstName;
@@ -186,11 +187,11 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "status")
-	public Boolean getStatus() {
+	public Integer getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -214,7 +215,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<Fees> getFeeses() {
 		return this.feeses;
 	}
@@ -243,7 +244,7 @@ public class User implements java.io.Serializable {
 		this.payments = payments;
 	}
 
-	@OneToOne(mappedBy = "user", targetEntity = UserProfile.class,
+	@OneToOne(mappedBy = "user",fetch = FetchType.LAZY, targetEntity = UserProfile.class,
 	/* fetch=FetchType.LAZY, */cascade = CascadeType.ALL)
 	@JoinColumn(name = "id", nullable = true)
 	public UserProfile getUserProfile() {
@@ -260,6 +261,17 @@ public class User implements java.io.Serializable {
 				(StringUtils.isEmpty(middleName)?"": " "+middleName)+
 				(StringUtils.isEmpty(lastName)?"": " "+ lastName);
 	}
+	
+	
+	@Column(name = "studentFees", precision = 11)
+	public Double getStudentFees() {
+		return studentFees;
+	}
+
+	public void setStudentFees(Double studentFees) {
+		this.studentFees = studentFees;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", middleName="

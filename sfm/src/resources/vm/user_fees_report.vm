@@ -23,7 +23,7 @@
 
 
 <p><b>Name</b>:$user.firstName &nbsp; $user.middleName &nbsp; $user.lastName / $user.fatherName</p>
-</p><b>Total Fees</b>: $compoundFees.totalFees </p>
+</p><b>Total Fees</b>: $user.studentFees </p>
 <p/>
 <table border=1>
 <tr>
@@ -58,6 +58,6 @@
 			<tr><td colspan="5" align="center"><b>no Fee record</b></td></tr>
 #end
 </table>
-<p><b>Total Fees</b>: $compoundFees.totalFees &nbsp; <b>Total Expenses</b>:$compoundFees.totalExpenses &nbsp; <b>Pending Amount</b>:$compoundFees.totalPendingFees</p>
+<p><b>Total Fees</b>: $user.studentFees &nbsp; <b>Total Expenses</b>:$compoundFees.totalExpenses &nbsp; <b>Pending Amount</b>:$compoundFees.totalPendingFees</p>
 </body>
 </html>

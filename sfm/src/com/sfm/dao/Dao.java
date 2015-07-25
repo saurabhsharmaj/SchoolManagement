@@ -29,4 +29,5 @@ public interface Dao<T, PK extends Serializable> {
 	public CompoundFees getCompoundFees(Integer id);
 	
 	public List<Object[]> getUserByNextPaymentDate();
+	public User validateUser(String username, String password);
 }

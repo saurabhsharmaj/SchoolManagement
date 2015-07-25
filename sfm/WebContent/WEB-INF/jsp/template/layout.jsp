@@ -63,6 +63,34 @@
 		    
 		});
 	
+	function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day, month, year].join('-');
+}
+
+	$.ajax({
+            url : '${pageContext.request.contextPath}/getUserByNextPaymentDate',
+            success : function(response) {
+               	var linkTemplate = '<li style="padding-bottom: 15px;"><a href="/sfm/viewFeesByUserId/#userId#">#name#</a></li>';
+                
+                for ( var obj in response) {                
+                	 var rec = response[obj];
+                	 console.log(rec);
+                	var link = linkTemplate;
+                	link = link.replace('#userId#',rec.id);
+                	link = link.replace('#name#',rec.user.firstName+""+rec.user.middleName+""+rec.user.lastName +
+                	" / ("+rec.user.fatherName+")-"+formatDate(new Date(rec.nextPaymentDueDate)));
+                	$('.opinion_hmlist1 ul').append(link);
+                }
+            }
+        });
 	
     });
 </script>

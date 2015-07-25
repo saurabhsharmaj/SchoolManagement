@@ -22,9 +22,9 @@ public class QuartzListener extends QuartzInitializerListener {
         try {
         	System.out.println("initilze the quartz schedular.");
             Scheduler scheduler = factory.getScheduler();
-            JobDetail jobDetail = JobBuilder.newJob(DailyJobSchedular.class).build();
+            JobDetail jobDetail = JobBuilder.newJob(HourlyJobSchedular.class).build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
-                    CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")).startNow().build();
+                    CronScheduleBuilder.cronSchedule("0 0/60 * 1/1 * ? *")).startNow().build();
             scheduler.scheduleJob(jobDetail, trigger);
             scheduler.start();
         } catch (Exception e) {

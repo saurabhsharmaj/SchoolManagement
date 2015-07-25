@@ -1,6 +1,10 @@
 package com.sfm.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfm.model.Fees;
 import com.sfm.model.User;
@@ -17,74 +22,7 @@ import com.sfm.service.UserService;
 import com.sfm.util.Utils;
 
 @Controller
-public class FeesController {/*
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private FeesService feesService;
-	
-	 @Value("${NoOfInstallment}")
-	 private String noOfInstallmentProperty;
-	 
-	 @Value("${TOTAL_FEES}")
-	 private String totalFees="50000";
-	 
-	 
-	@RequestMapping(value="viewFeesPayments")
-	public String viewFeesPayments(Map<String, Object> map) {	
-		map.put("user", userService.getUserById(18));	
-		map.put("feesPaymentList", feesService.listCompoundFees());		
-		return "viewFeesPaymentList";
-	}
-	
-	@RequestMapping(value="viewFeeDetailByUserId/{userId}")
-	public String viewFeesPayments(Map<String, Object> map,
-			@PathVariable("userId")Integer userId) {			
-		User user = userService.getUserById(userId);	
-		Fees fees = new Fees();
-		fees.setUser(user);
-		fees.setTotalFees(Double.valueOf("50000"));
-		map.put("fees", fees);
-		map.put("user", user);
-		map.put("action","add");
-		return "feesPayment";
-	}
-	
-	@RequestMapping(value="addfees")
-	public String addfees(Map<String, Object> map) {
-		Fees f= new Fees();
-		f.setUser(new User());
-		map.put("fees", f);
-		map.put("userId", 2);
-		map.put("noOfInstallmentList", Utils.stringToArray(noOfInstallmentProperty,"noOfInstallmentProperty"));
-		
-		return "feesPayment";
-	}
-	
-	@RequestMapping("/editfees/{userId}/{feesId}")
-	public String editUser(
-			@PathVariable("userId")Integer userId,@PathVariable("feesId")Integer feesId,
-			Map<String, Object> map)
-	{
-		User user = userService.getUserById(userId);
-		//map.put("user", user);
-		map.put("noOfInstallmentList", Utils.stringToArray(noOfInstallmentProperty,"noOfInstallmentProperty"));	
-		map.put("action","edit");
-		Fees fees = feesService.getFeesById(feesId);
-		fees.setUser(user);
-		map.put("fees", feesService.getFeesById(feesId));
-		return "feesPayment";
-	}
-	
-	@RequestMapping(value = {"/savefees/","/savefees/{userId}"}, method = RequestMethod.POST)
-	public String addExpense(@PathVariable("userId")Integer userId, @ModelAttribute("fees") 
-	Fees fees,Map<String, Object> map) {			
-		feesService.addFees(fees);			
-		return "redirect:/viewFeeDetailByUserId/"+fees.getUser().getId();
-	}*/
-
+public class FeesController {
 	
 	@Autowired
 	private UserService userService;
@@ -96,11 +34,11 @@ public class FeesController {/*
 	 private String noOfInstallmentProperty;
 	 
 	 @Value("${TOTAL_FEES}")
-	 private String totalFees="50000";
+	 private Double totalFees;
 	 
 	@RequestMapping(value="viewFees")
-	public String viewFees(Map<String, Object> map) {
-		map.put("user", userService.getUserById(18));//TODO
+	public String viewFees(HttpSession session, Map<String, Object> map) {
+		map.put("user", (User)session.getAttribute("user"));
 		map.put("feesList", feesService.listCompoundFees());
 		return "viewFeeslist";	
 	}
@@ -117,6 +55,9 @@ public class FeesController {/*
 	@RequestMapping(value="addFees")
 	public String listFees(Map<String, Object> map) {
 		Fees f = new Fees();
+		User user = new User();
+		user.setStudentFees(totalFees);
+		f.setUser(user);
 		map.put("fees", f);
 		map.put("noOfInstallmentList", Utils.stringToArray(noOfInstallmentProperty,"noOfInstallmentProperty"));		
 		return "viewFeesPage";
@@ -141,9 +82,24 @@ public class FeesController {/*
 		
 		@RequestMapping(value = "/saveFees/{userId}", method = RequestMethod.POST)
 		public String saveFees(@ModelAttribute("fees") 
-		Fees fees,Map<String, Object> map) {			
+		Fees fees,@PathVariable("userId")Integer userId,Map<String, Object> map) {			
+			fees.setTotalFees(userService.getUserById(userId).getStudentFees());
 			feesService.addFees(fees);			
 			return "redirect:/viewFeesByUserId/"+fees.getUser().getId();
-		}
+		}		
+		
+		@RequestMapping(value = "/getUserByNextPaymentDate",  produces="application/json", method = RequestMethod.GET)
+		public @ResponseBody
+		List<Fees> getTags() {
+			List<Fees> feesList= new ArrayList<Fees>();
+			List<Object[]> dataList = feesService.getUserByNextPaymentDate();
+			for (Object[] objects : dataList) {
+				User u = (User) objects[0];
+				Fees f = (Fees) objects[1];
+				f.setUser(u);
+				feesList.add(f);
+			}
+			return feesList;
 
+		}
 }

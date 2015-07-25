@@ -14,10 +14,7 @@
         <marquee direction="up" onmouseover="stop()" onmouseout="start()" height="300px;">
         <div class="opinion_hmlist1">
 		<ul  style="background-color:#FFFFF;">
-			<li><a href="">Saurabh Sharma</a></li>
-			<li><a href="">Jitendra</a></li>
-			<li><a href="">Shanker</a></li>
-			<li><a href="">Laxman</a></li>
+			
 		</ul>
 		</div>
 	</marquee>

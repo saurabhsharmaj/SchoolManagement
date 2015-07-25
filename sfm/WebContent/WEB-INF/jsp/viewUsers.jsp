@@ -40,7 +40,7 @@
 					<tr>
 						<td>${user.id}</td>
 						<td><a href="<c:url value='/edituser/${user.id}' />">${user.firstName}&nbsp;${user.middleName}&nbsp;${user.lastName}/${user.fatherName }</a></td>
-						<td>${user.userProfile.streamName}</td>
+						<td>${user.userProfile.stream}</td>
 						<td>${user.session} \ ${user.batch}</td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${user.id})" />
