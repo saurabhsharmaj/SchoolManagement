@@ -5,7 +5,7 @@
           <li><a href="${pageContext.request.contextPath}/viewExpenses">Expenses</a></li>
           <li><a href="${pageContext.request.contextPath}/viewFees">Fees Management</a></li>
           <%-- <li><a href="${pageContext.request.contextPath}/viewFeeDetailByUserId/18">Fees Management</a></li> --%>          
-          <li><a href="${pageContext.request.contextPath}/paymentRecived">Reports</a></li>         
+          <li><a href="${pageContext.request.contextPath}/facultyAttendance">Faculty Attendance</a></li>         
         </ul>
       </nav>
       <!-- /nav -->

@@ -12,9 +12,9 @@ public class ReportController {
 	
 	
 		
-	@RequestMapping(value="paymentRecived")
+	@RequestMapping(value="facultyAttendance")
 	public String listRoutes(Map<String, Object> map) {
 		map.put("user", new User());	
-		return "viewReports";
+		return "viewFacultyAttendance";
 	}	
 }
