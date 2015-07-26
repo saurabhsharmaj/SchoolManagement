@@ -85,11 +85,6 @@
 		font-size: 14px;
 	}
 
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
 </style>
 
 	
