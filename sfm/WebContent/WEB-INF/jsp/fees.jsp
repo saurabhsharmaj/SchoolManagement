@@ -2,6 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <script>
 function getPendingValue(value){
 
@@ -52,7 +53,7 @@ function checkUrl(){
 			</form:label>
 		</td>
 		<td colspan="2">
-			<form:input path="user.fullName" id="userName" cssClass="autoComplte"  placeholder="User Name"/>
+			<form:input path="user.fullName" id="userName" cssClass="autocompletesearch"  placeholder="User Name"/>
 		</td> 
 	</tr>
 	<tr>
@@ -150,7 +151,14 @@ function checkUrl(){
 			title="Add fees" />
 		</a>
 	</p>
-
+<jsp:useBean id="pagedListHolder" scope="request" type="org.springframework.beans.support.PagedListHolder"/>
+<c:url value="/viewFeesByUserId/${fees.user.id}" var="pagedLink">
+	<c:param name="action" value="list"/>
+    <c:param name="p" value="~"/>
+</c:url>
+<div style="padding-left:40%">
+<tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
+</div>
 <table class="bookTable">
 				<tr>
 					<th width="5">UserID</th>
@@ -164,7 +172,7 @@ function checkUrl(){
 				</tr>
 	<c:choose>	
     <c:when test="${!empty feesList}">			
-				<c:forEach items="${feesList}" var="fees">
+				<c:forEach items="${pagedListHolder.pageList}" var="fees">
 					<tr>
 						<td>${fees.user.id}</td>
 						<td><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>

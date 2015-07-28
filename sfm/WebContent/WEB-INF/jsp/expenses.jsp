@@ -1,6 +1,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <fieldset>
   	<legend>Expenses</legend>
   	<c:url var="action" value="/saveExpense/{user.id}" ></c:url>
@@ -39,7 +41,7 @@
 			</form:label>
 		</td>
 		<td colspan="2">
-			<form:input path="user.fullName" id="userName" cssClass="autoComplte"  placeholder="User Name"/>
+			<form:input path="user.fullName" id="userName" cssClass="autocompletesearch"  placeholder="User Name"/>
 		</td> 
 	</tr>
 	
@@ -102,6 +104,14 @@
 
 <fieldset>
 <legend>Expenses List:</legend>
+<jsp:useBean id="pagedListHolder" scope="request" type="org.springframework.beans.support.PagedListHolder"/>
+<c:url value="/viewExpensesByUserId/${expense.user.id}" var="pagedLink">
+	<c:param name="action" value="list"/>
+    <c:param name="p" value="~"/>
+</c:url>
+<div style="padding-left:40%">
+<tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
+</div>
 <table class="bookTable">
 				<tr>
 					<th width="60">Expense Type</th>
@@ -111,7 +121,7 @@
 				</tr>
 	<c:choose>	
     <c:when test="${!empty expensesList}">			
-				<c:forEach items="${expensesList}" var="expense">
+				<c:forEach items="${pagedListHolder.pageList}" var="expense">
 					<tr>
 						<td>${expense.expenseType}</td>
 						<td><a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />">${expense.description}</a></td>

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +48,17 @@ public class FeesController {
 	}
 	
 	@RequestMapping(value="viewFeesByUserId/{userId}")
-	public String viewFeesByUserId(@PathVariable("userId")Integer userId,Map<String, Object> map) {		
-		map.put("feesList", feesService.getFeesByUserId(userId));
+	public String viewFeesByUserId(@PathVariable("userId")Integer userId, HttpServletRequest request, HttpServletResponse response, Map<String, Object> map) {		
+		List<Fees> feesList = feesService.getFeesByUserId(userId);
+		PagedListHolder pagedListHolder = new PagedListHolder(feesList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 5;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+		
+		map.put("feesList", feesList);
+		
 		Fees fees = new Fees();
 		fees.setUser(userService.getUserById(userId));
 		map.put("fees", fees);
@@ -65,14 +78,22 @@ public class FeesController {
 	
 	@RequestMapping("/editFees/{userId}/{feesId}")
 	public String editFees(
-			@PathVariable("userId")Integer userId,@PathVariable("feesId")Integer feesId,
+			@PathVariable("userId")Integer userId,@PathVariable("feesId")Integer feesId, HttpServletRequest request, HttpServletResponse response,
 			Map<String, Object> map)
 	{
+		
+		List<Fees> feesList = feesService.getFeesByUserId(userId);
+		PagedListHolder pagedListHolder = new PagedListHolder(feesList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 5;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
 		
 		map.put("action","edit");
 		User user = userService.getUserById(userId);
 		map.put("user", user);
-		map.put("feesList", feesService.getFeesByUserId(userId));
+		map.put("feesList", feesList);
 		Fees fees = feesService.getFeesById(feesId);
 		fees.setUser(user);
 		map.put("fees", fees);

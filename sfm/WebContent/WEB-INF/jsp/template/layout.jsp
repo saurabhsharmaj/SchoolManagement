@@ -10,12 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 <link href='${pageContext.request.contextPath}/css/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/css/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="${pageContext.request.contextPath}/js/jquery.1.10.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.autocomplete.min.js"></script>
 <script src='${pageContext.request.contextPath}/js/moment.min.js'></script>
 <script src='${pageContext.request.contextPath}/js/fullcalendar.js'></script>
@@ -46,7 +46,7 @@
     		$('#fileName').val(e.target.files[0].name);       
     });
     
-    $('.autoComplte').autocomplete({
+    $('.autocompletesearch').autocomplete({
 			serviceUrl: '${pageContext.request.contextPath}/getUserNames',
 			paramName: "userName",
 			delimiter: ",",
