@@ -162,7 +162,7 @@
 		</td> 
 		<td rowspan=4>
 		   <%--  <img src="<c:url value='${pageContext.request.contextPath}\${userProfile.imageUrl}'/>" class="profile-image"/> --%>
-		   <img src='${pageContext.request.contextPath}/${userProfile.imageUrl}' class="profile-image"/>			
+		   <img src='${pageContext.request.contextPath}${user.userProfile.imageUrl}' class="profile-image"/>			
 		</td>
 	</tr>
 	<tr>

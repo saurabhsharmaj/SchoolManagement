@@ -107,6 +107,7 @@ public class UserController {
 			userService.addUser(user);	
 		}
 		else {
+			user.getUserProfile().setImageUrl(uploadImage(fileName,file));
 			System.out.println("## u :"+user.getId() + "### Profile Id:"+user.getUserProfile().getId());
 			user.getUserProfile().setUser(user);
 			userService.updateUser(user);
@@ -179,6 +180,8 @@ public class UserController {
 	{
 		addStatisFields(map);		
 		map.put("action","edit");
+		User user = userService.getUserById(userId);
+		System.out.println("#Profile:#"+user.getUserProfile().getImageUrl());
 		map.put("user", userService.getUserById(userId));	
 
 		return "editUser";
