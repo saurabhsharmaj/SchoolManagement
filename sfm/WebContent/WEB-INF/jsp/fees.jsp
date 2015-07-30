@@ -171,7 +171,7 @@ function checkUrl(){
 					<th width="12.5">Action</th>
 				</tr>
 	<c:choose>	
-    <c:when test="${!empty feesList}">			
+    <c:when test="${!empty pagedListHolder.pageList}">			
 				<c:forEach items="${pagedListHolder.pageList}" var="fees">
 					<tr>
 						<td>${fees.user.id}</td>
@@ -199,5 +199,9 @@ function checkUrl(){
 	</c:otherwise>	
 	</c:choose>
 	</table>
-	<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${fees.user.id}" css="button">user Fees Report</a>
+	<c:choose>		
+	 <c:when test="${!empty pagedListHolder.pageList}">		
+		<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${fees.user.id}" css="button">user Fees Report</a>
+	</c:when>
+	</c:choose>
 </fieldset>
