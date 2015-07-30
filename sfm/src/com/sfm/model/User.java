@@ -272,16 +272,4 @@ public class User implements java.io.Serializable {
 		this.studentFees = studentFees;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", userName="
-				+ userName + ", password=" + password + ", batch=" + batch
-				+ ", session=" + session + ", addmissionDate=" + addmissionDate
-				+ ", status=" + status + ", updateBy=" + updateBy
-				+ ", updatedOn=" + updatedOn + ", feeses=" + feeses
-				+ ", chargeses=" + chargeses + ", payments=" + payments
-				+ ", userprofile=" + userProfile + "]";
-	}
-
 }

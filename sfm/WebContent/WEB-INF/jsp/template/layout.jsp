@@ -17,7 +17,7 @@
 <link href='${pageContext.request.contextPath}/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.autocomplete.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.autocomplete.js"></script>
 <script src='${pageContext.request.contextPath}/js/moment.min.js'></script>
 <script src='${pageContext.request.contextPath}/js/fullcalendar.js'></script>
 <script src='${pageContext.request.contextPath}/js/jquery.dataTables.js'></script>
@@ -76,9 +76,8 @@
 		        };
 		        
 		    },
-		    click: function (event, ui) {
-					    var name = ui.item.value
-					   alert(name);
+		    onSelect: function (index) {
+		    			$('#userId').val(index.data);				    
 					}
 		    
 		});
