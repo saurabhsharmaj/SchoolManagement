@@ -144,5 +144,10 @@
 	</c:otherwise>	
 	</c:choose>
 	</table>
+	
+	<c:choose>	
+    <c:when test="${!empty pagedListHolder.pageList}">
 	<a href="${pageContext.request.contextPath}/pdf/user_exense_report/${expense.user.id}" css="button">user Expenses Report</a>
+	</c:when>
+	</c:choose>
 </fieldset>
