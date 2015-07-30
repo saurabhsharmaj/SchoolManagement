@@ -21,22 +21,22 @@ public class HibernateCriteriaExamples {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		// Prep work
-		/*int recNo =1;
+		int recNo =1;
 		for (int i = 1; i <= 4; i++) {			
 			System.out.println("-page-"+i+"-");
-			List<User> userList = new HibernateCriteriaExamples().listByPage(User.class, i, 3, "firstName", true);
+			List<User> userList = new HibernateCriteriaExamples().listByPage(User.class, i, 3, "firstName", false);
 			for (User user : userList) {
 				System.out.println(recNo++  +":" + user.getFirstName());
 			}
-		}*/
+		}
 		
-		 List<Object[]> data= new HibernateCriteriaExamples().getUserByNextPaymentDate();
+		 /*List<Object[]> data= new HibernateCriteriaExamples().getUserByNextPaymentDate();
 		 for (Object[] objects : data) {
 			User u = (User) objects[0];
 			Fees f = (Fees) objects[1];
 			
 			System.out.println(u.getFirstName()+" - "+f.getNextPaymentDueDate());
-		}
+		}*/
 	}
 
 

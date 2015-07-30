@@ -61,6 +61,21 @@
 
 </table>
 
+<!-- <table id="example" class="display">
+<thead>
+<tr>
+	<th>ID</th>
+	<th>firstName</th>
+</tr>
+</thead>
+
+<tfoot>
+	<tr>
+		<td>id</td>
+		<td>firstName</td>
+	</tr>
+</tfoot>
+</table> -->
 <%-- // load our paging tag, pass pagedListHolder and the link --%>
 <div style="padding-left:40%">
 <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>

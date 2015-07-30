@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sfm.model.Charges;
-import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.service.ExpenseService;
 import com.sfm.service.UserService;
@@ -62,7 +61,16 @@ public class ExpensesController {
 	}
 	
 	@RequestMapping(value="addExpense")
-	public String listFees(Map<String, Object> map) {
+	public String listFees(Map<String, Object> map, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<Charges> expenseList = expenseService.getChargesByUserId(-1);
+		PagedListHolder pagedListHolder = new PagedListHolder(expenseList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 10;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+		
 		Charges c1 = new Charges();
 		c1.setExpenseType(2);
 		map.put("expense", c1);

@@ -66,7 +66,16 @@ public class FeesController {
 	}
 	
 	@RequestMapping(value="addFees")
-	public String listFees(Map<String, Object> map) {
+	public String listFees(Map<String, Object> map , HttpServletRequest request, HttpServletResponse response) {
+		
+		List<Fees> feesList = feesService.getFeesByUserId(-1);
+		PagedListHolder pagedListHolder = new PagedListHolder(feesList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 5;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+		
 		Fees f = new Fees();
 		User user = new User();
 		user.setStudentFees(totalFees);

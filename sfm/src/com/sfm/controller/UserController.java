@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sfm.model.Data;
 import com.sfm.model.User;
 import com.sfm.model.UserProfile;
 import com.sfm.service.UserService;
@@ -64,7 +65,16 @@ public class UserController {
 
 		}
 
-	 
+	 @RequestMapping(value = "/listUserDATA",  produces="application/json", method = RequestMethod.GET)
+		public @ResponseBody
+		Data getUsers(HttpServletRequest request){
+		 //iDisplayStart
+		 String iDisplayStart = request.getParameter("iDisplayStart");
+		 String iDisplayLength = request.getParameter("iDisplayLength");
+		 System.out.println("start:"+iDisplayStart +"length:"+ iDisplayLength);
+		 List<User> list = userService.listUsers();
+		return new Data(list , list.size());
+	 }
 		
 	private List<User> getSearchUserNames(String userName) {
 		return userService.listUsersByName(userName);

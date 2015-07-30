@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Fees Management System</title>
-<script src="${pageContext.request.contextPath}/js/jquery.1.10.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css">
 <script type="text/javascript">
 function validateform(){

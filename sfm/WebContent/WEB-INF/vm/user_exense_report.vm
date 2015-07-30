@@ -31,27 +31,15 @@
 	</tr>
 		 #if ($expensesList.size() > 0)
 		 #set ($total = 0)
-			#foreach( $expense in $expensesList )			
+			#foreach( $expense in $expensesList )
+			#set ($amount = $expense.amount)
 					<tr>
 						<td>$expense.expenseType</td>
-						<td>
-							
-							#if(!$expense.description)
-								&#45;
-							#else
-								$expense.description
-							#end
-						</td>
+						<td>$expense.description</td>
 						<td>$date.format('dd-MMM-yyyy',$expense.updatedOn)</td>
-						<td>#if(!$expense.amount)
-								#set ($expense.amount=0)
-								0.0
-							#else
-								$expense.amount
-							#end
-						</td>
+						<td>$expense.amount</td>
 					</tr>
-					#set ($total = $total + $expense.amount)
+					#set ($total = $total + $amount)
 			#end
 			<tr>	
 				<td colspan="3" align="right">Grand Total</td>

@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.dataTables.css" type="text/css">
 <link href='${pageContext.request.contextPath}/css/fullcalendar.css' rel='stylesheet' />
 <link href='${pageContext.request.contextPath}/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.js"></script>
@@ -19,8 +20,24 @@
 <script src="${pageContext.request.contextPath}/js/jquery.autocomplete.min.js"></script>
 <script src='${pageContext.request.contextPath}/js/moment.min.js'></script>
 <script src='${pageContext.request.contextPath}/js/fullcalendar.js'></script>
+<script src='${pageContext.request.contextPath}/js/jquery.dataTables.js'></script>
+
 <script type="text/javascript">
   $(function() {
+  	$('#example').dataTable( {
+		"bProcessing": true,
+		"bServerSide": true,
+		"ajax": {
+			"url": '${pageContext.request.contextPath}/listUserDATA',
+			"type": "GET"
+		},
+		"columns": [
+			{ "data": "id" },
+			{ "data": "firstName" }
+		]
+	});
+	
+  	
   	$('.datepicker').datepicker({
   	showOn: "button",
       buttonImage: "${pageContext.request.contextPath}/images/calendar.png",

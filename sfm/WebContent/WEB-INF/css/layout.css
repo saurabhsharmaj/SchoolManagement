@@ -119,7 +119,6 @@ q:after {
 /* ----------------------------------------------Wrapper-------------------------------------*/
 div.wrapper {
 	display: block;
-	width: 78%;
 	margin: 0 auto;
 	padding: 0;
 	text-align: left;
@@ -218,7 +217,7 @@ blockquote:after,q:after {
 /*----------------------------------------------Header-------------------------------------*/
 .container {
 	margin: auto;
-	width: 90%;
+	width: 100%;
 }
 
 .top-links {
@@ -390,7 +389,7 @@ header {
 	line-height: 1.6em;
 	padding-left: 10px;
 	overflow: auto;
-	height: 90%;
+	height: 100%;
 }
 
 #container #content article {
@@ -407,7 +406,7 @@ header {
 footer {
 	background: #3a5795;
 	float: left;
-	width: 78%;
+	width: 100%;
 	text-align: center;
 	bottom: 0;
 	position: fixed;
@@ -447,7 +446,7 @@ footer {
 
 .container {
 	margin: auto;
-	width: 90%;
+	width: 100%;
 }
 
 .top-links {
