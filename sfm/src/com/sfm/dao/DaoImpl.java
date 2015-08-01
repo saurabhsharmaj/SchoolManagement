@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,8 +19,10 @@ import org.springframework.stereotype.Repository;
 import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Data;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
+import com.sfm.util.JQueryDataTableParamModel;
 
 @Repository
 public class DaoImpl<T, PK extends Serializable> implements Dao {
@@ -44,18 +47,34 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	public List list(Class clazz) {
 		return getSession().createQuery( "from " + clazz.getName() +" order by updatedOn desc" ).list();
 	}
-	
+
+	@Override
+	public int listCount(Class clazz) {
+		Criteria criteria = getSession().createCriteria(clazz.getName());
+		Object result = criteria.setProjection(Projections.rowCount()).uniqueResult();	 
+		return (null == result) ? 0 : ((Number) result).intValue();
+	}
+
+	private int listCountParam(JQueryDataTableParamModel param, Class clazz){
+		String extraParam = getSearchCreteria(param)+ getOrderBy(param);
+		String strQry = "select count(*) from " + clazz.getName() + " "+ extraParam ;
+		
+		Query query = getSession().createQuery(strQry);
+		Long count = (Long) query.uniqueResult();
+		return count.intValue();
+	}
+
 	protected List listByPage(Class clazz, int firstResult, int maxResult, String orderBy, boolean direction) {
-        String strQry = "from " + clazz.getName() + " order by "+orderBy+" " + getDirection(direction);
- 
-        Query query = this.sessionFactory.getCurrentSession().createQuery(strQry);
-        query.setFirstResult(firstResult);
-        query.setMaxResults(maxResult);
- 
-        return query.list();
-    }
-	
-	
+		String strQry = "from " + clazz.getName() + " order by "+orderBy+" " + getDirection(direction);
+
+		Query query = this.sessionFactory.getCurrentSession().createQuery(strQry);
+		query.setFirstResult(firstResult);
+		query.setMaxResults(maxResult);
+
+		return query.list();
+	}
+
+
 
 	private String getDirection(boolean direction) {
 		return direction?"ASC":"DESC";
@@ -73,35 +92,43 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	}
 
 	@Override
-	public List list(Integer deptId, Integer year, Integer semester,
-			Class clazz) {
-		String sql ;
-		StringBuffer buffer = new StringBuffer();
-		if(deptId != 0){
-			buffer.append("department = "+ deptId);
-		}
+	public Data list(JQueryDataTableParamModel param, Class clazz) {
+		String extraParam = getSearchCreteria(param)+ getOrderBy(param);
+		String strQry = "from " + clazz.getName() + " "+ extraParam ;
 
-		if(year != 0){
-			if(StringUtils.isNotBlank(buffer.toString())){
-				buffer.append("year = "+ year);
-			}else {
-				buffer.append("AND year = "+ year);
+		Query query = getSession().createQuery(strQry);
+		query.setFirstResult(param.getiDisplayStart());
+		query.setMaxResults(param.getiDisplayLength());		
+		List list = query.list(); 
+		return new Data(list,listCountParam(param, clazz),list.size()); // list - display record - total record
+	}
+
+	private String getSearchCreteria(JQueryDataTableParamModel param) {
+		StringBuffer searchStr = new StringBuffer();
+		if(StringUtils.isNotEmpty(param.getSearchTerm())){
+			searchStr.append(" WHERE ");
+			String []cols = null;
+			if(param.getsColumns().length() > 0 ){
+				cols = param.getsColumns().split(",");	
+			}
+			for (int index = 0 ; index < cols.length ; index++) {
+				if(cols.length -1 == index){
+					searchStr .append(cols[index]+" like '%"+param.getSearchTerm()+"%'");
+				} else {
+					searchStr .append(cols[index]+" like '%"+param.getSearchTerm()+"%'").append(" OR ");
+				}
 			}
 		}
+		return searchStr.toString();
+	}
 
-		if(semester !=0){
-			if(StringUtils.isNotBlank(buffer.toString())){
-				buffer.append("semester = "+ semester);
-			} else {
-				buffer.append("AND semester = "+ semester);
-			}
+	private String getOrderBy(JQueryDataTableParamModel param) {
+		String []cols = null;
+		if(param.getsColumns().length() > 0 ){
+			cols = param.getsColumns().split(",");	
 		}
-		if(StringUtils.isNotBlank(buffer.toString())){
-			sql  = "from "+ clazz.getName() + " where " + buffer.toString();
-		} else {
-			sql  = "from "+ clazz.getName();
-		}
-		return getSession().createQuery( sql ).list();
+		int index = param.getiSortColumnIndex();
+		return (cols!=null && cols.length > 0)?" order by " + cols[index] +" "+ param.getsSortDirection(): "";
 	}
 
 	@Override
@@ -129,7 +156,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				"group by f.userId order by u.id asc";
 		return (CompoundFees) getSession().createSQLQuery(SQL).addEntity(CompoundFees.class).uniqueResult();
 	}
-	
+
 	@Override
 	public List<CompoundFees> listCompoundFees() {
 		String SQL="Select u.id id," +
@@ -181,9 +208,9 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 
 	@Override
 	public  List<User>  listUsersByName(String userName) {
-		 Criteria criteria = getSession().createCriteria(User.class);
-		 criteria.add(Restrictions.ilike("firstName", userName, MatchMode.START));
-		 return criteria.list();
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.add(Restrictions.ilike("firstName", userName, MatchMode.START));
+		return criteria.list();
 	}
 
 	@Override
@@ -192,7 +219,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		criteria.add(Expression.eq("user",(User)getById(userId,User.class)));
 		criteria.addOrder(Order.asc("updatedOn"));
 		return criteria.list();
-	
+
 	}
 
 	@Override
@@ -201,7 +228,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				" (select * from fees where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month )" +
 				" group by userId order by nextPaymentDueDate) f" +
 				" on u.id = f.userId";
-		
+
 		return getSession().createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
 	}
 
@@ -211,5 +238,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		criteria.add(Expression.eq("userName",username));
 		criteria.add(Expression.eq("password",password));		
 		return (User)criteria.uniqueResult();
-	}	
+	}
+
+
 }

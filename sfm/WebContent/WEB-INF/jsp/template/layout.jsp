@@ -23,21 +23,7 @@
 <script src='${pageContext.request.contextPath}/js/jquery.dataTables.js'></script>
 
 <script type="text/javascript">
-  $(function() {
-  	$('#example').dataTable( {
-		"bProcessing": true,
-		"bServerSide": true,
-		"ajax": {
-			"url": '${pageContext.request.contextPath}/listUserDATA',
-			"type": "GET"
-		},
-		"columns": [
-			{ "data": "id" },
-			{ "data": "firstName" }
-		]
-	});
-	
-  	
+    	
   	$('.datepicker').datepicker({
   	showOn: "button",
       buttonImage: "${pageContext.request.contextPath}/images/calendar.png",
@@ -100,8 +86,7 @@
                	var linkTemplate = '<li style="padding-bottom: 15px;"><a href="/sfm/viewFeesByUserId/#userId#">#name#</a></li>';
                 
                 for ( var obj in response) {                
-                	 var rec = response[obj];
-                	 console.log(rec);
+                	var rec = response[obj];                	
                 	var link = linkTemplate;
                 	link = link.replace('#userId#',rec.id);
                 	link = link.replace('#name#',rec.user.firstName+""+rec.user.middleName+""+rec.user.lastName +

@@ -41,12 +41,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Transactional
 	public Charges getChargesById(Integer chargesId) {
 		return (Charges) dao.getById(chargesId,Charges.class);
-	}
-
-	@Override
-	public List<Charges> listCharges(Integer deptId, Integer year, Integer semester) {
-		return dao.list(deptId, year, semester,Charges.class);
-	}
+	}	
 
 	@Override
 	public List<CompoundExpenses> listCompoundExpenses() {

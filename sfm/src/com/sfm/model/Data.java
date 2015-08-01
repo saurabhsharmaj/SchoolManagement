@@ -2,18 +2,20 @@ package com.sfm.model;
 
 public class Data {
 	Object data;
-	int length;
-	int recordsTotal;
+	int iTotalRecords;
+	int iTotalDisplayRecords;
 	
 	public Data(){
 
 	}
 	
-	public Data(Object data, int length) {
+	public Data(Object data,int filterResultSize, int length) {
 		super();
-		this.data = data;
-		this.length = length;
-		this.recordsTotal=length;
+		this.data = data;		
+		System.out.println("lenght: "+length+" filter length:"+ filterResultSize);
+		iTotalDisplayRecords = filterResultSize;
+		iTotalRecords = length;
+		
 	}
 	
 	public Object getData() {
@@ -22,19 +24,21 @@ public class Data {
 	public void setData(Object data) {
 		this.data = data;
 	}
-	public int getLength() {
-		return length;
-	}
-	public void setLength(int length) {
-		this.length = length;
+	
+	public int getiTotalRecords() {
+		return iTotalRecords;
 	}
 
-	public int getRecordsTotal() {
-		return recordsTotal;
+	public void setiTotalRecords(int iTotalRecords) {
+		this.iTotalRecords = iTotalRecords;
 	}
 
-	public void setRecordsTotal(int recordsTotal) {
-		this.recordsTotal = recordsTotal;
+	public int getiTotalDisplayRecords() {
+		return iTotalDisplayRecords;
+	}
+
+	public void setiTotalDisplayRecords(int iTotalDisplayRecords) {
+		this.iTotalDisplayRecords = iTotalDisplayRecords;
 	}
 
 	

@@ -17,6 +17,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.sfm.util.Utils;
 
 /**
@@ -24,9 +30,13 @@ import com.sfm.util.Utils;
  */
 @Entity
 @Table(name = "userprofile", catalog = "sfm")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class UserProfile implements java.io.Serializable {
 
 	private Integer id;
+	@JsonIgnore
 	private User user;
 	private int roleId;
 	private Boolean gender;
@@ -85,6 +95,7 @@ public class UserProfile implements java.io.Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "userId")
+
 	public User getUser() {
 		return this.user;
 	}

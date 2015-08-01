@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sfm.dao.Dao;
+import com.sfm.model.Data;
 import com.sfm.model.User;
+import com.sfm.util.JQueryDataTableParamModel;
 
 
 
@@ -43,8 +45,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> listUsers(Integer deptId, Integer year, Integer semester) {
-		return dao.list(deptId, year, semester,User.class);
+	public Data listUsers(JQueryDataTableParamModel param) {
+		return dao.list(param, User.class);
 	}
 
 	@Override
@@ -54,7 +56,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User validateUser(String username, String password) {
-		// TODO Auto-generated method stub
 		return dao.validateUser(username,password);
+	}
+
+	@Override
+	public int listCount() {
+		return dao.listCount(User.class);
 	}
 }

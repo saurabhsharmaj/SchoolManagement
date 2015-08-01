@@ -41,12 +41,7 @@ public class FeesServiceImpl implements FeesService {
 	@Transactional
 	public Fees getFeesById(Integer feesId) {
 		return (Fees) dao.getById(feesId,Fees.class);
-	}
-
-	@Override
-	public List<Fees> listFees(Integer deptId, Integer year, Integer semester) {
-		return dao.list(deptId, year, semester,Fees.class);
-	}
+	}	
 
 	@Override
 	public List<CompoundFees> listCompoundFees() {

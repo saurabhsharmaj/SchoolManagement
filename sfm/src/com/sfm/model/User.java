@@ -60,7 +60,7 @@ public class User implements java.io.Serializable {
 	private Set<Charges> chargeses = new HashSet<Charges>(0);
 	@JsonIgnore
 	private Set<Payment> payments = new HashSet<Payment>(0);
-	@JsonIgnore
+	
 	private UserProfile userProfile;
 
 	public User() {

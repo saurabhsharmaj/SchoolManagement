@@ -15,7 +15,6 @@ public interface FeesService {
 	public List<Fees> getFeesByUserId(Integer userId);
 	public List<Fees> listFees();
 	public List<CompoundFees> listCompoundFees();
-	public List<Fees> listFees(Integer deptId, Integer year, Integer semester);
 	public void removeFees(Integer id);
 	public CompoundFees getCompoundFees(Integer id);
 	public List<Object[]> getUserByNextPaymentDate();

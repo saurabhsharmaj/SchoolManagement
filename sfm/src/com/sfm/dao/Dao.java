@@ -6,17 +6,19 @@ import java.util.List;
 import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Data;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
+import com.sfm.util.JQueryDataTableParamModel;
 
 public interface Dao<T, PK extends Serializable> {
     public void add(T t);
 	public void update(T t);
 	public List<T> list(Class< T > clazzToSet);
+	public int listCount(Class< T > clazzToSet);
 	public T getById(Integer id,Class< T > clazzToSet);
 	public void remove(T t);
-	public List<T> list(Integer deptId, Integer year, Integer semester,
-			Class<T> class1);
+	public Data list(JQueryDataTableParamModel param, Class< T > clazzToSet);
 	public List<Fees> listFees();
 	
 	public List<CompoundFees> listCompoundFees();

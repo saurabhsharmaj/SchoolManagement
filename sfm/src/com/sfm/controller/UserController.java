@@ -29,6 +29,8 @@ import com.sfm.model.Data;
 import com.sfm.model.User;
 import com.sfm.model.UserProfile;
 import com.sfm.service.UserService;
+import com.sfm.util.DataTablesParamUtility;
+import com.sfm.util.JQueryDataTableParamModel;
 import com.sfm.util.Utils;
 
 
@@ -68,12 +70,10 @@ public class UserController {
 	 @RequestMapping(value = "/listUserDATA",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
 		Data getUsers(HttpServletRequest request){
-		 //iDisplayStart
-		 String iDisplayStart = request.getParameter("iDisplayStart");
-		 String iDisplayLength = request.getParameter("iDisplayLength");
-		 System.out.println("start:"+iDisplayStart +"length:"+ iDisplayLength);
-		 List<User> list = userService.listUsers();
-		return new Data(list , list.size());
+		 JQueryDataTableParamModel param = DataTablesParamUtility.getParam(request);
+		 System.out.println(param);		 
+		 Data data = userService.listUsers(param);		
+		return data;
 	 }
 		
 	private List<User> getSearchUserNames(String userName) {
