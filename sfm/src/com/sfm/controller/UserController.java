@@ -70,8 +70,7 @@ public class UserController {
 	 @RequestMapping(value = "/listUserDATA",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
 		Data getUsers(HttpServletRequest request){
-		 JQueryDataTableParamModel param = DataTablesParamUtility.getParam(request);
-		 System.out.println(param);		 
+		 JQueryDataTableParamModel param = DataTablesParamUtility.getParam(request);		  
 		 Data data = userService.listUsers(param);		
 		return data;
 	 }
@@ -81,14 +80,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="viewUserList")
-	public String listRoutes(HttpServletRequest request, HttpServletResponse response,Map<String, Object> map) {
-		PagedListHolder pagedListHolder = new PagedListHolder(userService.listUsers());
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		int pageSize = PAGE_SIZE;
-		pagedListHolder.setPageSize(pageSize);
-		map.put("pagedListHolder", pagedListHolder);
-		map.put("userList", userService.listUsers());
+	public String listRoutes(HttpServletRequest request, HttpServletResponse response,Map<String, Object> map) {		
 		return "viewUserList";
 	}
 
