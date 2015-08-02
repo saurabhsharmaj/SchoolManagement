@@ -7,7 +7,7 @@
 <form:form method="post" action="${action}" enctype="multipart/form-data"  commandName="user" cssClass="bookForm">
 <table>
 	<tr><td colspan=2>
-	<fieldset>
+	<fieldset style="height: 265px;">
   	<legend>Basic Profile</legend>	
 	<table>
 	<c:if test="${!empty user.firstName}">
@@ -275,19 +275,19 @@
 	</fieldset>
 	</td></tr>
 	<!-- End Profile -->
-	<tr>
+	<tr style="position: fixed;z-index: 99999999999999999">
 	<td>
 		<c:if test="${!empty user.id}">
 				<input type="submit"
-					value="<spring:message code="label.edituser"/>" class="button"/>
+					value="<spring:message code="label.edituser"/>" class="button-orange"/>
 			</c:if>
 			<c:if test="${empty user.id}">
 				<input type="submit"
-					value="<spring:message code="label.adduser"/>" class="button"/>
+					value="<spring:message code="label.adduser"/>" class="button-orange"/>
 			</c:if>        
 	</td>
 	<td>
-		<a href="<c:url value="/viewUserList" />" class="button">Cancel</a>
+		<a href="<c:url value="/viewUserList" />" class="button-orange">Cancel</a>
 	</td>
 	</tr>	
 </table>
