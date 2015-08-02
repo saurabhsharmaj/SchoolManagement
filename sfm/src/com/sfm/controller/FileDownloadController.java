@@ -54,7 +54,6 @@ public class FileDownloadController {
     public byte[] helloWorld(@PathVariable int userId) throws Exception  {
       User user = userService.getUserById(userId);
       String path = user.getUserProfile().getImageUrl();
-      System.out.println("###########################path:"+path);
       if(user!=null & path!=null)
       {
     	  InputStream fis = FileDownloadController.class.getClassLoader().getResourceAsStream(path);    	  
@@ -101,7 +100,7 @@ public class FileDownloadController {
 			params.put("compoundFees", feesService.getCompoundFees(user.getId()));
 		} else if(reportName.equalsIgnoreCase("fees_report")){
 			params.put("user", user);
-			params.put("feesList", feesService.listCompoundFees());
+			params.put("feesList", feesService.listCompoundFees(null).getData());
 		} else if(reportName.equalsIgnoreCase("user_exense_report")){
 			params.put("user", user);
 			params.put("expensesList", expenseService.getChargesByUserId(user.getId()));

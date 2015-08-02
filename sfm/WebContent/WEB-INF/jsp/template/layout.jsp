@@ -23,7 +23,7 @@
 <script src='${pageContext.request.contextPath}/js/jquery.dataTables.js'></script>
 
 <script type="text/javascript">
-    	
+ $(function() {   	
   	$('.datepicker').datepicker({
   	showOn: "button",
       buttonImage: "${pageContext.request.contextPath}/images/calendar.png",
@@ -95,8 +95,7 @@
                 }
             }
         });
-	
-    });
+ });
 </script>
 
 

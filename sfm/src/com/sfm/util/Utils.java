@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
  
  
 public class Utils {
 	
 	static Map<Integer,String> streamMap = new HashMap<Integer,String>();
+	static Map<Integer,String> batchMap = new HashMap<Integer,String>();
+	static Map<Integer,String> sessionMap = new HashMap<Integer,String>();
 	
 	public static Map<Integer,StatusEnum> statusList(){
 		Map<Integer,StatusEnum> semester = new LinkedHashMap<Integer,StatusEnum>();
@@ -32,6 +33,10 @@ public class Utils {
 		for (int i = 0 ;i < value.length ; i++) {			
 			if(key.equalsIgnoreCase("stream")){
 				streamMap.put(i, value[i]);
+			} else if(key.equalsIgnoreCase("session")){
+				sessionMap.put(i, value[i]);
+			} else if(key.equalsIgnoreCase("batch")){
+				batchMap.put(i, value[i]);
 			} else {
 				installments.put(i, value[i]);
 			}
@@ -54,5 +59,19 @@ public class Utils {
 	public static String getExpenseTypeName(String id) {
 		// ARTS,COMMERCE,SCIENCE,OTHER		
 		return streamMap.get(new Integer(id));
+	}
+
+	public static String getBatchName(String batch) {
+		if(StringUtils.isEmpty(batch)){
+			return batch;
+		}
+		return batchMap.get(new Integer(batch));
+	}
+
+	public static String getSessionName(String session) {
+		if(StringUtils.isEmpty(session)){
+			return session;
+		}
+		return sessionMap.get(new Integer(session));
 	}
 }

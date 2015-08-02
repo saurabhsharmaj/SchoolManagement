@@ -1,11 +1,13 @@
 package com.sfm.dao;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
@@ -138,7 +140,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	}
 
 	@Override
-	public CompoundFees getCompoundFees(Integer id) {
+	public CompoundFees getCompoundFeesByUserId(Integer id) {
 		String SQL="Select u.id id," +
 				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
 				"u.fatherName fatherName,"+
@@ -158,8 +160,11 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	}
 
 	@Override
-	public List<CompoundFees> listCompoundFees() {
-		String SQL="Select u.id id," +
+	public Data listCompoundFees(JQueryDataTableParamModel param) {
+
+		String searchParam = param != null? getSearchCreteria(param):"";
+		String orderByParam = param != null? getOrderBy(param):"";
+		String SQL="SELECT * FROM (Select u.id id," +
 				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
 				"u.fatherName fatherName,"+
 				"totalFees, " +
@@ -172,9 +177,42 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				"from " +
 				"fees f " +
 				"inner join User u on u.id=f.userId " +
-				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
-				"group by f.userId order by u.id asc";
-		return getSession().createSQLQuery(SQL).addEntity("f", CompoundFees.class).list();
+				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +				
+				"group by f.userId ) a " +searchParam + orderByParam;
+		System.out.println(SQL);
+		SQLQuery query = getSession().createSQLQuery(SQL);
+		if(param != null){
+			System.out.println("search with: "+param.getiDisplayStart()+" - "+param.getiDisplayLength() );
+			query.setFirstResult(param.getiDisplayStart());
+			query.setMaxResults(param.getiDisplayLength());	
+		}
+		List list = query.addEntity("f", CompoundFees.class).list();
+		System.out.println("list size: "+list.size());
+		return new Data(list,countParam(param),list.size());
+	}
+
+	private int countParam(JQueryDataTableParamModel param) {
+		String searchParam = param != null? getSearchCreteria(param):"";
+		String orderByParam = param != null? getOrderBy(param):"";
+		String SQL="SELECT count(distinct id) FROM (Select u.id id," +
+				"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
+				"u.fatherName fatherName,"+
+				"totalFees, " +
+				"count(noOfInstallment)," +
+				"sum(paidFees) totalPaidFees," +
+				"sum(additionCharges) totalAdditionCharges," +
+				"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
+				"nextPaymentDueDate nextDueDate, " +
+				"totalExpenses  " +
+				"from " +
+				"fees f " +
+				"inner join User u on u.id=f.userId " +
+				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +				
+				"group by f.userId ) a " +searchParam + orderByParam;
+		System.out.println(SQL);
+		BigInteger count = (BigInteger)getSession().createSQLQuery(SQL).uniqueResult();
+		System.out.println("total:"+count);
+		return count.intValue();
 	}
 
 	@Override

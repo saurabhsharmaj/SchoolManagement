@@ -9,18 +9,22 @@ function getPendingValue(value){
 $('#pendingFees').val($('#studentFees').val() - value);
 }
 
-function checkUrl(){
+function validate(){
 	var action = $('form').attr('action');
 	var patt = new RegExp("[0-9]+$");    
 	if(!patt.test(action)){
 			$('form').attr('action', action+$('#userId').val());
+	}
+	if($('#userId').val()==undefined ||$('#userId').val()==null || $('#userId').val()=='' ){
+		alert('User id cannot left blank. Please select any user.');
+		return false;
 	}
 }
 </script>
 <fieldset>
   	<legend>fees</legend>
   	<c:url var="action" value="/saveFees/${user.id}" ></c:url>
-  	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm" onsubmit="checkUrl();">
+  	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm" onsubmit="return validate();">
 	<table>
 	<c:if test="${!empty fees.id}">
 	<tr>
@@ -35,17 +39,7 @@ function checkUrl(){
 			
 		</td> 
 	</tr>
-	</c:if>
-	<tr>
-		<td>
-			<form:label path="user.id" cssClass="userNameLabel">
-				<spring:message code="label.userId" />
-			</form:label>
-		</td>
-		<td colspan="2">
-			<form:input path="user.id" id="userId"  placeholder="user Id"/>
-		</td> 
-	</tr>
+	</c:if>	
 	<tr>
 		<td>			
 			<form:label path="user.fullName" cssClass="userNameLabel">
@@ -54,6 +48,16 @@ function checkUrl(){
 		</td>
 		<td colspan="2">
 			<form:input path="user.fullName" id="userName" cssClass="autocompletesearch"  placeholder="User Name"/>
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="user.id" cssClass="userNameLabel">
+				<spring:message code="label.userId" />
+			</form:label>
+		</td>
+		<td colspan="2">
+			<form:input path="user.id" id="userId"  placeholder="user Id"/>
 		</td> 
 	</tr>
 	<tr>
@@ -146,7 +150,7 @@ function checkUrl(){
 	<legend>View Fees Payment</legend>
 	<p style="color: green; font-weight: bold;">
 		Add Fees <a
-			href="<c:url value='/addfees' />"> <img
+			href="<c:url value='/addFees' />"> <img
 			src="<c:url value='/images/vcard_add.png' />"
 			title="Add fees" />
 		</a>

@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sfm.model.Data;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.service.FeesService;
 import com.sfm.service.UserService;
+import com.sfm.util.DataTablesParamUtility;
+import com.sfm.util.JQueryDataTableParamModel;
 import com.sfm.util.Utils;
 
 @Controller
@@ -39,11 +42,19 @@ public class FeesController {
 	 
 	 @Value("${TOTAL_FEES}")
 	 private Double totalFees;
+	
+	 @RequestMapping(value = "/listFeesDATA",  produces="application/json", method = RequestMethod.GET)
+		public @ResponseBody
+		Data listFeesDATA(HttpServletRequest request){
+		 JQueryDataTableParamModel param = DataTablesParamUtility.getParam(request);		  
+		 Data data = feesService.listCompoundFees(param);		
+		return data;
+	 }
 	 
 	@RequestMapping(value="viewFees")
 	public String viewFees(HttpSession session, Map<String, Object> map) {
 		map.put("user", (User)session.getAttribute("user"));
-		map.put("feesList", feesService.listCompoundFees());
+		map.put("feesList", feesService.listCompoundFees(null));
 		return "viewFeeslist";	
 	}
 	

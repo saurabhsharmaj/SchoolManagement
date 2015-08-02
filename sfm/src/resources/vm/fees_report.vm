@@ -36,10 +36,22 @@
 	#foreach( $fees in $feesList )
 		<td>$fees.fullName/$fees.fatherName</td>
 		<td>$fees.totalFees</td>
-		<td>$fees.totalExpenses</td>
+		<td>
+			#if (!$fees.totalExpenses)
+			 	0.0
+			#else
+				$fees.totalExpenses
+			#end
+		</td>
 		<td>$fees.totalPaidFees</td>
 		<td>$fees.totalAdditionCharges</td>
-		<td>$fees.totalPendingFees</td>
+		<td>
+			#if (!$fees.totalPendingFees)
+			 	0.0
+			#else
+				$fees.totalPendingFees
+			#end
+		</td>
 		<td>$date.format('dd-MMM-yyyy',$fees.nextDueDate)</td>
 	</tr>
 	#end

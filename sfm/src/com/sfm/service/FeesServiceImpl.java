@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sfm.dao.Dao;
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Data;
 import com.sfm.model.Fees;
+import com.sfm.util.JQueryDataTableParamModel;
 
 
 
@@ -44,22 +46,22 @@ public class FeesServiceImpl implements FeesService {
 	}	
 
 	@Override
-	public List<CompoundFees> listCompoundFees() {
-		return dao.listCompoundFees();
-	}
-
-	@Override
 	public List<Fees> getFeesByUserId(Integer userId) {		
 		return dao.listFeesByUserId(userId);
 	}
 
 	@Override
 	public CompoundFees getCompoundFees(Integer id) {
-		return dao.getCompoundFees(id);
+		return dao.getCompoundFeesByUserId(id);
 	}
 
 	@Override
 	public List<Object[]> getUserByNextPaymentDate() {
 		return dao.getUserByNextPaymentDate();
+	}
+
+	@Override
+	public Data listCompoundFees(JQueryDataTableParamModel param) {
+		return dao.listCompoundFees(param);
 	}
 }

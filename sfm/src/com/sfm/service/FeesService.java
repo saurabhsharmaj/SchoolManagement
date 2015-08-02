@@ -3,7 +3,9 @@ package com.sfm.service;
 import java.util.List;
 
 import com.sfm.model.CompoundFees;
+import com.sfm.model.Data;
 import com.sfm.model.Fees;
+import com.sfm.util.JQueryDataTableParamModel;
 
 
 
@@ -14,8 +16,8 @@ public interface FeesService {
 	public Fees getFeesById(Integer feesId);
 	public List<Fees> getFeesByUserId(Integer userId);
 	public List<Fees> listFees();
-	public List<CompoundFees> listCompoundFees();
 	public void removeFees(Integer id);
 	public CompoundFees getCompoundFees(Integer id);
 	public List<Object[]> getUserByNextPaymentDate();
+	public Data listCompoundFees(JQueryDataTableParamModel param);
 }

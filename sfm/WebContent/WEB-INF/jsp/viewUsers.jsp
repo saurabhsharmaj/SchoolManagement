@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
 $(function() {
-  	$('#example').dataTable( {
+  	$('#userView').dataTable({
 		"bServerSide": true,
 		"lengthMenu": [[5,10,20, -1], [5,10,20, "All"]],
 		"sAjaxSource": '${pageContext.request.contextPath}/listUserDATA',		
@@ -26,14 +26,13 @@ $(function() {
             },{
                
                 "render": function ( data, type, row ) {                
-                   	console.log(row);
-                    return row.userProfile.stream;
+                   	return getStreamName(row.userProfile.stream);
                  },
                 "targets": 2
             },{
                
                 "render": function ( data, type, row ) {                
-                    return row.session +' / '+ row.batch;
+                    return getSessionName(row.session) +' / '+  getBatchName(row.batch);
                  },
                 "targets": 3
             },{
@@ -43,8 +42,34 @@ $(function() {
                 },
                 "targets": 4
             }]         
-	});
+	});	
 	
+	function getBatchName(id){
+		switch(id){
+		 	case '0': return 'FIRST';
+		 	case '1': return 'SECOND';
+		 	case '2': return 'THIRD';
+		 	case '3': return 'FOURTH';
+		 	case '4': return 'FIFTH';
+		 	case '5': return 'SIXTH';
+		}
+	}
+	
+	function getSessionName(id){
+		switch(id){
+		 	case '0': return '2014-15';
+		 	case '1': return '2015-16';		 	
+		}
+	}
+	
+	function getStreamName(id){
+		switch(id){
+		 	case 0: return 'Arts';
+		 	case 1: return 'Commerce';
+		 	case 2: return 'Science';
+		 	case 3: return 'Other';				 	
+		}
+	}
 });
 </script>
 <fieldset>
@@ -57,7 +82,7 @@ $(function() {
 		</a>
 	</p>
 	<c:url var="action" value="/user/add.html"></c:url>
-	<table id="example" class="display">
+	<table id="userView" class="display">
 		<thead>
 			<tr>
 				<th width="10">UserID</th>
