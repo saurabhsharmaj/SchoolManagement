@@ -90,7 +90,10 @@ function validate(){
 		</td>
 		
 		<td colspan="2">
-			<form:input path="paidFees" id="paidFees"  placeholder="paidFees" onblur="getPendingValue(this.value);"/>		
+			<form:input path="paidFees" id="paidFees"  placeholder="paidFees" onblur="getPendingValue(this.value);"/>
+			<!-- <div><span>Total Paid:</span><span>0</span></div>
+			<div><span>Total Expense:</span><span>0</span></div>
+			<div><span>Total Additional Fees:</span><span>0</span></div> -->	
 		</td> 
 	</tr>
 	<tr>

@@ -56,14 +56,16 @@
 		    transformResult: function(response) {		    	
 		        return {		        	
 		            suggestions: $.map($.parseJSON(response), function(item) {		            	
-		                return { value: item.firstName +"/"+item.fatherName, data: item.id };
+		                return { value: item.firstName +"/"+item.fatherName, data: item };
 		            })
 		            
 		        };
 		        
 		    },
 		    onSelect: function (index) {
-		    			$('#userId').val(index.data);				    
+		    			$('#userId').val(index.data.id);
+		    			$('#studentFees').val(index.data.studentFees);
+		    			$('#pendingFees').val(index.data.studentFees - $('#paidFees').val());		    
 					}
 		    
 		});
