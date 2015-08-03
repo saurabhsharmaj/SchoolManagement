@@ -20,7 +20,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Transactional
 	public void addCharges(Charges charges) {
-		dao.add(charges);
+		dao.save(charges);
 	}
 
 	@Transactional
@@ -35,7 +35,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Transactional
 	public void updateCharges(Charges charges) {
-		dao.update(charges);
+		dao.save(charges);
 	}
 
 	@Transactional

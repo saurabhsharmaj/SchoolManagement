@@ -36,15 +36,10 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 
 
 	@Override
-	public void add(Object t) {
+	public void save(Object t) {
 		getSession().saveOrUpdate(t);		
 	}
-
-	@Override
-	public void update(Object t) {
-		getSession().update(t);		
-	}
-
+	
 	@Override
 	public List list(Class clazz) {
 		return getSession().createQuery( "from " + clazz.getName() +" order by updatedOn desc" ).list();

@@ -95,7 +95,6 @@ public class UserProfile implements java.io.Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "userId")
-
 	public User getUser() {
 		return this.user;
 	}

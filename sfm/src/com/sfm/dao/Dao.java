@@ -12,8 +12,7 @@ import com.sfm.model.User;
 import com.sfm.util.JQueryDataTableParamModel;
 
 public interface Dao<T, PK extends Serializable> {
-    public void add(T t);
-	public void update(T t);
+    public void save(T t);	
 	public List<T> list(Class< T > clazzToSet);
 	public int listCount(Class< T > clazzToSet);
 	public T getById(Integer id,Class< T > clazzToSet);

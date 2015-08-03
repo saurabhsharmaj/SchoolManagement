@@ -93,6 +93,26 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
 ,PRIMARY KEY (id));
 
+Create Table faculty(
+id int(11) NOT NULL AUTO_INCREMENT
+,facultyName varchar(50)
+,facultyHourlyRate DECIMAL(11,2) default 0.0
+,subject varchar(50)
+,updateBy varchar(50)
+,updatedOn TIMESTAMP 
+,PRIMARY KEY (id)
+);
+
+Create Table attendance(
+id int(11) NOT NULL AUTO_INCREMENT
+,facultyId int(11) NOT NULL
+,attendanceDate TIMESTAMP
+,noOfHours DECIMAL(11,2) default 0.0
+,FOREIGN KEY (facultyId) REFERENCES faculty(id) ON DELETE CASCADE
+,PRIMARY KEY (id)
+,updateBy varchar(50)
+,updatedOn TIMESTAMP 
+);
 
 -- Database backup
 Create Table databaseBackup(

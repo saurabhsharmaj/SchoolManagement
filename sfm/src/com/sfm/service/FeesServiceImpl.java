@@ -22,7 +22,7 @@ public class FeesServiceImpl implements FeesService {
 	
 	@Transactional
 	public void addFees(Fees fees) {
-		dao.add(fees);
+		dao.save(fees);
 	}
 
 	@Transactional
@@ -37,7 +37,7 @@ public class FeesServiceImpl implements FeesService {
 
 	@Transactional
 	public void updateFees(Fees fees) {
-		dao.update(fees);
+		dao.save(fees);
 	}
 
 	@Transactional
