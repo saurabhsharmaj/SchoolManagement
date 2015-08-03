@@ -250,7 +250,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	public List<Fees> listFeesByUserId(Integer userId) {
 		Criteria criteria = getSession().createCriteria(Fees.class);
 		criteria.add(Expression.eq("user",(User)getById(userId,User.class)));
-		criteria.addOrder(Order.asc("updatedOn"));
+		criteria.addOrder(Order.asc("id"));
 		return criteria.list();
 
 	}

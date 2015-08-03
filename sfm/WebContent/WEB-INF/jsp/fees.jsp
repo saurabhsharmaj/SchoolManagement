@@ -164,26 +164,22 @@ function validate(){
 <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
 </div>
 <table class="bookTable">
-				<tr>
-					<th width="5">UserID</th>
-					<th width="20">UserName</th>
-					<th width="12">Total Fees</th>
-					<th width="12.5">Total Expenses</th>
-					<th width="12.5">Paid Fees</th>
-					<th width="12.5">Pending Fees</th>
-					<th width="12.5">Next Due</th>
-					<th width="12.5">Action</th>
+				<tr>					
+					<th>Fee ID</th>
+					<th>Addition Fees</th>
+					<th>Paid Fees</th>
+					<th>Pending Fees</th>
+					<th>Next Due</th>
+					<th>Action</th>
 				</tr>
 	<c:choose>	
     <c:when test="${!empty pagedListHolder.pageList}">			
 				<c:forEach items="${pagedListHolder.pageList}" var="fees">
 					<tr>
-						<td>${fees.user.id}</td>
-						<td><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">${fees.user.firstName} &nbsp;${fees.user.middleName} &nbsp;${fees.user.lastName}</a></td>
-						<td>${fees.totalFees}</td>
-						<td>${fees.paidFees}</td>
-						<td>${fees.pendingFees}</td>
+						<td align="center"><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">${fees.id}</a></td>
 						<td>${fees.additionCharges}</td>
+						<td>${fees.paidFees}</td>
+						<td>${fees.pendingFees}</td>						
 						<td><fmt:formatDate pattern="dd-MMM-yyyy" value="${fees.nextPaymentDueDate}" /></td>
 						<td><img src="<c:url value='/images/vcard_delete.png' />"
 							title="Delete User" onclick="javascript:deleteUser(${fees.id})" />
