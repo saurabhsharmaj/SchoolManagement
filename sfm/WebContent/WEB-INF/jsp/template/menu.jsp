@@ -11,7 +11,7 @@
       <!-- /nav -->
       <h2 class="title">Today Important:</h2>
       <section class="last" >
-        <marquee direction="up" onmouseover="stop()" onmouseout="start()" height="300px;">
+        <marquee direction="up" onmouseover="stop()" onmouseout="start()">
         <div class="opinion_hmlist1">
 		<ul  style="background-color:#FFFFF;">
 			

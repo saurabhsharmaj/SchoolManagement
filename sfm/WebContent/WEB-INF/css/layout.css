@@ -16,6 +16,7 @@ body {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	color: #979797;
 	background-color: #FFFFFF;
+	width:100%;
 }
 
 .clear:after {
@@ -195,20 +196,6 @@ blockquote:after,q:after {
 	margin: 0 30px 0 0;
 }
 
-.one_third {
-	width: 300px;
-}
-
-.two_third {
-	width: 630px;
-}
-
-.three_third {
-	width: 960px;
-	float: none;
-	margin-right: 0;
-	clear: both;
-}
 
 .lastbox {
 	margin-right: 0;
@@ -309,7 +296,6 @@ header {
 
 /*----------------------------------------------Content Area-------------------------------------*/
 #container {
-	height: 620px;
 	background-color: #edf0f5;
 }
 
@@ -408,7 +394,7 @@ footer {
 	width: 100%;
 	text-align: center;
 	bottom: 0;
-	position: fixed;
+	position: relative;
 	z-index: 150;
 	_position: absolute;
 	_top: expression(eval(document.documentElement.scrollTop + 

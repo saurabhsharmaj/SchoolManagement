@@ -6,8 +6,9 @@
 
 <form:form method="post" action="${action}" enctype="multipart/form-data"  commandName="user" cssClass="bookForm">
 <table>
-	<tr><td colspan=2>
-	<fieldset style="height: 265px;">
+	<tr>
+	<td>
+	<fieldset style="height: 365px;">
   	<legend>Basic Profile</legend>	
 	<table>
 	<c:if test="${!empty user.firstName}">
@@ -139,11 +140,8 @@
 	</table>
 	</fieldset>
 	</td>
-	</tr>
-	<!-- Start User Profile -->
-	
-	<tr><td colspan=2>
-	<fieldset>
+	<td>
+	<fieldset style="height:365px;">
   	<legend>Additional Profile</legend>
   	<table>	
 	<tr>
@@ -275,7 +273,7 @@
 	</fieldset>
 	</td></tr>
 	<!-- End Profile -->
-	<tr style="position: fixed;z-index: 99999999999999999">
+	<tr>
 	<td>
 		<c:if test="${!empty user.id}">
 				<input type="submit"
