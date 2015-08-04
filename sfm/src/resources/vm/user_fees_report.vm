@@ -37,13 +37,28 @@
 #if ($paymentList.size() > 0)
 			#set ($rowNumber = 1)
 			#set ($grandTotal = 0)
-			#foreach( $fees in $paymentList )
-			#set ($total = $fees.paidFees + $fees.additionCharges)
+			#foreach( $fees in $paymentList )			
+			#set ($total = 0)
 			<tr>
 				<td>$rowNumber</td>
 				<td>$date.format('dd-MMM-yyyy', $fees.updatedOn)</td>
-				<td>$fees.paidFees</td>
-				<td>$fees.additionCharges</td>
+				<td>
+					#if(!$fees.paidFees)
+						0.0
+						#set ($total = 0)
+					#else
+						$fees.paidFees
+						#set ($total = $fees.paidFees)
+					#end
+				</td>
+				<td>
+					#if(!$fees.additionCharges)
+						#set ($total = $total + 0)
+					#else
+						$fees.additionCharges
+						#set ($total = $total + $fees.additionCharges)
+					#end
+				</td>
 				<td>$total</td>
 			</tr>
 			#set ($grandTotal = $grandTotal + $total)
