@@ -43,8 +43,20 @@
 				$fees.totalExpenses
 			#end
 		</td>
-		<td>$fees.totalPaidFees</td>
-		<td>$fees.totalAdditionCharges</td>
+		<td>
+			#if (!$fees.totalPaidFees)
+			 	0.0
+			#else
+				$fees.totalPaidFees
+			#end
+		</td>
+		<td>
+			#if (!$fees.totalAdditionCharges)
+			 	0.0
+			#else
+				$fees.totalAdditionCharges
+			#end
+		</td>
 		<td>
 			#if (!$fees.totalPendingFees)
 			 	0.0

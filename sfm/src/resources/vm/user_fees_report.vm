@@ -67,12 +67,32 @@
 			#end
 			<tr>	
 				<td colspan="4" align="right"><B>GrandTotal</b></td>
-				<td >$grandTotal</td>
+				<td>				
+					#if(!$grandTotal)
+							0.0						
+					#else
+						$grandTotal						
+					#end				
+				</td>
 			</tr>
 #else
 			<tr><td colspan="5" align="center"><b>no Fee record</b></td></tr>
 #end
 </table>
-<p><b>Total Fees</b>: $user.studentFees &nbsp; <b>Total Expenses</b>:$compoundFees.totalExpenses &nbsp; <b>Pending Amount</b>:$compoundFees.totalPendingFees</p>
+<p><b>Total Fees</b>: $user.studentFees &nbsp; 
+<b>Total Expenses</b>:$compoundFees.totalExpenses
+	#if(!$compoundFees.totalExpenses)
+		0.0						
+	#else
+		$compoundFees.totalExpenses						
+	#end
+ &nbsp; 
+<b>Pending Amount</b>:
+	#if(!$compoundFees.totalPendingFees)
+		0.0						
+	#else
+		$compoundFees.totalPendingFees						
+	#end
+					</p>
 </body>
 </html>
