@@ -4,16 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <script>
-function getPendingValue(value){
-	if(getValue(value)!=0){
-		$('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- getValue(value) - getValue($('#additionCharges').val()));
-	}
+function getPendingValue(value){	
+    $('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- Math.abs(getValue(value)) - getValue($('#additionCharges').val())  - getValue($('#totalAdditionCharges').text()));
+	
 }
 
 function updateDueAmount(value){
-	if(getValue(value)!=0){
-		$('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- getValue(value) - getValue($('#paidFees').val()));
-	}
+	$('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- Math.abs(getValue(value)) - getValue($('#paidFees').val()) - getValue($('#totalAdditionCharges').text()));
 }
 
 function getValue(value){
@@ -37,7 +34,7 @@ function validate(){
 		return false;
 	}
 	
-	if($('#pendingFees').val()==0 && $('#additionCharges').val() == 0 ){
+	if($('#paidFees').val() == 0 && $('#additionCharges').val() == 0 ){
 	alert('There is no pending amount.');
 	 return false;
 	}
@@ -47,8 +44,16 @@ $(function() {
 	if($('#studentFees').val() == parseInt($('#totalPaidFees').text())){
 		$('#paidFees').val(0.0).attr('readonly',true);
 	}
-	$('#pendingFees').val($('#studentFees').val() - $('#totalPaidFees').text());
 	$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text()); 
+	
+	if($('#additionCharges').val() !=''){
+		updateDueAmount($('#additionCharges').val());
+	}
+	
+	if($('#paidFees').val() !=''){
+		getPendingValue($('#paidFees').val());
+	}
+	
 });
 </script>
 <fieldset>
@@ -134,17 +139,7 @@ $(function() {
 		   </div>
 		</td> 
 	</tr>
-	<tr>
-		<td>
-			<form:label path="pendingFees" cssClass="nameLabel">
-				<spring:message code="label.pendingFees" />
-			</form:label>
-		</td>
-		
-		<td colspan="2">
-			<form:input path="pendingFees" id="pendingFees"  placeholder="pendingFees"/>		
-		</td> 
-	</tr>
+	
 	<tr>
 		<td>
 			<form:label path="additionCharges" cssClass="nameLabel">
@@ -174,6 +169,17 @@ $(function() {
 				    </c:otherwise>
 				</c:choose>
 				</span></div>		
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="pendingFees" cssClass="nameLabel">
+				<spring:message code="label.pendingFees" />
+			</form:label>
+		</td>
+		
+		<td colspan="2">
+			<form:input path="pendingFees" id="pendingFees" readonly="true" style="background-color: #EBEBE4;"  placeholder="pendingFees"/>		
 		</td> 
 	</tr>
 	<tr>

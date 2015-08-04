@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sfm.model.CompoundFees;
 import com.sfm.model.Data;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
@@ -69,7 +70,8 @@ public class FeesController {
 		map.put("pagedListHolder", pagedListHolder);
 		
 		map.put("feesList", feesList);
-		map.put("compoundFees", feesService.getCompoundFees(userId));
+		CompoundFees compoundFees = feesService.getCompoundFees(userId);
+		map.put("compoundFees", compoundFees);
 		Fees fees = new Fees();
 		fees.setUser(userService.getUserById(userId));
 		map.put("fees", fees);
