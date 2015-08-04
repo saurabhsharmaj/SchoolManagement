@@ -3,6 +3,7 @@ package com.sfm.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +15,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
-@Table(name = "user", catalog = "sfm")
+@Table(name = "attendance", catalog = "sfm")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
@@ -34,6 +36,17 @@ public class Attendance {
 	private Date updatedOn;
 	
 	private Faculty faculty;
+
+	public Attendance(String id, Faculty faculty, Date attendanceDate,
+			Double noOfHours) {
+		this.id = StringUtils.isEmpty(id) ?null:new Integer(id);
+		this.faculty = faculty;
+		this.attendanceDate = attendanceDate;
+		this.noOfHours = noOfHours;
+	}
+	
+	public Attendance() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

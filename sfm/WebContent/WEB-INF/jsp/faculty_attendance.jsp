@@ -8,6 +8,16 @@
 
 $(document).ready(function() {
 
+function selcteFaculty(ref){
+   		
+}
+
+$('#facultyName').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+ 	$('#action').val('getAttendanceByFacultyId/'+valueSelected);               		
+  	$("#ajaxform").submit();
+});  
 
 $('#facultyName').empty();
 	    $.getJSON('getFacultyName',{},function(data)
@@ -22,6 +32,8 @@ $('#facultyName').empty();
 	         });
 	       
 	    });
+
+
 	    
     var dates = $("#eventStart, #eventEnd").datepicker({
         defaultDate: "+1w",
@@ -32,9 +44,10 @@ $('#facultyName').empty();
                 date = $.datepicker.parseDate(
                 instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
             dates.not(this).datepicker("option", option, date);
+            $('#facultyId').val($('#facultyName').val());
         }
     });
-    
+   $('#facultyId').val(1); 
     $myCalendar = $('#myCalendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -46,14 +59,12 @@ $('#facultyName').empty();
         selectHelper: true,
         height: 500,
         select: function(start, end, allDay) {
-            $('#eventStart').datepicker("setDate", new Date(start));
-            $('#eventEnd').datepicker("setDate", new Date(end));
+       	 	$('#attendanceDate').val(new Date(start));            
             $('#calEventDialog').dialog('open');
         },
         eventClick: function(calEvent, jsEvent, view) {
-            $('#eventStart').datepicker("setDate", new Date(calEvent.start));
-            $('#eventEnd').datepicker("setDate", new Date(calEvent.end));
-            $('#calEventDialog #eventTitle').val(calEvent.title);
+        	
+           
             $('#calEventDialog #allday').val([calEvent.className == "gbcs-halfday-event" ? "1" : "2"]).prop('checked', true);
             $("#calEventDialog").dialog("option", "buttons", [
                 {
@@ -78,10 +89,42 @@ $('#facultyName').empty();
         editable: true
     });
 
-    var title = $('#eventTitle');
-    var start = $('#eventStart');
-    var end = $('#eventEnd');
-    var eventClass, color;
+$("#ajaxform").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $('#action').val();
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        success:function(item, textStatus, jqXHR) 
+        { 
+        $myCalendar.fullCalendar( 'removeEvents', function(event) {    
+        	return true;
+		});       
+       	for(var i in item)
+			{			     
+				var newEvent = new Object();
+				newEvent.title = item[i].faculty.subject + " - " +item[i].noOfHours;
+				newEvent.start = new Date(item[i].attendanceDate);
+				newEvent.allDay = false;
+				$myCalendar.fullCalendar( 'renderEvent', newEvent );
+			}
+       
+		            
+            $myCalendar.fullCalendar('unselect');
+            $('#calEventDialog').dialog('close');
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {        
+           $myCalendar.fullCalendar('unselect');
+           $('#calEventDialog').dialog('close'); 
+        }
+    });    
+     e.preventDefault();    
+});
+
     $('#calEventDialog').dialog({
         resizable: false,
         autoOpen: false,
@@ -89,72 +132,57 @@ $('#facultyName').empty();
         width: 400,
         buttons: {
             Save: function() {
-                if ($('input:radio[name=allday]:checked').val() == "1") {
-                    eventClass = "gbcs-halfday-event";
-                    color = "#9E6320";
-                    end.val(start.val());
-                }
-                else {
-                    eventClass = "gbcs-allday-event";
-                    color = "#875DA8";
-                }
-                if (title.val() !== '') {
-                    $myCalendar.fullCalendar('renderEvent', {
-                        title: title.val(),
-                        start: start.val(),
-                        end: end.val(),
-                        allDay: true,
-                        className: eventClass,
-                        color: color
-                    }, true // make the event "stick"
-                    );
-                }
-                $myCalendar.fullCalendar('unselect');
-                $(this).dialog('close');
+               
+               	if($('#facultyName').val()!=0){
+               		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
+               		$("#ajaxform").submit();
+               	}else{
+               		alert('Please select, Any single faculty.');
+               	}
+                
             },
             Cancel: function() {
                 $(this).dialog('close');
             }
         }
-    });
+    });    
 });
 </script>
 <style>
-
-	body {
-		margin: 40px 10px;
-		padding: 0;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
-
+body {
+	margin: 40px 10px;
+	padding: 0;
+	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 14px;
+}
 </style>
 
-	
+
 
 
 <fieldset>
-  	<legend>Attendance: </legend>
-  	Select Faculty Name:<select id="facultyName"></select>
-  	
+	<legend>Attendance: </legend>
+	Select Faculty Name:<select id="facultyName"></select>
 	<div id="calEventDialog">
-	    <form>
-	        <fieldset>
-	        <label for="eventTitle">Title</label>
-	        <input type="text" name="eventTitle" id="eventTitle" /><br>
-	        <label for="eventStart">Start Date</label>
-	        <input type="text" name="eventStart" id="eventStart" /><br>
-	        <label for="eventEnd">End Date</label>
-	        <input type="text" name="eventEnd" id="eventEnd" /><br>
-	        <input type="radio" id="allday" name="allday" value="1">
-	        Half Day
-	        <input type="radio" id="allday" name="allday" value="2">
-	        All Day
-	        </fieldset>
-	    </form>
+		<form name="ajaxform" id="ajaxform">
+			<fieldset>
+				<table>
+					<tr>
+						<th>Enter Hours:</th>
+						<td>
+							<input type="hidden" id="action" name="action" />
+							<input type="hidden" id="id" name="id" />
+							<input type="hidden" id="facultyId" name="facultyId" />
+							<input	type="hidden" id="attendanceDate" name="attendanceDate" />
+							<input	type="text" id="noOfHours" name="noOfHours" value="1" /></td>
+					</tr>
+				</table>
+
+			</fieldset>
+		</form>
 	</div>
-	<div style="border:solid 2px red;">
-	        <div id='myCalendar'></div>
+	<div style="border: solid 2px red;">
+		<div id='myCalendar'></div>
 	</div>
 
 </fieldset>

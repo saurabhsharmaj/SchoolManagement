@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.dataTables.css" type="text/css">
 <link href='${pageContext.request.contextPath}/css/fullcalendar.css' rel='stylesheet' />
-<link href='${pageContext.request.contextPath}/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.autocomplete.js"></script>

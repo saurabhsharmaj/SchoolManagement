@@ -7,6 +7,7 @@ import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 import com.sfm.model.CompoundFees;
 import com.sfm.model.Data;
+import com.sfm.model.Faculty;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.util.JQueryDataTableParamModel;
@@ -31,4 +32,6 @@ public interface Dao<T, PK extends Serializable> {
 	
 	public List<Object[]> getUserByNextPaymentDate();
 	public User validateUser(String username, String password);
+	public List<Faculty> listAttendanceByFacultyId(Integer facultyId,
+			Class<Faculty> clazz);
 }
