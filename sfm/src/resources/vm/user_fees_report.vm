@@ -80,7 +80,7 @@
 #end
 </table>
 <p><b>Total Fees</b>: $user.studentFees &nbsp; 
-<b>Total Expenses</b>:$compoundFees.totalExpenses
+<b>Total Expenses</b>:
 	#if(!$compoundFees.totalExpenses)
 		0.0						
 	#else
