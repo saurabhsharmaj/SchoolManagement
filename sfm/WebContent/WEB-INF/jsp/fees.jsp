@@ -5,11 +5,20 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <script>
 function getPendingValue(value){
-$('#pendingFees').val(parseInt($('#studentFees').val()) - parseInt($('#totalPaidFees').text()) - parseInt(value));
+	if(getValue(value)!=0){
+		$('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- getValue(value) - getValue($('#additionCharges').val()));
+	}
 }
 
 function updateDueAmount(value){
-	$('#pendingFees').val(parseInt($('#totalExpenses').text()) - parseInt($('#totalAdditionCharges').text())- parseInt(value));
+	if(getValue(value)!=0){
+		$('#pendingFees').val(getValue($('#studentFees').val()) + getValue($('#totalExpenses').text()) - getValue($('#totalPaidFees').text())- getValue(value) - getValue($('#paidFees').val()));
+	}
+}
+
+function getValue(value){
+	value = (value==null|| value==''|| value==undefined)?0:value;
+	return parseInt(value);
 }
 function validate(){
 	var action = $('form').attr('action');
@@ -22,12 +31,13 @@ function validate(){
 		return false;
 	}
 	
-	if($('#userId').val()==undefined ||$('#userId').val()==null || $('#userId').val()=='' ){
+	if(($('#paidFees').val()==undefined ||$('#paidFees').val()==null || $('#paidFees').val()=='') &&
+		($('#additionCharges').val()==undefined ||$('#additionCharges').val()==null || $('#additionCharges').val()=='')){
 		alert('User id cannot left blank. Please select any user.');
 		return false;
 	}
 	
-	if($('#pendingFees').val()==0){
+	if($('#pendingFees').val()==0 && $('#additionCharges').val() == 0 ){
 	alert('There is no pending amount.');
 	 return false;
 	}
