@@ -29,6 +29,8 @@ import com.sfm.util.JQueryDataTableParamModel;
 @Repository
 public class DaoImpl<T, PK extends Serializable> implements Dao {
 
+	Session session ;
+			
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -227,6 +229,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		try{
 			return sessionFactory.getCurrentSession();
 		}catch(Exception ex){
+			ex.printStackTrace();
 			return sessionFactory.openSession();
 		}
 	}
