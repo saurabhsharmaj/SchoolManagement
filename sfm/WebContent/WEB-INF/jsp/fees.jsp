@@ -67,7 +67,7 @@ $(function() {
 			</form:label>
 		</td>
 		<td colspan="2">
-			<form:input path="user.fullName" id="userName" cssClass="autocompletesearch"  placeholder="User Name"/>
+			<form:input path="user.fullName" id="userName" cssClass="autocompletesearch-fees"  placeholder="User Name"/>
 		</td> 
 	</tr>
 	<tr>

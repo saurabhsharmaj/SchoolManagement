@@ -63,6 +63,25 @@
 		        
 		    },
 		    onSelect: function (index) {
+		    			$('#userId').val(index.data.id);	    			
+					}
+		    
+		});
+		
+    $('.autocompletesearch-fees').autocomplete({
+			serviceUrl: '${pageContext.request.contextPath}/getUserNames',
+			paramName: "userName",
+			delimiter: ",",
+		    transformResult: function(response) {		    	
+		        return {		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {		            	
+		                return { value: item.firstName +"/"+item.fatherName, data: item };
+		            })
+		            
+		        };
+		        
+		    },
+		    onSelect: function (index) {
 		    			$('#userId').val(index.data.id);
 		    			$('#studentFees').val(index.data.studentFees);
 		    			$('#pendingFees').val(index.data.studentFees - $('#totalPaidFees').text());	    
