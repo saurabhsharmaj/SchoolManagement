@@ -91,7 +91,7 @@
                 for ( var obj in response) {                
                 	var rec = response[obj];                	
                 	var link = linkTemplate;
-                	link = link.replace('#userId#',rec.id);
+                	link = link.replace('#userId#',rec.user.id);
                 	link = link.replace('#name#',rec.user.firstName+""+rec.user.middleName+""+rec.user.lastName +
                 	" / ("+rec.user.fatherName+")-"+formatDate(new Date(rec.nextPaymentDueDate)));
                 	$('.opinion_hmlist1 ul').append(link);

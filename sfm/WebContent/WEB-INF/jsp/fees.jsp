@@ -21,6 +21,16 @@ function validate(){
 		alert('User id cannot left blank. Please select any user.');
 		return false;
 	}
+	
+	if($('#userId').val()==undefined ||$('#userId').val()==null || $('#userId').val()=='' ){
+		alert('User id cannot left blank. Please select any user.');
+		return false;
+	}
+	
+	if($('#pendingFees').val()==0){
+	alert('There is no pending amount.');
+	 return false;
+	}
 }
 
 $(function() {

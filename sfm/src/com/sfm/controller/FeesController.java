@@ -138,7 +138,7 @@ public class FeesController {
 			for (Object[] objects : dataList) {
 				User u = (User) objects[0];
 				Fees f = (Fees) objects[1];
-				f.setUser(u);
+				//f.setUser(u);
 				feesList.add(f);
 			}
 			return feesList;
