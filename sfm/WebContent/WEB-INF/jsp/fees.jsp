@@ -41,23 +41,26 @@ function validate(){
 }
 
 $(function() {
-	if($('#studentFees').val() == parseInt($('#totalPaidFees').text())){
-		$('#paidFees').val(0.0).attr('readonly',true);
-	}
-	$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text()); 
-	
-	if($('#additionCharges').val() !=''){
-		updateDueAmount($('#additionCharges').val());
-	}
-	
-	if($('#paidFees').val() !=''){
-		getPendingValue($('#paidFees').val());
+	if($('#action').val() !='edit'){
+		if($('#studentFees').val() == parseInt($('#totalPaidFees').text())){
+			$('#paidFees').val(0.0).attr('readonly',true);
+		}
+		$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text()); 
+		
+		if($('#additionCharges').val() !=''){
+			updateDueAmount($('#additionCharges').val());
+		}
+		
+		if($('#paidFees').val() !=''){
+			getPendingValue($('#paidFees').val());
+		}
 	}
 	
 });
 </script>
 <fieldset>
   	<legend>fees</legend>
+  	<input type="hidden" id="action" value="${action}"/>
   	<c:url var="action" value="/saveFees/${user.id}" ></c:url>
   	<form:form method="post" action="${action}" commandName="fees" cssClass="bookForm" onsubmit="return validate();">
 	<table>
