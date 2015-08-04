@@ -257,10 +257,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 
 	@Override
 	public List<Object[]> getUserByNextPaymentDate() {
-		String SQL = "Select * from User u right outer join" +
-				" (select * from fees where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month )" +
-				" group by userId order by nextPaymentDueDate) f" +
-				" on u.id = f.userId";
+		String SQL = "Select * from fees f inner join (select userId, MAX(updatedOn) updatedOn  from fees group by userId  order by updatedOn asc) a on a.userId = f.userId and f.updatedOn = a.updatedOn left outer join user u on f.userId = u.id where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month ) AND pendingFees > 0";
 
 		return getSession().createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
 	}

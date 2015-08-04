@@ -8,6 +8,9 @@ function getPendingValue(value){
 $('#pendingFees').val(parseInt($('#studentFees').val()) - parseInt($('#totalPaidFees').text()) - parseInt(value));
 }
 
+function updateDueAmount(value){
+	$('#pendingFees').val(parseInt($('#totalExpenses').text()) - parseInt($('#totalAdditionCharges').text())- parseInt(value));
+}
 function validate(){
 	var action = $('form').attr('action');
 	var patt = new RegExp("[0-9]+$");    
@@ -21,6 +24,9 @@ function validate(){
 }
 
 $(function() {
+	if($('#studentFees').val() == parseInt($('#totalPaidFees').text())){
+		$('#paidFees').val(0.0).attr('readonly',true);
+	}
 	$('#pendingFees').val($('#studentFees').val() - $('#totalPaidFees').text());
 	$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text()); 
 });
@@ -75,7 +81,7 @@ $(function() {
 			<form:input path="user.studentFees" id="studentFees" readonly="true" disabled="true" placeholder="Total Fees"/>		
 		</td> 
 	</tr>
-	<tr>
+	<tr style="display:none;">
 		<td>
 			<form:label path="noOfInstallment" cssClass="nameLabel">
 				<spring:message code="label.noOfInstallment" />
@@ -127,7 +133,7 @@ $(function() {
 		</td>
 		
 		<td colspan="2">
-			<form:input path="additionCharges" id="additionCharges"  placeholder="additionCharges"/>
+			<form:input path="additionCharges" id="additionCharges"  placeholder="additionCharges" onblur="updateDueAmount(this.value);"/>
 			<div style="float: right;width: 80%;"><span>Total Expenses Due:</span><span id="totalExpenses">
 			
 			<c:choose>
