@@ -5,8 +5,7 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <script>
 function getPendingValue(value){
-
-$('#pendingFees').val($('#studentFees').val() - value);
+$('#pendingFees').val(parseInt($('#studentFees').val()) - parseInt($('#totalPaidFees').text()) - parseInt(value));
 }
 
 function validate(){
@@ -20,6 +19,11 @@ function validate(){
 		return false;
 	}
 }
+
+$(function() {
+	$('#pendingFees').val($('#studentFees').val() - $('#totalPaidFees').text());
+	$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text()); 
+});
 </script>
 <fieldset>
   	<legend>fees</legend>
@@ -91,9 +95,17 @@ function validate(){
 		
 		<td colspan="2">
 			<form:input path="paidFees" id="paidFees"  placeholder="paidFees" onblur="getPendingValue(this.value);"/>
-			<!-- <div><span>Total Paid:</span><span>0</span></div>
-			<div><span>Total Expense:</span><span>0</span></div>
-			<div><span>Total Additional Fees:</span><span>0</span></div> -->	
+			<div style="float: right;width: 80%;"><span>Already Paid:</span><span id="totalPaidFees">				
+				<c:choose>
+				    <c:when test="${! empty compoundFees.totalPaidFees}">
+				        ${compoundFees.totalPaidFees} 				       
+				    </c:when>    
+				    <c:otherwise>
+				        0.0
+				    </c:otherwise>
+				</c:choose>
+				</span>
+		   </div>
 		</td> 
 	</tr>
 	<tr>
@@ -115,7 +127,27 @@ function validate(){
 		</td>
 		
 		<td colspan="2">
-			<form:input path="additionCharges" id="additionCharges"  placeholder="additionCharges"/>		
+			<form:input path="additionCharges" id="additionCharges"  placeholder="additionCharges"/>
+			<div style="float: right;width: 80%;"><span>Total Expenses Due:</span><span id="totalExpenses">
+			
+			<c:choose>
+				    <c:when test="${! empty compoundFees.totalExpenses}">
+				        ${compoundFees.totalExpenses} 				       
+				    </c:when>    
+				    <c:otherwise>
+				        0.0
+				    </c:otherwise>
+				</c:choose>
+				</span> / <span>Total Additional Fees Paid:</span><span id="totalAdditionCharges">
+				<c:choose>
+				    <c:when test="${! empty compoundFees.totalAdditionCharges}">
+				        ${compoundFees.totalAdditionCharges} 				       
+				    </c:when>    
+				    <c:otherwise>
+				        0.0
+				    </c:otherwise>
+				</c:choose>
+				</span></div>		
 		</td> 
 	</tr>
 	<tr>

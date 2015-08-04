@@ -65,7 +65,8 @@
 		    onSelect: function (index) {
 		    			$('#userId').val(index.data.id);
 		    			$('#studentFees').val(index.data.studentFees);
-		    			$('#pendingFees').val(index.data.studentFees - $('#paidFees').val());		    
+		    			$('#pendingFees').val(index.data.studentFees - $('#totalPaidFees').text());	    
+		    			$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text());
 					}
 		    
 		});

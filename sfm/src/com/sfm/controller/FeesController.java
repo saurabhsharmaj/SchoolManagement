@@ -69,7 +69,7 @@ public class FeesController {
 		map.put("pagedListHolder", pagedListHolder);
 		
 		map.put("feesList", feesList);
-		
+		map.put("compoundFees", feesService.getCompoundFees(userId));
 		Fees fees = new Fees();
 		fees.setUser(userService.getUserById(userId));
 		map.put("fees", fees);
@@ -114,6 +114,7 @@ public class FeesController {
 		User user = userService.getUserById(userId);
 		map.put("user", user);
 		map.put("feesList", feesList);
+		map.put("compoundFees", feesService.getCompoundFees(userId));
 		Fees fees = feesService.getFeesById(feesId);
 		fees.setUser(user);
 		map.put("fees", fees);

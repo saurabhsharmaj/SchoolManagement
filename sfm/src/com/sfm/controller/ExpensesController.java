@@ -52,7 +52,7 @@ public class ExpensesController {
 		int pageSize = 10;
 		pagedListHolder.setPageSize(pageSize);
 		map.put("pagedListHolder", pagedListHolder);
-		
+		map.put("expenseTypeList", Utils.stringToArray(expenseTypeProperty,"expenseTypeProperty"));
 		map.put("expensesList", expenseList);
 		Charges charges = new Charges();
 		charges.setUser(userService.getUserById(userId));

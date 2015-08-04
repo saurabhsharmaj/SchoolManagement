@@ -149,7 +149,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				"from " +
 				"fees f " +
 				"inner join User u on u.id=f.userId and u.id="+id +" "+
-				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
+				"left outer join (select userId, sum(amount) totalExpenses from charges group by userId) ch on f.userId = ch.userId " +
 				"group by f.userId order by u.id asc";
 		return (CompoundFees) getSession().createSQLQuery(SQL).addEntity(CompoundFees.class).uniqueResult();
 	}
@@ -172,7 +172,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 				"from " +
 				"fees f " +
 				"inner join User u on u.id=f.userId " +
-				"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +				
+				"left outer join (select userId, sum(amount) totalExpenses from charges group by userId) ch on f.userId = ch.userId " +				
 				"group by f.userId ) a " +searchParam + orderByParam;
 		System.out.println(SQL);
 		SQLQuery query = getSession().createSQLQuery(SQL);
