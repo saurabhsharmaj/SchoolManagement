@@ -67,6 +67,7 @@
 		    			$('#studentFees').val(index.data.studentFees);
 		    			$('#pendingFees').val(index.data.studentFees - $('#totalPaidFees').text());	    
 		    			$('#additionCharges').val($('#totalExpenses').text() - $('#totalAdditionCharges').text());
+		    			window.location.href = "/sfm/viewFeesByUserId/"+index.data.id;;
 					}
 		    
 		});

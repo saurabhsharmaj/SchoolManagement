@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lowagie.text.pdf.codec.Base64;
+import com.sfm.model.CompoundFees;
 import com.sfm.model.User;
 import com.sfm.service.ExpenseService;
 import com.sfm.service.FeesService;
 import com.sfm.service.UserService;
 import com.sfm.util.PdfWriterUtil;
+import com.sfm.util.Utils;
  
 /**
  * Handles requests for the application file upload requests
@@ -97,7 +99,9 @@ public class FileDownloadController {
 			params.put("user", user);
             params.put("totalfees", user.getStudentFees());
             params.put("paymentList",  feesService.getFeesByUserId(user.getId()));
-			params.put("compoundFees", feesService.getCompoundFees(user.getId()));
+            CompoundFees cf = feesService.getCompoundFees(user.getId());
+            cf.setTotalPendingFees(Utils.getValue(cf.getTotalFees()) + Utils.getValue(cf.getTotalExpenses()) - Utils.getValue(cf.getTotalAdditionCharges()) - Utils.getValue(cf.getTotalPaidFees()));
+			params.put("compoundFees", cf);
 		} else if(reportName.equalsIgnoreCase("fees_report")){
 			params.put("user", user);
 			params.put("feesList", feesService.listCompoundFees(null).getData());

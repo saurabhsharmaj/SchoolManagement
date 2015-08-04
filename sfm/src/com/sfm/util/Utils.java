@@ -74,4 +74,8 @@ public class Utils {
 		}
 		return sessionMap.get(new Integer(session));
 	}
+
+	public static Double getValue(Double value) {
+		return (value==null)?0:value.doubleValue();
+	}
 }
