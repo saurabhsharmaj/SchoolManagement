@@ -53,10 +53,10 @@ public class FacultyController {
 	}
 
 
-	@RequestMapping(value = "/getAttendanceByFacultyId/{facultyId}",  produces="application/json", method = RequestMethod.POST)
+	@RequestMapping(value = "/getAttendanceByFacultyId/{facultyId}/{month}",  produces="application/json", method = RequestMethod.POST)
 	public @ResponseBody
-	List<Faculty> listAttendanceByFacultyId(@PathVariable("facultyId")Integer facultyId) {
-		List<Faculty> faculties= facultyService.listAttendanceByFaculty(facultyId,new Date().getMonth());
+	List<Faculty> listAttendanceByFacultyId(@PathVariable("facultyId")Integer facultyId,@PathVariable("month")Integer month) {
+		List<Faculty> faculties= facultyService.listAttendanceByFaculty(facultyId,month);
 		return faculties;
 
 	}
@@ -115,7 +115,7 @@ public class FacultyController {
 				Faculty faculty = facultyService.getFacultyById(facultyId);
 				Attendance attendance = new Attendance(id,faculty, new Date(attendanceDate),new Double(noOfHours));				
 				facultyService.saveAttendance(attendance);				
-				return listAttendanceByFacultyId(facultyId);
+				return listAttendanceByFacultyId(facultyId, new Date(attendanceDate).getMonth()+1);
 			}
 
 	@RequestMapping(value = "/pdf/{report_name}/{month}/{facultyId}", method = RequestMethod.GET)

@@ -15,7 +15,7 @@ function selcteFaculty(ref){
 $('#facultyName').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
- 	$('#action').val('getAttendanceByFacultyId/'+valueSelected);               		
+ 	$('#action').val('getAttendanceByFacultyId/'+valueSelected+"/"+ (new Date($myCalendar.fullCalendar('getDate')).getMonth()+1));               		
   	$("#ajaxform").submit();
 });  
 
@@ -102,6 +102,7 @@ $("#ajaxform").submit(function(e)
         data : postData,
         success:function(item, textStatus, jqXHR) 
         { 
+        console.log(item);
         $myCalendar.fullCalendar( 'removeEvents', function(event) {    
         	return true;
 		});       
@@ -192,7 +193,7 @@ body {
 			</fieldset>
 		</form>
 	</div>
-	<div style="border: solid 2px red;">
+	<div>
 		<div id='myCalendar'></div>
 	</div>
 
