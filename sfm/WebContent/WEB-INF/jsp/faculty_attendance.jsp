@@ -68,23 +68,21 @@ $('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
         	
            
             $('#calEventDialog #allday').val([calEvent.className == "gbcs-halfday-event" ? "1" : "2"]).prop('checked', true);
-            $("#calEventDialog").dialog("option", "buttons", [
-                {
-                text: "Save",
-                click: function() {
-                    $(this).dialog("close");
-                }},
-            {
-                text: "Delete",
-                click: function() {
-                    $(this).dialog("close");
-                }},
-            {
-                text: "Cancel",
-                click: function() {
-                    $(this).dialog("close");
-                }}
-            ]);
+            $("#calEventDialog").dialog("option", "buttons", {
+            Save: function() {
+               
+               	if($('#facultyName').val()!=0){
+               		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
+               		$("#ajaxform").submit();
+               	}else{
+               		alert('Please select, Any single faculty.');
+               	}
+                
+            },
+            Cancel: function() {
+                $(this).dialog('close');
+            }
+        });
             $("#calEventDialog").dialog("option", "title", "Edit Event");
             $('#calEventDialog').dialog('open');
         },
