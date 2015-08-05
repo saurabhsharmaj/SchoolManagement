@@ -80,7 +80,7 @@ public class FileDownloadController {
     	Map<Object, Object> params = new HashMap<Object, Object>();
     	params.put("test", "test");
     	getParamsByReport(userService.getUserById(userId), reportName,params);
-       String logoURL = getContextPath(request,"/images/logo.png");
+       String logoURL = Utils.getContextPath(request,"/images/logo.png");
         FileInputStream fin = new FileInputStream(PdfWriterUtil.createPdf(reportName,logoURL,params));
         byte[] contents = IOUtils.toByteArray(fin);
 
@@ -110,15 +110,5 @@ public class FileDownloadController {
 			params.put("expensesList", expenseService.getChargesByUserId(user.getId()));
 		}
 		
-	}
-
-	private String getContextPath(HttpServletRequest request, String resource) throws Exception {
-		URL url = new URL(request.getRequestURL().toString());
-		String host  = url.getHost();		
-		String scheme = url.getProtocol();
-		int port = url.getPort();
-		
-		
-		return scheme+"://"+host+":"+port+"/sfm"+resource;
-	}
+	}	
 }

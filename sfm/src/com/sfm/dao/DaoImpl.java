@@ -371,7 +371,7 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	}
 
 	@Override
-	public List listAttendanceByFacultyId(Integer facultyId, Class clazz) {
+	public List listAttendanceByFacultyId(Integer facultyId, Integer month, Class clazz) {
 		try{
 			session = getSession();
 			String SQL ="select * from sfm.attendance att left outer join sfm.faculty fac on att.facultyId=fac.id where att.facultyId="+facultyId;	

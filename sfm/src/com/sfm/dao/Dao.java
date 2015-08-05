@@ -32,6 +32,6 @@ public interface Dao<T, PK extends Serializable> {
 	
 	public List<Object[]> getUserByNextPaymentDate();
 	public User validateUser(String username, String password);
-	public List<Faculty> listAttendanceByFacultyId(Integer facultyId,
+	public List<Faculty> listAttendanceByFacultyId(Integer facultyId,Integer month,
 			Class<Faculty> clazz);
 }

@@ -17,7 +17,7 @@
 					<th width="60">UserID</th>
 					<th width="160">UserName</th>					
 					<th width="160">Amount</th>
-					<th width="60">Action</th>
+					<th style="width:90px">Action</th>
 				</tr>
 	<c:choose>	
     <c:when test="${!empty expensesList}">			

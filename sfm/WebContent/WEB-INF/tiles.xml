@@ -63,8 +63,13 @@
     
     
     <definition name="viewFacultyAttendance" extends="base.definition">
-        <put-attribute name="title" value="Payment Received" />
+        <put-attribute name="title" value="View Faculty Attendance" />
         <put-attribute name="body" value="/WEB-INF/jsp/faculty_attendance.jsp" />
+    </definition>
+    
+    <definition name="addFacultyView" extends="base.definition">
+        <put-attribute name="title" value="Add Faculty" />
+        <put-attribute name="body" value="/WEB-INF/jsp/faculty.jsp" />
     </definition>
      
 </tiles-definitions>

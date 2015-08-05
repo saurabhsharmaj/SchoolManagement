@@ -1,0 +1,68 @@
+<html>
+<body>
+<table style="width:100%;">
+<tr >
+	<td width="60%" rowspan=2>
+		<span style="vertical-align: middle;">
+		Kuchaman Defence Academy
+		<br>Gaytri Nagar,Jusari-Makrana Road,Megha Highway>
+		<br>Kuchaman City(341508)
+		<br>Nagaur(Rajasthan)
+		<br>Cont.No- 9649656599, 9887373477, 9672601061, 9587590650
+		<br>E-Mail-kuchamandefence@gmail.com, kuchamandefence@yahoo.com
+	</span>
+	</td>	
+	<td width="40%" align="right"><img src=$logoURL ></td>
+</tr>
+<tr>
+	<td colspan=2 align="right"><b>Registration No</b>- 09/NAGAUR/2011-2012</td>
+</tr>
+</table>
+<div class="clear-all"/>
+<div style="padding-bottom:10px;">--------------------------------------------------------------------------------------------------------------------------</div>​​​​​
+<p><b>Name</b>:$faculty.facultyName </p>
+<p><b>Hourly Rate:</b>:$faculty.facultyHourlyRate </p>
+<p><b>Subject:</b>:$faculty.subject </p>
+<p/>
+
+<table border=1>
+<tr>
+	<th>S.No.</th>
+	<th>Date</th>
+	<th>noOfHours</th>	
+	<th>Amount</th>		
+</tr>
+ 
+
+#if ($attendanceList.size() > 0)
+			#set ($rowNumber = 1)			
+			#foreach( $attendance in $attendanceList )			
+			
+			<tr>
+				<td>$rowNumber</td>
+				<td>$attendance.attendanceDate</td>
+				<td>
+					#if(!$attendance.noOfHours)
+						0.0
+						
+					#else
+						$attendance.noOfHours
+						
+					#end
+				</td>
+				<td>
+					#if(!$attendance.noOfHours)
+						0.0						
+					#else
+						#set ($amount = $faculty.facultyHourlyRate * $attendance.noOfHours)
+						$amount
+					#end
+				</td>				
+			</tr>
+		#end	
+#else
+			<tr><td colspan="4" align="center"><b>No Attendance record</b></td></tr>
+#end		
+</table>
+</body>
+</html>

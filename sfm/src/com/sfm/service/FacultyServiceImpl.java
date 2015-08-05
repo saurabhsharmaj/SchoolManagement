@@ -42,9 +42,8 @@ public class FacultyServiceImpl implements FacultyService {
 	}
 
 	@Override
-	public List<Faculty> listAttendanceByFaculty(Integer facultyId) {
+	public List<Faculty> listAttendanceByFaculty(Integer facultyId , Integer month) {
 		// TODO Auto-generated method stub
-		return dao.listAttendanceByFacultyId(facultyId, Attendance.class);
+		return dao.listAttendanceByFacultyId(facultyId, month, Attendance.class);
 	}
-
 }

@@ -162,7 +162,16 @@ body {
 
 <fieldset>
 	<legend>Attendance: </legend>
+	<p style="color: green; font-weight: bold;">
+		To add a New Faculty please click <a
+			href="<c:url value='/addFacultyPage' />"> <img
+			src="<c:url value='/images/vcard_add.png' />"
+			title="Add a New Faculty" />
+		</a>
+	</p>
+	<p>
 	Select Faculty Name:<select id="facultyName"></select>
+	</p>
 	<div id="calEventDialog">
 		<form name="ajaxform" id="ajaxform">
 			<fieldset>

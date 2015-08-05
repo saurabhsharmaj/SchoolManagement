@@ -76,7 +76,7 @@ $(function() {
 				<th width="12.5">Additional Fees</th>
 				<th width="12.5">Pending Fees</th>
 				<th width="12.5">Next Due</th>
-				<th width="12.5">Action</th>
+				<th style="width:1px">Action</th>
 			</tr>
 		</thead>
 </table>

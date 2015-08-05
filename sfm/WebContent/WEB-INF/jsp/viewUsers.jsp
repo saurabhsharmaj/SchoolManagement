@@ -89,7 +89,7 @@ $(function() {
 				<th>firstName</th>
 				<th>stream</th>
 				<th>Session</th>
-				<th width="10">Action</th>
+				<th style="width:90px">Action</th>
 			</tr>
 		</thead>
 	</table>

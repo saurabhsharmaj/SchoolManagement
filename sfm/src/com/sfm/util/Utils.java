@@ -1,8 +1,11 @@
 package com.sfm.util;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
  
@@ -77,5 +80,15 @@ public class Utils {
 
 	public static Double getValue(Double value) {
 		return (value==null)?0:value.doubleValue();
+	}
+	
+	public static String getContextPath(HttpServletRequest request, String resource) throws Exception {
+		URL url = new URL(request.getRequestURL().toString());
+		String host  = url.getHost();		
+		String scheme = url.getProtocol();
+		int port = url.getPort();
+		
+		
+		return scheme+"://"+host+":"+port+"/sfm"+resource;
 	}
 }

@@ -297,6 +297,7 @@ header {
 /*----------------------------------------------Content Area-------------------------------------*/
 #container {
 	background-color: #edf0f5;
+	min-height: 480px;
 }
 
 #container section {
@@ -397,8 +398,7 @@ footer {
 	position: relative;
 	z-index: 150;
 	_position: absolute;
-	_top: expression(eval(document.documentElement.scrollTop + 
-         ( document.documentElement.clientHeight-this.offsetHeight)));
+	
 }
 
 .footer-logos {
