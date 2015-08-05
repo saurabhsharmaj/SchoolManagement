@@ -71,5 +71,10 @@
         <put-attribute name="title" value="Add Faculty" />
         <put-attribute name="body" value="/WEB-INF/jsp/faculty.jsp" />
     </definition>
+    
+    <definition name="facultiesListView" extends="base.definition">
+        <put-attribute name="title" value="List of Faculty" />
+        <put-attribute name="body" value="/WEB-INF/jsp/facultyList.jsp" />
+    </definition>
      
 </tiles-definitions>

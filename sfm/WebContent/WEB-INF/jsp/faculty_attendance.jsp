@@ -151,18 +151,6 @@ $("#ajaxform").submit(function(e)
     });    
 });
 </script>
-<style>
-body {
-	margin: 40px 10px;
-	padding: 0;
-	font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-	font-size: 14px;
-}
-</style>
-
-
-
-
 <fieldset>
 	<legend>Attendance: </legend>
 	<p style="color: green; font-weight: bold;">
@@ -173,7 +161,7 @@ body {
 		</a>
 	</p>
 	<p>
-	Select Faculty Name:<select id="facultyName"></select>
+	Select Faculty Name:<select id="facultyName"></select> <a href="getFacultiesListView">go to download attendance</a>
 	</p>
 	<div id="calEventDialog">
 		<form name="ajaxform" id="ajaxform">

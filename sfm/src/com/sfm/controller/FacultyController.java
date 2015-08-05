@@ -142,4 +142,18 @@ public class FacultyController {
         return response;
     	
     }
+    
+    @RequestMapping("/getFacultiesListView")
+	public String facultiesListView(HttpServletRequest request, HttpServletResponse response,		
+			Map<String, Object> map)
+	{	
+    	List<Faculty> facultyList = facultyService.listFaculty();
+		PagedListHolder pagedListHolder = new PagedListHolder(facultyList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 10;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+    	return "facultiesListView";
+	}
 }
