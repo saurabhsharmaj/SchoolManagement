@@ -20,8 +20,10 @@ $('#facultyName').on('change', function (e) {
 });  
 
 $('#facultyName').empty();
+$('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
 	    $.getJSON('getFacultyName',{},function(data)
 	    {
+	    	
 	        $.each(data, function(i,obj)
 	        {
 	             $('#facultyName').append(

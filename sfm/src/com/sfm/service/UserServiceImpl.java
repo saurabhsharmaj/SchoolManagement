@@ -12,7 +12,7 @@ import com.sfm.model.User;
 import com.sfm.util.JQueryDataTableParamModel;
 
 
-
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -44,21 +44,25 @@ public class UserServiceImpl implements UserService {
 		return (User) dao.getById(userId,User.class);
 	}
 
+	@Transactional
 	@Override
 	public Data listUsers(JQueryDataTableParamModel param) {
 		return dao.list(param, User.class);
 	}
 
+	@Transactional
 	@Override
 	public List<User> listUsersByName(String userName) {
 		return dao.listUsersByName(userName) ;
 	}
 
+	@Transactional
 	@Override
 	public User validateUser(String username, String password) {
 		return dao.validateUser(username,password);
 	}
 
+	@Transactional
 	@Override
 	public int listCount() {
 		return dao.listCount(User.class);

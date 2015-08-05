@@ -23,7 +23,6 @@ import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 import com.sfm.model.CompoundFees;
 import com.sfm.model.Data;
-import com.sfm.model.Faculty;
 import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.util.JQueryDataTableParamModel;
@@ -374,8 +373,11 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 	public List listAttendanceByFacultyId(Integer facultyId, Integer month, Class clazz) {
 		try{
 			session = getSession();
-			String SQL ="select * from sfm.attendance att left outer join sfm.faculty fac on att.facultyId=fac.id where att.facultyId="+facultyId;	
-			List list = session.createSQLQuery(SQL).addEntity("att",Attendance.class).list();
+			String SQL ="select * from sfm.attendance att left outer join sfm.faculty fac on att.facultyId=fac.id where att.facultyId= :facultyId and month(attendanceDate)= :month order by attendanceDate asc";	
+			SQLQuery query = session.createSQLQuery(SQL);
+			query.setParameter("facultyId", facultyId);
+			query.setParameter("month", month);
+			List list = query.addEntity("att",Attendance.class).list();
 			return list;
 		}finally{
 			closeSession(session);

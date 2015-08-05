@@ -11,7 +11,7 @@ import com.sfm.model.Charges;
 import com.sfm.model.CompoundExpenses;
 
 
-
+@Transactional
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 

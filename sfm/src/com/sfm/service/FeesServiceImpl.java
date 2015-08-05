@@ -13,7 +13,7 @@ import com.sfm.model.Fees;
 import com.sfm.util.JQueryDataTableParamModel;
 
 
-
+@Transactional
 @Service
 public class FeesServiceImpl implements FeesService {
 

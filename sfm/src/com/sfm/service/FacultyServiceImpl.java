@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sfm.dao.Dao;
 import com.sfm.model.Attendance;
 import com.sfm.model.Faculty;
 
+@Transactional
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
