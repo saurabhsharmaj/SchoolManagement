@@ -35,34 +35,47 @@
  
 
 #if ($attendanceList.size() > 0)
-			#set ($rowNumber = 1)			
+			#set ($rowNumber = 1)
+			#set ($totalHours = 0)
+			#set ($totalAmount = 0)			
 			#foreach( $attendance in $attendanceList )			
-			
+				<tr>
+					<td>$rowNumber</td>
+					<td>$date.format('dd-MMM-yyyy', $attendance.attendanceDate)</td>
+					<td>
+						#if(!$attendance.noOfHours)
+							0.0
+							#set ($totalHours = $totalHours + 0)
+				
+						#else
+							$attendance.noOfHours
+							#set ($totalHours = $totalHours+ $attendance.noOfHours)
+				
+							
+						#end
+					</td>
+					<td>
+						#if(!$attendance.noOfHours)
+							0.0	
+							#set ($totalAmount = $totalAmount + 0)				
+						#else
+							#set ($amount = $faculty.facultyHourlyRate * $attendance.noOfHours)
+							$amount
+							#set ($totalAmount = $totalAmount + $amount)
+						#end
+					</td>				
+				</tr>
+				#set ($rowNumber =  $rowNumber + 1)
+			#end
 			<tr>
-				<td>$rowNumber</td>
-				<td>$attendance.attendanceDate</td>
-				<td>
-					#if(!$attendance.noOfHours)
-						0.0
-						
-					#else
-						$attendance.noOfHours
-						
-					#end
-				</td>
-				<td>
-					#if(!$attendance.noOfHours)
-						0.0						
-					#else
-						#set ($amount = $faculty.facultyHourlyRate * $attendance.noOfHours)
-						$amount
-					#end
-				</td>				
-			</tr>
-		#end	
+				<td>Grand Total</td>
+				<td>$totalHours</td>
+				<td>$totalAmount</td>
+			</tr>	
 #else
 			<tr><td colspan="4" align="center"><b>No Attendance record</b></td></tr>
-#end		
+#end
+				
 </table>
 </body>
 </html>
