@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfm.model.Attendance;
+import com.sfm.model.Charges;
 import com.sfm.model.Faculty;
 import com.sfm.service.FacultyService;
 import com.sfm.util.PdfWriterUtil;
@@ -155,5 +156,14 @@ public class FacultyController {
 		pagedListHolder.setPageSize(pageSize);
 		map.put("pagedListHolder", pagedListHolder);
     	return "facultiesListView";
+	}
+    
+    @RequestMapping("/deleteFaculty/{id}")
+	public @ResponseBody String deleteFees(
+			@PathVariable("id") Integer id)
+	{
+    	Faculty faculty = facultyService.getFacultyById(id);
+    	facultyService.removeFaculty(faculty);
+		return "/sfm/viewExpensesByUserId/"+faculty.getId();
 	}
 }

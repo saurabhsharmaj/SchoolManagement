@@ -157,4 +157,12 @@ public class FeesController {
 			feesService.removeFees(fees);
 			return "/sfm/viewFeesByUserId/"+fees.getUser().getId();
 		}
+		
+		@RequestMapping("/deleteAllFees/{userId}")
+		public @ResponseBody String deleteAllFees(
+				@PathVariable("userId") Integer userId)
+		{			
+			feesService.removeFeesByUserId(userId);
+			return "/sfm/viewFees";
+		}
 }

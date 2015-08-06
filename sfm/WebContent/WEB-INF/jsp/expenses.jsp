@@ -127,10 +127,12 @@
 						<td>${expense.expenseType}</td>
 						<td><a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />">${expense.description}</a></td>
 						<td>${expense.amount}</td>
-						<td><img src="<c:url value='/images/vcard_delete.png' />"
-							title="Delete User" onclick="javascript:deleteUser(${expense.id})" />
+						<td>
+							<a href="#" id ="${expense.id}" url='/sfm/deleteExpense/${expense.id}' class="deleteButton"> <img
+								src="<c:url value='/images/vcard_delete.png' />" title="Delete Expense" />
+						</a>
 							<a href="<c:url value='/editExpense/${expense.user.id}/${expense.id}' />"> <img
-								src="<c:url value='/images/vcard_add.png' />" title="Edit Fees" />
+								src="<c:url value='/images/vcard_add.png' />" title="Edit Expense" />
 						</a></td>
 					</tr>
 				</c:forEach>

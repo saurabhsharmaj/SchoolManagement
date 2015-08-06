@@ -117,6 +117,49 @@
                 }
             }
         });
+        
+		$('.deleteButton').on('click',function(ref){
+		 	$('#deleteId').val($(this).attr('id')); 
+		 	$('#deleteURL').val($(this).attr('url')); 	
+			$('#dialog-confirm').dialog('open');
+		});
+
+$( "#dialog-confirm" ).dialog({
+		resizable: false,
+        autoOpen: false,
+        buttons: {
+        "Delete": function() {
+          	$("#ajaxform").submit();
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+ 
+ $("#ajaxform").submit(function(e)
+{
+	var postData = $(this).serializeArray();
+    $.ajax(
+    {
+        url : $('#deleteURL').val(),
+        type: "get",
+        data : postData,
+        success:function(response, textStatus, jqXHR) 
+        {      
+            $('#dialog-confirm').dialog('close');
+            window.location.href=response;
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {        
+          
+           $('#dialog-confirm').dialog('close'); 
+        }
+    });    
+     e.preventDefault();    
+});
+        
+        
  });
 </script>
 
@@ -139,6 +182,12 @@
 	<div class="wrapper row3">
 		<tiles:insertAttribute name="footer" />
 	</div>
-
+<div id="dialog-confirm" title="Delete">
+<form name="ajaxform" id="ajaxform">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These item will be permanently deleted and cannot be recovered. Are you sure?</p>
+  <input type="hidden" id="deleteId">
+  <input type="hidden" id="deleteURL">
+</form>
+</div>
 </body>
 </html>

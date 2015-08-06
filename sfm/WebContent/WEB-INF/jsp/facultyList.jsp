@@ -37,8 +37,10 @@
 						<td><a href="<c:url value='/editFaculty/${faculty.id}' />">${faculty.facultyName}</a></td>
 						<td>${faculty.subject}</td>
 						<td>${faculty.facultyHourlyRate}</td>
-						<td><img src="<c:url value='/images/vcard_delete.png' />"
-							title="Delete User" onclick="javascript:deleteUser(${expense.id})" />
+						<td>
+							<a href="#" id ="${faculty.id}" url='/sfm/deleteFaculty/${faculty.id}' class="deleteButton"> <img
+								src="<c:url value='/images/vcard_delete.png' />" title="Delete Faculty" />
+							</a>
 							<a href="<c:url value='/editFaculty/${faculty.id}' />"> <img
 								src="<c:url value='/images/vcard_add.png' />" title="Edit Faculty" />
 						</a>

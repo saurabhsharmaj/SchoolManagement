@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfm.model.Charges;
+import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.service.ExpenseService;
 import com.sfm.service.UserService;
@@ -109,5 +111,14 @@ public class ExpensesController {
 		Charges expense,Map<String, Object> map) {			
 			expenseService.addCharges(expense);			
 			return "redirect:/viewExpensesByUserId/"+expense.getUser().getId();
+		}
+		
+		@RequestMapping("/deleteExpense/{id}")
+		public @ResponseBody String deleteFees(
+				@PathVariable("id") Integer id)
+		{
+			Charges ch = expenseService.getChargesById(id);
+			expenseService.removeCharges(ch);
+			return "/sfm/viewExpensesByUserId/"+ch.getUser().getId();
 		}
 }

@@ -28,7 +28,7 @@ public class FacultyServiceImpl implements FacultyService {
 	}
 
 	@Override
-	public void removeFaculty(Integer id) {
+	public void removeFaculty(Faculty id) {
 		dao.remove(id);
 	}
 

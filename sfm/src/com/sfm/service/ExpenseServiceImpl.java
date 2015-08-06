@@ -24,7 +24,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Transactional
-	public void removeCharges(Integer id) {
+	public void removeCharges(Charges id) {
 		dao.remove(id);
 	}
 

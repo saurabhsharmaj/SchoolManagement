@@ -150,11 +150,12 @@ public class UserController {
 	}
 
 	@RequestMapping("/deleteuser/{userId}")
-	public String deleteUser(
+	public @ResponseBody String deleteUser(
 			@PathVariable("userId") Integer userId)
 	{
-		userService.removeUser(userService.getUserById(userId));
-		return "redirect:/viewUserList";
+		User user = userService.getUserById(userId);
+		userService.removeUser(user);
+		return "/sfm/viewUserList";
 	}
 
 	@RequestMapping("/addUser")

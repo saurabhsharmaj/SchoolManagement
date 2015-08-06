@@ -20,6 +20,13 @@ $(function() {
 		"sDom" : "<'row'<'spanPag'l><'span6'p><'spanSer'f>r>t<'row'<'spanPage'i><'span6'p>>",
          "oLanguage" : {"sLengthMenu" : "_MENU_ records per page"},          
          "bProcessing": true,
+         "fnInitComplete": function(oSettings, json){
+         		$('.deleteButton').on('click',function(ref){
+				 	$('#deleteId').val($(this).attr('id')); 
+				 	$('#deleteURL').val($(this).attr('url')); 	
+					$('#dialog-confirm').dialog('open');
+				});
+         	},
          "columnDefs": [
             {
                
@@ -36,7 +43,7 @@ $(function() {
             },{
                
                 "render": function ( data, type, row ) {              
-                    return '<a href=deleteuser/'+row.id+'><img src="images/vcard_delete.png" title="Delete User"/></a>&nbsp;<a href=viewFeesByUserId/'+row.id+'><img src="images/vcard_add.png" title="Edit User"/></a>';
+                    return '<a href="#" id="'+row.id+'" url="/sfm/deleteAllFees/'+row.id+'" class="deleteButton"><img src="images/vcard_delete.png" title="Delete All Fees Payments"/></a>&nbsp;<a href=viewFeesByUserId/'+row.id+'><img src="images/vcard_add.png" title="Edit Fees Payments"/></a>';
                 },
                 "targets": 8
             }]         

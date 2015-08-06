@@ -371,4 +371,18 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 			closeSession(session);
 		}
 	}
+
+	@Override
+	public void removeFeesByUserId(Integer userId) {
+		try{
+			session = getSession();
+			String SQL ="delete from fees where userId =:userId";	
+			SQLQuery query = session.createSQLQuery(SQL);
+			query.setParameter("userId", userId);	
+			query.executeUpdate();
+		}finally{
+			closeSession(session);
+		}
+		
+	}
 }

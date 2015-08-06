@@ -59,4 +59,9 @@ public class FeesServiceImpl implements FeesService {
 	public Data listCompoundFees(JQueryDataTableParamModel param) {
 		return dao.listCompoundFees(param);
 	}
+
+	@Override
+	public void removeFeesByUserId(Integer userId) {
+		dao.removeFeesByUserId(userId);		
+	}
 }
