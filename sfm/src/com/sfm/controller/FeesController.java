@@ -148,4 +148,13 @@ public class FeesController {
 			return feesList;
 
 		}
+		
+		@RequestMapping("/deletefees/{feesId}")
+		public @ResponseBody String deleteFees(
+				@PathVariable("feesId") Integer feesId)
+		{
+			Fees fees = feesService.getFeesById(feesId);
+			feesService.removeFees(fees);
+			return "/sfm/viewFeesByUserId/"+fees.getUser().getId();
+		}
 }

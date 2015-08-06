@@ -153,7 +153,7 @@ public class UserController {
 	public String deleteUser(
 			@PathVariable("userId") Integer userId)
 	{
-		userService.removeUser(userId);
+		userService.removeUser(userService.getUserById(userId));
 		return "redirect:/viewUserList";
 	}
 

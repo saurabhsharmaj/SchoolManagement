@@ -16,7 +16,7 @@ public interface FeesService {
 	public Fees getFeesById(Integer feesId);
 	public List<Fees> getFeesByUserId(Integer userId);
 	public List<Fees> listFees();
-	public void removeFees(Integer id);
+	public void removeFees(Fees id);
 	public CompoundFees getCompoundFees(Integer id);
 	public Data listCompoundFees(JQueryDataTableParamModel param);
 }

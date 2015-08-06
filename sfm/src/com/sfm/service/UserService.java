@@ -15,7 +15,7 @@ public interface UserService {
 	public User getUserById(Integer userId);
 	public List<User> listUsers();
 	public Data listUsers(JQueryDataTableParamModel param);
-	public void removeUser(Integer id);
+	public void removeUser(User user);
 	public List<User> listUsersByName(String userName);
 	public User validateUser(String username, String password);
 	public int listCount();

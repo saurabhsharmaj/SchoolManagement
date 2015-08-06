@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public void removeUser(Integer id) {
-		dao.remove(id);
+	public void removeUser(User user) {
+		dao.remove(user);
 	}
 
 	@Transactional

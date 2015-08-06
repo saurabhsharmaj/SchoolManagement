@@ -26,7 +26,7 @@ public class FeesServiceImpl implements FeesService {
 	}
 
 	@Transactional
-	public void removeFees(Integer id) {
+	public void removeFees(Fees id) {
 		dao.remove(id);
 	}
 
