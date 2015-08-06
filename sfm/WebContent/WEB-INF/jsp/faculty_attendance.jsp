@@ -16,7 +16,7 @@ $('#facultyName').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
  	$('#action').val('getAttendanceByFacultyId/'+valueSelected+"/"+ (new Date($myCalendar.fullCalendar('getDate')).getMonth()+1));               		
-  	$("#ajaxform").submit();
+  	$("#attendanceform").submit();
 });  
 
 $('#facultyName').empty();
@@ -73,7 +73,7 @@ $('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
                
                	if($('#facultyName').val()!=0){
                		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
-               		$("#ajaxform").submit();
+               		$("#attendanceform").submit();
                	}else{
                		alert('Please select, Any single faculty.');
                	}
@@ -89,7 +89,7 @@ $('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
         editable: true
     });
 
-$("#ajaxform").submit(function(e)
+$("#attendanceform").submit(function(e)
 {
     var postData = $(this).serializeArray();
     var formURL = $('#action').val();
@@ -136,7 +136,7 @@ $("#ajaxform").submit(function(e)
                
                	if($('#facultyName').val()!=0){
                		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
-               		$("#ajaxform").submit();
+               		$("#attendanceform").submit();
                	}else{
                		alert('Please select, Any single faculty.');
                	}
@@ -162,7 +162,7 @@ $("#ajaxform").submit(function(e)
 	Select Faculty Name:<select id="facultyName"></select> <a href="getFacultiesListView">go to download attendance</a>
 	</p>
 	<div id="calEventDialog">
-		<form name="ajaxform" id="ajaxform">
+		<form name="attendanceform" id="attendanceform">
 			<fieldset>
 				<table>
 					<tr>
