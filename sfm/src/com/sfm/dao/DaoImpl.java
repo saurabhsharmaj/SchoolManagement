@@ -223,9 +223,9 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 					"count(noOfInstallment)," +
 					"sum(paidFees) totalPaidFees," +
 					"sum(additionCharges) totalAdditionCharges," +
-					"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
-					"nextPaymentDueDate nextDueDate, " +
-					"totalExpenses  " +
+					"totalFees+ IFNULL(sum(totalExpenses),0)-(IFNULL(sum(paidFees),0) + IFNULL(sum(additionCharges),0)) totalPendingFees," +
+					"IFNULL(sum(totalExpenses),0) totalExpenses,"+					
+					"nextPaymentDueDate nextDueDate " +
 					"from " +
 					"fees f " +
 					"inner join User u on u.id=f.userId " +
@@ -342,18 +342,6 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 			closeSession(session);
 		}
 
-	}
-
-	@Override
-	public List<Object[]> getUserByNextPaymentDate() {
-		try{
-			session = getSession();
-			String SQL = "Select * from fees f inner join (select userId, MAX(updatedOn) updatedOn  from fees group by userId  order by updatedOn asc) a on a.userId = f.userId and f.updatedOn = a.updatedOn left outer join user u on f.userId = u.id where nextPaymentDueDate BETWEEN  now() and DATE_ADD( now(), INTERVAL 1 month ) AND pendingFees > 0";
-
-			return session.createSQLQuery(SQL).addEntity("u",User.class).addEntity("f",Fees.class).list();
-		}finally{
-			closeSession(session);
-		}
 	}
 
 	@Override

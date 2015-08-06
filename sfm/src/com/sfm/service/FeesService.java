@@ -18,6 +18,5 @@ public interface FeesService {
 	public List<Fees> listFees();
 	public void removeFees(Integer id);
 	public CompoundFees getCompoundFees(Integer id);
-	public List<Object[]> getUserByNextPaymentDate();
 	public Data listCompoundFees(JQueryDataTableParamModel param);
 }

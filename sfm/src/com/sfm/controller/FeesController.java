@@ -43,6 +43,9 @@ public class FeesController {
 	 
 	 @Value("${TOTAL_FEES}")
 	 private Double totalFees;
+	 
+	 @Value("${dueDateNotificationCriteria}")
+	 private Integer dueDateNotificationCriteria;
 	
 	 @RequestMapping(value = "/listFeesDATA",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
@@ -134,14 +137,13 @@ public class FeesController {
 		
 		@RequestMapping(value = "/getUserByNextPaymentDate",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
-		List<Fees> getTags() {
-			List<Fees> feesList= new ArrayList<Fees>();
-			List<Object[]> dataList = feesService.getUserByNextPaymentDate();
-			for (Object[] objects : dataList) {
-				User u = (User) objects[0];
-				Fees f = (Fees) objects[1];
-				//f.setUser(u);
-				feesList.add(f);
+		List<CompoundFees> getUserByNextPaymentDate() {
+			List<CompoundFees> feesList= new ArrayList<CompoundFees>();
+			Data data = feesService.listCompoundFees(null);
+			for (CompoundFees cf : (List<CompoundFees>)data.getData()) {
+				if(Utils.checkDateBetweenCriteria(cf.getNextDueDate(), dueDateNotificationCriteria) && cf.getTotalPaidFees() > 0){
+					feesList.add(cf);
+				}
 			}
 			return feesList;
 

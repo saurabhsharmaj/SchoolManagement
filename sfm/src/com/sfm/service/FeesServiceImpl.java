@@ -56,11 +56,6 @@ public class FeesServiceImpl implements FeesService {
 	}
 
 	@Override
-	public List<Object[]> getUserByNextPaymentDate() {
-		return dao.getUserByNextPaymentDate();
-	}
-
-	@Override
 	public Data listCompoundFees(JQueryDataTableParamModel param) {
 		return dao.listCompoundFees(param);
 	}

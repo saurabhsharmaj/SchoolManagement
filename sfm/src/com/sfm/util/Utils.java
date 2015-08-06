@@ -1,6 +1,8 @@
 package com.sfm.util;
 
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -91,4 +93,11 @@ public class Utils {
 		
 		return scheme+"://"+host+":"+port+"/sfm"+resource;
 	}
+
+	public static boolean checkDateBetweenCriteria(Date nextDueDate,
+			Integer dueDateNotificationCriteria) {
+		Calendar date = Calendar.getInstance();
+		date.add(Calendar.DATE, dueDateNotificationCriteria);		
+		return nextDueDate.after(new Date()) && nextDueDate.before(date.getTime());
+	}	
 }
