@@ -34,4 +34,5 @@ public interface Dao<T, PK extends Serializable> {
 	public List<Faculty> listAttendanceByFacultyId(Integer facultyId,Integer month,
 			Class<Faculty> clazz);
 	public void removeFeesByUserId(Integer userId);
+	public void removeFacultyAttendance(Integer attendanceId);
 }

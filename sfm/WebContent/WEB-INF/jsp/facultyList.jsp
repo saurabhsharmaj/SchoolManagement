@@ -43,10 +43,13 @@
 							</a>
 							<a href="<c:url value='/editFaculty/${faculty.id}' />"> <img
 								src="<c:url value='/images/vcard_add.png' />" title="Edit Faculty" />
-						</a>
-						<a class="downloadPdf" id="${faculty.id}"><img
-								src="<c:url value='/images/pdf.png' />" title="Download Attendance Report" />
-						</a>
+							</a>
+							<a class="downloadPdf" id="${faculty.id}"><img
+									src="<c:url value='/images/pdf.png' />" title="Download Attendance Report" />
+							</a>
+							<a href="/sfm/detailAttendanceById/${faculty.id}/-1"><img
+									src="<c:url value='/images/view_detail.png' />" title="Attendance Detail" />
+							</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -130,7 +133,7 @@ $('.downloadPdf').on('click',function(ref){
         width: 400,
         buttons: {
             Save: function() {
-             var action = 'pdf/faculty_attendance_report/'+$('#month').val()+"/"+$('#facultyId').val();             
+             var action = '/sfm/pdf/faculty_attendance_report/'+$('#month').val()+"/"+$('#facultyId').val();             
              $('#action').val(action);             
              $.download(action,'faculty_attendance_report','GET');
               $(this).dialog('close');           

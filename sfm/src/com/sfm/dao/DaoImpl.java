@@ -385,4 +385,21 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		}
 		
 	}
+
+	@Override
+	public void removeFacultyAttendance(Integer attendanceId) {
+
+		try{
+			session = getSession();
+			String SQL ="delete from attendance where id =:attendanceId";	
+			SQLQuery query = session.createSQLQuery(SQL);
+			query.setParameter("attendanceId", attendanceId);	
+			query.executeUpdate();
+		}finally{
+			closeSession(session);
+		}
+		
+	
+		
+	}
 }

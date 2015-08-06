@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfm.model.Attendance;
-import com.sfm.model.Charges;
 import com.sfm.model.Faculty;
 import com.sfm.service.FacultyService;
 import com.sfm.util.PdfWriterUtil;
@@ -111,14 +110,27 @@ public class FacultyController {
 			{
 				String id =  request.getParameter("id");		
 				String attendanceDate = request.getParameter("attendanceDate");
-				String noOfHours = request.getParameter("noOfHours");
-				System.out.println("faculty Id:"+id +" noOfHour:"+noOfHours);
+				String noOfHours = request.getParameter("noOfHours");				
 				Faculty faculty = facultyService.getFacultyById(facultyId);
-				Attendance attendance = new Attendance(id,faculty, new Date(attendanceDate),new Double(noOfHours));				
+				Attendance attendance = new Attendance(id,faculty, Utils.formatDate(attendanceDate), new Double(noOfHours));				
 				facultyService.saveAttendance(attendance);				
-				return listAttendanceByFacultyId(facultyId, new Date(attendanceDate).getMonth()+1);
+				return listAttendanceByFacultyId(facultyId, Utils.formatDate(attendanceDate).getMonth()+1);
 			}
-
+	
+	@RequestMapping(value="/saveAttendancePage/{id}" , method = RequestMethod.POST)
+	public String saveAttendancePage(
+			@PathVariable("id")Integer facultyId,
+			HttpServletRequest request, HttpServletResponse response,Map<String, Object> map)
+			{
+				String id =  request.getParameter("id");		
+				String attendanceDate = request.getParameter("attendanceDate");
+				String noOfHours = request.getParameter("noOfHours");				
+				Faculty faculty = facultyService.getFacultyById(facultyId);
+				Attendance attendance = new Attendance(id,faculty, Utils.formatDate(attendanceDate), new Double(noOfHours));				
+				facultyService.saveAttendance(attendance);				
+				return "redirect:/detailAttendanceById/"+facultyId+"/-1";
+			}
+	
 	@RequestMapping(value = "/pdf/{report_name}/{month}/{facultyId}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> downloadAttendanceReport(HttpServletRequest request,
     		@PathVariable("report_name") String reportName, 
@@ -165,5 +177,55 @@ public class FacultyController {
     	Faculty faculty = facultyService.getFacultyById(id);
     	facultyService.removeFaculty(faculty);
 		return "/sfm/viewExpensesByUserId/"+faculty.getId();
+	}
+    
+    
+    @RequestMapping(value="detailAttendanceById/{facultyId}/{month}")
+	public String detailAttendanceById(@PathVariable("facultyId")Integer facultyId, @PathVariable("month")Integer month, HttpServletRequest request, HttpServletResponse response, Map<String, Object> map) {		
+		if(month==-1){
+			month = new Date().getMonth() + 1;
+		}
+    	List<Faculty> facultyList = facultyService.listAttendanceByFaculty(facultyId,month);
+		PagedListHolder pagedListHolder = new PagedListHolder(facultyList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 5;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+		map.put("facultyList", facultyList);
+		Attendance attendance = new Attendance();
+		attendance.setFaculty(facultyService.getFacultyById(facultyId));
+		map.put("attendance", attendance);		
+		return "viewAttendancePage";
+	}
+    
+    @RequestMapping("/deleteFacultyAttendance/{facultyId}/{attendanceId}")
+	public @ResponseBody String deleteFacultyAttendance(
+			@PathVariable("facultyId") Integer facultyId, @PathVariable("attendanceId") Integer attendanceId)
+	{    	
+    	facultyService.removeFacultyAttendance(attendanceId);
+		return "/sfm/detailAttendanceById/"+facultyId+"/-1";
+	}
+    
+    @RequestMapping("/editFacultyAttendance/{facultyId}/{attendanceId}/{month}")
+	public String editFacultyAttendance(
+			@PathVariable("facultyId")Integer facultyId, @PathVariable("attendanceId")Integer attendanceId, @PathVariable("month")Integer month, HttpServletRequest request, HttpServletResponse response,
+			Map<String, Object> map)
+	{
+    	if(month==-1){
+			month = new Date().getMonth() + 1;
+		}
+    	List<Faculty> facultyList = facultyService.listAttendanceByFaculty(facultyId,month);
+		PagedListHolder pagedListHolder = new PagedListHolder(facultyList);
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		int pageSize = 5;
+		pagedListHolder.setPageSize(pageSize);
+		map.put("pagedListHolder", pagedListHolder);
+		map.put("facultyList", facultyList);
+		Attendance attendance = facultyService.getAttendanceById(attendanceId);
+		map.put("facultyId", facultyId);
+		map.put("attendance", attendance);		
+		return "viewAttendancePage";
 	}
 }

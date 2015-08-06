@@ -1,6 +1,9 @@
 package com.sfm.util;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -99,5 +102,27 @@ public class Utils {
 		Calendar date = Calendar.getInstance();
 		date.add(Calendar.DATE, dueDateNotificationCriteria);		
 		return nextDueDate.after(new Date()) && nextDueDate.before(date.getTime());
-	}	
+	}
+
+	public static Date formatDate(Date date) {
+		System.out.println(date);
+		String nDate = new SimpleDateFormat("MM-dd-yyyy").format(date);
+		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+		try {
+			date= df.parse(nDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 return date;
+	}
+
+	public static Date formatDate(String attendanceDate) {
+		Date date = new Date();
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(attendanceDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
 }

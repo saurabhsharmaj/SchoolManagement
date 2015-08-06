@@ -48,4 +48,14 @@ public class FacultyServiceImpl implements FacultyService {
 		// TODO Auto-generated method stub
 		return dao.listAttendanceByFacultyId(facultyId, month, Attendance.class);
 	}
+
+	@Override
+	public void removeFacultyAttendance(Integer attendanceId) {
+		dao.removeFacultyAttendance(attendanceId);
+	}
+
+	@Override
+	public Attendance getAttendanceById(Integer attendanceId) {
+		return (Attendance)dao.getById(attendanceId, Attendance.class);
+	}
 }

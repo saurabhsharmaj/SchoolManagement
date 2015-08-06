@@ -60,6 +60,7 @@ $('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
         selectable: true,
         selectHelper: true,
         height: 500,
+        editable: true,
         select: function(start, end, allDay) {
        	 	$('#attendanceDate').val(new Date(start));            
             $('#calEventDialog').dialog('open');
@@ -67,24 +68,23 @@ $('#facultyName').append($('<option></option>').val(0).html('Select Faculty'));
         eventClick: function(calEvent, jsEvent, view) {
         	
            
-            $('#calEventDialog #allday').val([calEvent.className == "gbcs-halfday-event" ? "1" : "2"]).prop('checked', true);
+            //$('#calEventDialog #allday').val([calEvent.className == "gbcs-halfday-event" ? "1" : "2"]).prop('checked', true);
             $("#calEventDialog").dialog("option", "buttons", {
-            Save: function() {
-               
-               	if($('#facultyName').val()!=0){
-               		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
-               		$("#attendanceform").submit();
-               	}else{
-               		alert('Please select, Any single faculty.');
-               	}
-                
-            },
-            Cancel: function() {
-                $(this).dialog('close');
-            }
-        });
-            $("#calEventDialog").dialog("option", "title", "Edit Event");
-            $('#calEventDialog').dialog('open');
+						            Save: function() {
+						               
+						               	if($('#facultyName').val()!=0){
+						               		$('#action').val('saveAttendance/'+$('#facultyName').val());               		
+						               		$("#attendanceform").submit();
+						               	}else{
+						               		alert('Please select, Any single faculty.');
+						               	}
+						                
+						            },
+						            Cancel: function() {
+						                $(this).dialog('close');
+						            }
+						        });
+        	$('#calEventDialog').dialog('open');
         },
         editable: true
     });
@@ -100,10 +100,9 @@ $("#attendanceform").submit(function(e)
         data : postData,
         success:function(item, textStatus, jqXHR) 
         { 
-        console.log(item);
-        $myCalendar.fullCalendar( 'removeEvents', function(event) {    
-        	return true;
-		});       
+       		$myCalendar.fullCalendar( 'removeEvents', function(event) {    
+		        	return true;
+			});       
        	for(var i in item)
 			{			     
 				var newEvent = new Object();

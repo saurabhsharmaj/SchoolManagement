@@ -14,6 +14,8 @@ public interface FacultyService {
 	public void removeFaculty(Faculty id);
 	public List<Faculty> listFaculty();
 	public void saveAttendance(Attendance attendance);
-	public List<Faculty> listAttendanceByFaculty(Integer facultyId, Integer month);	
+	public List<Faculty> listAttendanceByFaculty(Integer facultyId, Integer month);
+	public void removeFacultyAttendance(Integer attendanceId);
+	public Attendance getAttendanceById(Integer attendanceId);	
 
 }

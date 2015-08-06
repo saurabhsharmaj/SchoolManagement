@@ -76,5 +76,10 @@
         <put-attribute name="title" value="List of Faculty" />
         <put-attribute name="body" value="/WEB-INF/jsp/facultyList.jsp" />
     </definition>
-     
+    
+    <definition name="viewAttendancePage" extends="base.definition">
+        <put-attribute name="title" value="Faculty Attendance" />
+        <put-attribute name="body" value="/WEB-INF/jsp/viewFacultyAttendance.jsp" />
+    </definition>
+    
 </tiles-definitions>
