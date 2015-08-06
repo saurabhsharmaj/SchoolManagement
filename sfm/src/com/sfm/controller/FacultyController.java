@@ -171,12 +171,12 @@ public class FacultyController {
 	}
     
     @RequestMapping("/deleteFaculty/{id}")
-	public @ResponseBody String deleteFees(
+	public @ResponseBody String deleteFaculty(
 			@PathVariable("id") Integer id)
 	{
     	Faculty faculty = facultyService.getFacultyById(id);
     	facultyService.removeFaculty(faculty);
-		return "/sfm/viewExpensesByUserId/"+faculty.getId();
+		return "/sfm/getFacultiesListView";
 	}
     
     

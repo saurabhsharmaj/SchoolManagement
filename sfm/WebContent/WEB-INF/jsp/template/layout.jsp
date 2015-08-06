@@ -146,8 +146,8 @@ $( "#dialog-confirm" ).dialog({
         type: "get",
         data : postData,
         success:function(response, textStatus, jqXHR) 
-        {      
-            $('#dialog-confirm').dialog('close');
+        {   
+        	$('#dialog-confirm').dialog('close');
             window.location.href=response;
         },
         error: function(jqXHR, textStatus, errorThrown) 

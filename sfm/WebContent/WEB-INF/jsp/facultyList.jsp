@@ -66,7 +66,7 @@
 	</table>	
 </fieldset>
 <div id="downloadAttendanceReportDialog">
-	<form name="ajaxform" id="ajaxform">
+	<form name="downloadReportForm" id="downloadReportForm">
 		<table>
 		<tr><td>
 		<input type="hidden" id="action" name="action" />
