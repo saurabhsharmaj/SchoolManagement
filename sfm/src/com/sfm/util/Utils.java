@@ -105,7 +105,6 @@ public class Utils {
 	}
 
 	public static Date formatDate(Date date) {
-		System.out.println(date);
 		String nDate = new SimpleDateFormat("MM-dd-yyyy").format(date);
 		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
 		try {

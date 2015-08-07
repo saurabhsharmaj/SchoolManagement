@@ -129,7 +129,7 @@ $('.downloadPdf').on('click',function(ref){
  $('#downloadAttendanceReportDialog').dialog({
         resizable: false,
         autoOpen: false,
-        title: 'Add Event',
+        title: 'Download Attendance Report',
         width: 400,
         buttons: {
             Save: function() {

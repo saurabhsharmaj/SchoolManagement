@@ -12,7 +12,6 @@ public class Data {
 	public Data(Object data,int filterResultSize, int length) {
 		super();
 		this.data = data;		
-		System.out.println("lenght: "+length+" filter length:"+ filterResultSize);
 		iTotalDisplayRecords = filterResultSize;
 		iTotalRecords = length;
 		

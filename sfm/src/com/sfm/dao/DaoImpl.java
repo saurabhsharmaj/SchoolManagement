@@ -233,7 +233,6 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 					"group by f.userId ) a " +searchParam + orderByParam;
 			SQLQuery query = session.createSQLQuery(SQL);
 			if(param != null){
-				System.out.println("search with: "+param.getiDisplayStart()+" - "+param.getiDisplayLength() );
 				query.setFirstResult(param.getiDisplayStart());
 				query.setMaxResults(param.getiDisplayLength());	
 			}

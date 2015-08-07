@@ -108,7 +108,6 @@ public class UserController {
 		}
 		else {
 			user.getUserProfile().setImageUrl(uploadImage(fileName,file));
-			System.out.println("## u :"+user.getId() + "### Profile Id:"+user.getUserProfile().getId());
 			user.getUserProfile().setUser(user);
 			userService.updateUser(user);
 		}
@@ -123,7 +122,6 @@ public class UserController {
                 // Creating the directory to store file
                 String rootPath = System.getProperty("catalina.home");
                 File dir = new File(rootPath + File.separator + "webapps/sfm/tmpFiles");
-                System.out.println("------------------------> "+dir.getAbsolutePath());
                 if (!dir.exists())
                     dir.mkdirs();
  
@@ -182,7 +180,6 @@ public class UserController {
 		addStatisFields(map);		
 		map.put("action","edit");
 		User user = userService.getUserById(userId);
-		System.out.println("#Profile:#"+user.getUserProfile().getImageUrl());
 		map.put("user", userService.getUserById(userId));	
 
 		return "editUser";

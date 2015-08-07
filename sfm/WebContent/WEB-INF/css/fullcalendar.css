@@ -382,8 +382,15 @@ hr.fc-divider {
 	text-align: center;
 }
 
-.fc th,
-.fc td {
+.fc th {
+	color: #FFF;
+	border-style: solid;
+	border-width: 1px;
+	padding: 0;
+	vertical-align: top;
+}
+
+.fc th {
 	border-style: solid;
 	border-width: 1px;
 	padding: 0;

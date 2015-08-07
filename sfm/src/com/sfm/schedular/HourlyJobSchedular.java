@@ -15,7 +15,6 @@ public class HourlyJobSchedular implements Job {
     public void execute(final JobExecutionContext ctx)
             throws JobExecutionException {
         String path = backupDataWithOutDatabase("mysqldump","localhost","3306","teneqs","teneqs","sfm","c:/");
-        System.out.println("Executing Job"+path);
     }
 
     public static String backupDataWithOutDatabase(String dumpExePath, String host, String port, String user, String password, String database, String backupPath) {
@@ -35,15 +34,14 @@ public class HourlyJobSchedular implements Job {
     	batchCommand = dumpExePath + " -h " + host + " --port " + port + " -u " + user + " " + database + " > \"" + backupPath + "" + filepath + "\"";
     	}
     	 
-    	System.out.println(batchCommand);
     	Runtime runtime = Runtime.getRuntime();
     	p = runtime.exec(new String[] { "cmd.exe", "/c", batchCommand });
     	int processComplete = p.waitFor();
     	 
     	if (processComplete == 0) {    	
-    	System.out.println("Backup created successfully for without DB " + database + " in " + host + ":" + port);
+    		System.out.println("Backup created successfully for without DB " + database + " in " + host + ":" + port);
     	} else {    	
-    	System.out.println("Could not create the backup for without DB " + database + " in " + host + ":" + port);
+    		System.out.println("Could not create the backup for without DB " + database + " in " + host + ":" + port);
     	}
     	 
     	} catch (IOException ioe) {

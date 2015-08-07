@@ -229,7 +229,10 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-datepicker .ui-datepicker-header {
 	position: relative;
-	padding: .2em 0;
+	padding: .2em 0;	
+    color: #FFFFFF;
+    border: white solid 1px;
+    background-color: #3A5795;
 }
 .ui-datepicker .ui-datepicker-prev,
 .ui-datepicker .ui-datepicker-next {
@@ -286,7 +289,7 @@ button.ui-button::-moz-focus-inner {
 	padding: .7em .3em;
 	text-align: center;
 	font-weight: bold;
-	border: 0;
+	border: solid 1px;
 }
 .ui-datepicker td {
 	border: 0;
@@ -398,6 +401,7 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog .ui-dialog-titlebar {
 	padding: .4em 1em;
 	position: relative;
+	    color: #3A5795;
 }
 .ui-dialog .ui-dialog-title {
 	float: left;
@@ -446,6 +450,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-draggable .ui-dialog-titlebar {
 	cursor: move;
+	color: #3A5795;
 }
 .ui-draggable-handle {
 	-ms-touch-action: none;
@@ -852,9 +857,7 @@ body .ui-tooltip {
 	color: #333333;
 }
 .ui-widget-header {
-	border: 1px solid #e78f08;
-	background: #f6a828 url("images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x;
-	color: #ffffff;
+	color: #3A5795;
 	font-weight: bold;
 }
 .ui-widget-header a {

@@ -20,7 +20,6 @@ public class QuartzListener extends QuartzInitializerListener {
         ServletContext ctx = sce.getServletContext();
         StdSchedulerFactory factory = (StdSchedulerFactory) ctx.getAttribute(QUARTZ_FACTORY_KEY);
         try {
-        	System.out.println("initilze the quartz schedular.");
             Scheduler scheduler = factory.getScheduler();
             JobDetail jobDetail = JobBuilder.newJob(HourlyJobSchedular.class).build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(

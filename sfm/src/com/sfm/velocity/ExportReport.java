@@ -25,6 +25,5 @@ public class ExportReport {
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);
 		/* show the World */
-		System.out.println(writer.toString());
 	}
 }

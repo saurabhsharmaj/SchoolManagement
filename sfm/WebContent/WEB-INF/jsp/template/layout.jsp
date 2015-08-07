@@ -22,7 +22,8 @@
 <script src='${pageContext.request.contextPath}/js/jquery.dataTables.js'></script>
 
 <script type="text/javascript">
- $(function() {   	
+ $(function() {
+    	
   	$('.datepicker').datepicker({
   	showOn: "button",
       buttonImage: "${pageContext.request.contextPath}/images/calendar.png",
@@ -31,7 +32,6 @@
       });
     
     $.datepicker.formatDate('dd/MMM/yy', new Date());
-    
     var now = new Date();
 	var current;
 	if (now.getMonth() == 11) {

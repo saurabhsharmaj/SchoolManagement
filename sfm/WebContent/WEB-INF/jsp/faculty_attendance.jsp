@@ -128,7 +128,7 @@ $("#attendanceform").submit(function(e)
     $('#calEventDialog').dialog({
         resizable: false,
         autoOpen: false,
-        title: 'Add Event',
+        title: 'Add Attendance',
         width: 400,
         buttons: {
             Save: function() {

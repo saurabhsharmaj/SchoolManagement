@@ -137,7 +137,6 @@ public class FacultyController {
     		@PathVariable("month") Integer month,
     		@PathVariable("facultyId") Integer facultyId) throws Exception {
     	
-    	System.out.println(reportName +""+month +""+ facultyId);
     	Map<Object, Object> params = new HashMap<Object, Object>();
     	params.put("faculty", facultyService.getFacultyById(facultyId));
     	params.put("attendanceList", facultyService.listAttendanceByFaculty(facultyId,month));   	

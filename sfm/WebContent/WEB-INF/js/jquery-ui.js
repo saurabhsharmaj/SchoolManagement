@@ -8319,6 +8319,7 @@ var dialog = $.widget( "ui.dialog", {
 	},
 
 	open: function() {
+		$(document).find('.ui-draggable-handle').attr('style','background-color : #3A5795; color: #FFF;');
 		var that = this;
 		if ( this._isOpen ) {
 			if ( this._moveToTop() ) {
