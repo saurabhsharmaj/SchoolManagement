@@ -138,7 +138,8 @@ public class FacultyController {
     		@PathVariable("facultyId") Integer facultyId) throws Exception {
     	
     	Map<Object, Object> params = new HashMap<Object, Object>();
-    	params.put("faculty", facultyService.getFacultyById(facultyId));
+    	Faculty faculty = facultyService.getFacultyById(facultyId);
+    	params.put("faculty", faculty);
     	params.put("attendanceList", facultyService.listAttendanceByFaculty(facultyId,month));   	
     	
         String logoURL = Utils.getContextPath(request,"/images/logo.png");
@@ -147,7 +148,7 @@ public class FacultyController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = reportName+".pdf";
+        String filename = reportName+"_"+faculty.getFacultyName()+"_"+facultyId+".pdf";
         headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);

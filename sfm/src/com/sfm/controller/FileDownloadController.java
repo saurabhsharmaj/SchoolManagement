@@ -79,14 +79,19 @@ public class FileDownloadController {
         
     	Map<Object, Object> params = new HashMap<Object, Object>();
     	params.put("test", "test");
-    	getParamsByReport(userService.getUserById(userId), reportName,params);
+    	User user = userService.getUserById(userId);
+    	getParamsByReport(user, reportName,params);
        String logoURL = Utils.getContextPath(request,"/images/logo.png");
         FileInputStream fin = new FileInputStream(PdfWriterUtil.createPdf(reportName,logoURL,params));
         byte[] contents = IOUtils.toByteArray(fin);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = reportName+".pdf";
+        String filename = reportName;
+        if(user != null ){
+        	filename += "_"+ user.getFullName()+"_"+user.getId();
+        }
+        filename += ".pdf";
         headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);
