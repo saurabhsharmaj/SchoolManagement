@@ -22,6 +22,8 @@ public class FeesServiceImpl implements FeesService {
 	
 	@Transactional
 	public void addFees(Fees fees) {
+		//update all nextpaymentDueDate Null.		
+		dao.setNullNextPaymentDate(fees.getUser());
 		dao.save(fees);
 	}
 

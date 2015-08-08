@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
@@ -225,11 +226,12 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 					"sum(additionCharges) totalAdditionCharges," +
 					"totalFees+ IFNULL(sum(totalExpenses),0)-(IFNULL(sum(paidFees),0) + IFNULL(sum(additionCharges),0)) totalPendingFees," +
 					"IFNULL(sum(totalExpenses),0) totalExpenses,"+					
-					"nextPaymentDueDate nextDueDate " +
+					"n.nextPaymentDueDate nextDueDate " +
 					"from " +
 					"fees f " +
 					"inner join User u on u.id=f.userId " +
-					"left outer join (select userId, sum(amount) totalExpenses from charges group by userId) ch on f.userId = ch.userId " +				
+					"left outer join (select userId, sum(amount) totalExpenses from charges group by userId) ch on f.userId = ch.userId " +
+					"inner join (Select userId, nextPaymentDueDate from fees where nextPaymentDueDate IS NOT NULL group by userId)n on f.userId = n.userId " +				
 					"group by f.userId ) a " +searchParam + orderByParam;
 			SQLQuery query = session.createSQLQuery(SQL);
 			if(param != null){
@@ -256,12 +258,13 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 					"sum(paidFees) totalPaidFees," +
 					"sum(additionCharges) totalAdditionCharges," +
 					"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
-					"nextPaymentDueDate nextDueDate, " +
+					"n.nextPaymentDueDate nextDueDate, " +
 					"totalExpenses  " +
 					"from " +
 					"fees f " +
 					"inner join User u on u.id=f.userId " +
-					"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +				
+					"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
+					"inner join (Select userId, nextPaymentDueDate from fees where nextPaymentDueDate IS NOT NULL group by userId)n on f.userId = n.userId " +				
 					"group by f.userId ) a " +searchParam + orderByParam;
 			BigInteger count = (BigInteger)session.createSQLQuery(SQL).uniqueResult();
 			return count.intValue();
@@ -400,5 +403,15 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 		
 	
 		
+	}
+
+	@Override
+	public void setNullNextPaymentDate(User user) {
+		session = getSession();
+		String SQL ="Update Fees SET nextPaymentDueDate =:nextPaymentDate where userId =:userId";	
+		SQLQuery query = session.createSQLQuery(SQL);
+		query.setParameter("userId", user.getId());
+		query.setParameter("nextPaymentDate", null);
+		query.executeUpdate();
 	}
 }

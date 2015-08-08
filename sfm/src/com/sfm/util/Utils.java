@@ -100,8 +100,9 @@ public class Utils {
 	public static boolean checkDateBetweenCriteria(Date nextDueDate,
 			Integer dueDateNotificationCriteria) {
 		Calendar date = Calendar.getInstance();
-		date.add(Calendar.DATE, dueDateNotificationCriteria);		
-		return nextDueDate.after(new Date()) && nextDueDate.before(date.getTime());
+		date.add(Calendar.DATE, dueDateNotificationCriteria);
+		System.out.println("notification date: "+ nextDueDate + "\n (current date +"+dueDateNotificationCriteria+"):"+date.getTime());
+		return nextDueDate.getTime() <= date.getTime().getTime();
 	}
 
 	public static Date formatDate(Date date) {

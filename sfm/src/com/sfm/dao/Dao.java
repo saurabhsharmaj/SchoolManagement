@@ -35,4 +35,5 @@ public interface Dao<T, PK extends Serializable> {
 			Class<Faculty> clazz);
 	public void removeFeesByUserId(Integer userId);
 	public void removeFacultyAttendance(Integer attendanceId);
+	public void setNullNextPaymentDate(User user);
 }

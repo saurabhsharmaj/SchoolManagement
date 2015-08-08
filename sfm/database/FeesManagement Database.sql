@@ -65,7 +65,7 @@ id int(11) NOT NULL AUTO_INCREMENT
 ,paidFees DECIMAL(11,2) default 0.0
 ,pendingFees DECIMAL(11,2) default 0.0
 ,additionCharges DECIMAL(11,2) default 0.0
-,nextPaymentDueDate timestamp
+,nextPaymentDueDate date
 ,updateBy varchar(50)
 ,updatedOn TIMESTAMP 
 ,FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
@@ -119,3 +119,5 @@ Create Table databaseBackup(
 id int(11) NOT NULL AUTO_INCREMENT,
 lastBackUpDate TIMESTAMP
 );
+
+ALTER TABLE fees MODIFY nextPaymentDueDate date;
