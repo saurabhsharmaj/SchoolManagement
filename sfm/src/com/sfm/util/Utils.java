@@ -101,7 +101,6 @@ public class Utils {
 			Integer dueDateNotificationCriteria) {
 		Calendar date = Calendar.getInstance();
 		date.add(Calendar.DATE, dueDateNotificationCriteria);
-		System.out.println("notification date: "+ nextDueDate + "\n (current date +"+dueDateNotificationCriteria+"):"+date.getTime());
 		return nextDueDate.getTime() <= date.getTime().getTime();
 	}
 
