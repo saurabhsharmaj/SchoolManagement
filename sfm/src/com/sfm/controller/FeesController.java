@@ -1,6 +1,8 @@
 package com.sfm.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import com.sfm.model.User;
 import com.sfm.service.FeesService;
 import com.sfm.service.UserService;
 import com.sfm.util.DataTablesParamUtility;
+import com.sfm.util.FeesComparator;
 import com.sfm.util.JQueryDataTableParamModel;
 import com.sfm.util.Utils;
 
@@ -138,13 +141,14 @@ public class FeesController {
 		@RequestMapping(value = "/getUserByNextPaymentDate",  produces="application/json", method = RequestMethod.GET)
 		public @ResponseBody
 		List<CompoundFees> getUserByNextPaymentDate() {
-			List<CompoundFees> feesList= new ArrayList<CompoundFees>();
+			List<CompoundFees> feesList= new ArrayList<CompoundFees>();			
 			Data data = feesService.listCompoundFees(null);
 			for (CompoundFees cf : (List<CompoundFees>)data.getData()) {
 				if(Utils.checkDateBetweenCriteria(cf.getNextDueDate(), dueDateNotificationCriteria) && cf.getTotalPaidFees() > 0){
 					feesList.add(cf);
 				}
 			}
+			Collections.sort(feesList, new FeesComparator());
 			return feesList;
 
 		}

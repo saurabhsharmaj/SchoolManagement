@@ -550,3 +550,23 @@ th{
 background-color: rgb(58, 87, 149);
 color:white;
 }
+
+li.red{
+list-style-type: none;
+padding-bottom: 15px;
+margin-left: -25px;
+}
+
+
+li.green{
+list-style-type: none;
+padding-bottom: 15px;
+    margin-left: -25px;
+}
+
+li.yellow{
+list-style-type: none;
+padding-bottom: 15px;
+    margin-left: -25px;
+}
+

@@ -105,16 +105,21 @@
 	$.ajax({
             url : '${pageContext.request.contextPath}/getUserByNextPaymentDate',
             success : function(response) {
-               	var linkTemplate = '<li style="padding-bottom: 15px;"><a href="/sfm/viewFeesByUserId/#userId#">#name#</a></li>';
+               	var linkTemplate = '<li class="#class#"><img src="#src#"></span><a style="padding-left: 15px;" href="/sfm/viewFeesByUserId/#userId#">#name#</a></li>';
                 
                 for ( var obj in response) {                
                 	var rec = response[obj];                	
                 	var link = linkTemplate;
                 	var due= DateDiff.inDays(new Date(),new Date(rec.nextDueDate));
-                	if (due > 0) {
-                		due =' will be Due ' + Math.abs(due) + 'day(s)';
+                	if (due == 0){
+                		due =' is Due today';
+                		link = link.replace('#class#','yellow').replace('#src#','./images/yellowalertcircle.png');
+                	} else if (due > 0) {
+                		due =' will be Due ' + Math.abs(due) + 'day(s) ';
+                		link = link.replace('#class#','green').replace('#src#','./images/greenalertcircle.png');
 					} else {
                 		due =' Has been Due ' + Math.abs(due) + 'day(s)';
+                		link = link.replace('#class#','red').replace('#src#','./images/redalertcircle.png');
 					}
                 	link = link.replace('#userId#',rec.id);
                 	link = link.replace('#name#',rec.fullName +
