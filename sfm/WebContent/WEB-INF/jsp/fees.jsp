@@ -237,8 +237,9 @@ $(function() {
 <tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}"/>
 </div>
 <table class="bookTable">
-				<tr>					
-					<th>Fee ID</th>
+				<tr>
+					<th align="center">S.NO.</th>					
+					<th>Paid On</th>					
 					<th>Addition Fees</th>
 					<th>Paid Fees</th>
 					<th>Pending Fees</th>
@@ -247,12 +248,16 @@ $(function() {
 				</tr>
 	<c:choose>	
     <c:when test="${!empty pagedListHolder.pageList}">			
-				<c:forEach items="${pagedListHolder.pageList}" var="fees">
+				<c:forEach items="${pagedListHolder.pageList}" var="fees" varStatus="loop">
 					<tr>
-						<td align="center"><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">${fees.id}</a></td>
+						<td align="center"><c:out value="${loop.index + 1}"/></td>
+						<td><a href="<c:url value='/editFees/${fees.user.id}/${fees.id}' />">
+								<fmt:formatDate pattern="dd-MMM-yyyy" value="${fees.updatedOn}" />
+							</a>
+						</td>						
 						<td>${fees.additionCharges}</td>
 						<td>${fees.paidFees}</td>
-						<td>${fees.pendingFees}</td>						
+						<td>${fees.pendingFees}</td>
 						<td><fmt:formatDate pattern="dd-MMM-yyyy" value="${fees.nextPaymentDueDate}" /></td>
 						<td>
 						<a href="#" id ="${fees.id}" url='/sfm/deletefees/${fees.id}' class="deleteButton"> <img
@@ -276,7 +281,7 @@ $(function() {
 	</table>
 	<c:choose>		
 	 <c:when test="${!empty pagedListHolder.pageList}">		
-		<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${fees.user.id}" css="button">user Fees Report</a>
+		<a href="${pageContext.request.contextPath}/pdf/user_fees_report/${fees.user.id}" class="button">user Fees Report</a>
 	</c:when>
 	</c:choose>
 </fieldset>

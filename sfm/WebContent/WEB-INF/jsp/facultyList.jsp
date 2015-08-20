@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 <fieldset>
-<legend>Expenses List:</legend>
+<legend>Faculty List:</legend>
 <p style="color: green; font-weight: bold;">
 		To add a New Faculty please click <a
 			href="<c:url value='/addFacultyPage' />"> <img

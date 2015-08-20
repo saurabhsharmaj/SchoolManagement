@@ -3,11 +3,21 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
-
+<script>
+function validate(){
+if($('#id').val()==undefined || $('#id').val()=='' ){
+alert('Please select attendance before save.');
+return false;
+}
+else {
+return true;
+}
+}
+</script>
 <fieldset>
   	<legend>Faculty Attendance</legend>
   	<c:url var="action" value="/saveAttendancePage/${facultyId}" ></c:url>
-  	<form:form method="post" action="${action}" commandName="attendance" cssClass="bookForm">
+  	<form:form method="post" action="${action}" commandName="attendance" cssClass="bookForm" onsubmit="return validate();">
 	<table>
 	<c:if test="${!empty attendance.id}">
 	<tr>
@@ -71,7 +81,7 @@
 	</td>
 	<td>
 		<c:if test="${empty id}">
-				<a href="<c:url value="/getAttendanceByFacultyId/${id}" />" class="button">Cancel</a>
+				<a href="<c:url value="/getFacultiesListView" />" class="button">Cancel</a>
 		</c:if>
 	</td>
 	</tr>
