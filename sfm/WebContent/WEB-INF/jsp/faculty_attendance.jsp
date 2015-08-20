@@ -158,7 +158,7 @@ $("#attendanceform").submit(function(e)
 		</a>
 	</p>
 	<p>
-	Select Faculty Name:<select id="facultyName"></select> <a href="getFacultiesListView">go to download attendance</a>
+	Select Faculty Name:<select id="facultyName"></select> <a href="getFacultiesListView" class="button">go to download attendance</a>
 	</p>
 	<div id="calEventDialog">
 		<form name="attendanceform" id="attendanceform">

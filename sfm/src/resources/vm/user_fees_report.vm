@@ -26,14 +26,15 @@
 </p><b>Total Fees</b>: $user.studentFees </p>
 <p/>
 <table border=1>
-<tr>
-	<th>InstallmentNo</th>
-	<th>Date</th>	
-	<th>Payment Received</th>
-	<th>Additional Payment</th>
-	<th>Total Amount</th>	
+<tr>	
+	<th>S.NO.</th>					
+	<th>Paid On</th>					
+	<th>Addition Fees</th>
+	<th>Paid Fees</th>
+	<th>Pending Fees</th>
+	<th>Total Received Amount</th>
 </tr>
-
+#set ($nextPaymentDueDate= '')
 #if ($paymentList.size() > 0)
 			#set ($rowNumber = 1)
 			#set ($grandTotal = 0)
@@ -43,30 +44,32 @@
 				<td>$rowNumber</td>
 				<td>$date.format('dd-MMM-yyyy', $fees.updatedOn)</td>
 				<td>
-					#if(!$fees.paidFees)
-						0.0
-						#set ($total = 0)
-					#else
-						$fees.paidFees
-						#set ($total = $fees.paidFees)
-					#end
-				</td>
-				<td>
 					#if(!$fees.additionCharges)
 						#set ($total = $total + 0)
 					#else
 						$fees.additionCharges
 						#set ($total = $total + $fees.additionCharges)
 					#end
+				</td>				
+				<td>
+					#if(!$fees.paidFees)
+						0.0
+						#set ($total = $total + 0)
+					#else
+						$fees.paidFees
+						#set ($total = $total + $fees.paidFees)
+					#end
 				</td>
+				<td>$fees.pendingFees</td>
 				<td>$total</td>
 			</tr>
 			#set ($grandTotal = $grandTotal + $total)
 			#set ($total=0)
 			#set($rowNumber = $rowNumber +1)
+			#set ($nextPaymentDueDate= $fees.nextPaymentDueDate)
 			#end
 			<tr>	
-				<td colspan="4" align="right"><B>GrandTotal</b></td>
+				<td colspan="3" align="right"><B>GrandTotal</b></td>
 				<td>				
 					#if(!$grandTotal)
 							0.0						
@@ -79,20 +82,36 @@
 			<tr><td colspan="5" align="center"><b>no Fee record</b></td></tr>
 #end
 </table>
-<p><b>Total Fees</b>: $user.studentFees &nbsp; 
-<b>Total Expenses</b>:
-	#if(!$compoundFees.totalExpenses)
-		0.0						
-	#else
-		$compoundFees.totalExpenses						
+<p style="padding:10px;">summary</p>
+<table style="padding:25px;" border=1>
+
+	#if(!$nextPaymentDueDate)
+			<tr>
+				<th>NEXT PAYMENT DUE DATE</th><td>$nextPaymentDueDate</td>
+			</tr>					
 	#end
- &nbsp; 
-<b>Pending Amount</b>:
-	#if(!$compoundFees.totalPendingFees)
-		0.0						
-	#else
-		$compoundFees.totalPendingFees						
-	#end
-					</p>
+	
+	<tr><th>Total Fees</th><td>$user.studentFees</td></tr>
+	
+	<tr><th>Total Expenses</th>
+		<td>
+			#if(!$compoundFees.totalExpenses)
+				0.0						
+			#else
+				$compoundFees.totalExpenses						
+			#end
+		</td>
+	</tr>
+	<tr><th>Total Pending Fees</th>
+		<td>
+			#if(!$compoundFees.totalPendingFees)
+			0.0						
+			#else
+			$compoundFees.totalPendingFees						
+			#end
+		</td>
+	</tr>
+</table>
+
 </body>
 </html>

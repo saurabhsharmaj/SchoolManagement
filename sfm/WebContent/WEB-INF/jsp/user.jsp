@@ -19,7 +19,7 @@
 			</form:label>
 		</td>
 		<td colspan="2">
-			<form:input path="id" readonly="true" size="8"  disabled="true" />
+			<form:input path="id" id="id" readonly="true" size="8"  disabled="true" />
 			<form:hidden path="id" />
 		</td> 
 	</tr>
@@ -71,7 +71,7 @@
 			</form:label>
 		</td>	
 		<td>
-			<form:input path="userName"  placeholder="username" />
+			<form:input path="userName" id="username" placeholder="username" />
 		</td> 
 	</tr>
 	<tr>	
@@ -81,7 +81,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:password path="password"  placeholder="password" />
+			<form:password path="password" id="password" showPassword="true" placeholder="password" />
 		</td> 
 	</tr>
 	
@@ -290,3 +290,14 @@
 	</tr>	
 </table>
 </form:form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if($'#id').val()!=undefined||$'#id').val()!=''){
+		$'#username').val('');
+		$'#password').val('');
+		
+	
+	}
+
+});

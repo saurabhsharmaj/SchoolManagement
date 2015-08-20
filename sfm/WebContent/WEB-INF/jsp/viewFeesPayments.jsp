@@ -88,5 +88,5 @@ $(function() {
 		</thead>
 </table>
 </fieldset>
-<a href="${pageContext.request.contextPath}/pdf/fees_report/1" css="button">Fees Report</a>
+<a href="${pageContext.request.contextPath}/pdf/fees_report/1" class="button">Fees Report</a>
 

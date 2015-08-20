@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sfm.model.Charges;
-import com.sfm.model.Fees;
 import com.sfm.model.User;
 import com.sfm.service.ExpenseService;
 import com.sfm.service.UserService;
