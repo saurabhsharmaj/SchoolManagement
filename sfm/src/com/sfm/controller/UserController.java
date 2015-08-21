@@ -125,7 +125,6 @@ public class UserController {
                 // Creating the directory to store file
                 String rootPath = System.getProperty("catalina.home");
                 File dir = new File(rootPath + File.separator + "webapps/sfm/tmpFiles");
-                System.out.println("================="+dir.getAbsolutePath()+"==================");
                 if (!dir.exists())
                     dir.mkdirs();
  
