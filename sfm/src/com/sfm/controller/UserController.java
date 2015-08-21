@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,13 +102,15 @@ public class UserController {
 		
 		if(null == user.getId()) {
 			UserProfile profile = user.getUserProfile();
-			profile.setImageUrl(uploadImage(fileName,file));
+			
 			user.setUserProfile(profile);
 			profile.setUser(user);
-			userService.addUser(user);	
+			userService.addUser(user);
+			profile.setImageUrl(uploadImage(user.getId()+"."+ FilenameUtils.getExtension(fileName),file));
+			userService.updateUser(user);
 		}
 		else {
-			user.getUserProfile().setImageUrl(uploadImage(fileName,file));
+			user.getUserProfile().setImageUrl(uploadImage(user.getId()+"."+ FilenameUtils.getExtension(fileName),file));
 			user.getUserProfile().setUser(user);
 			userService.updateUser(user);
 		}
@@ -122,6 +125,7 @@ public class UserController {
                 // Creating the directory to store file
                 String rootPath = System.getProperty("catalina.home");
                 File dir = new File(rootPath + File.separator + "webapps/sfm/tmpFiles");
+                System.out.println("================="+dir.getAbsolutePath()+"==================");
                 if (!dir.exists())
                     dir.mkdirs();
  

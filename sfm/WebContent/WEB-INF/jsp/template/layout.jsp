@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/imagehover.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.dataTables.css" type="text/css">

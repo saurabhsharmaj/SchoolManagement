@@ -24,10 +24,18 @@ $(function() {
 				});
          	},
          "columnDefs": [
+         	{
+               
+                "render": function ( data, type, row ) {               	
+                	var data='<a class="thumbnail" href="#thumb">'+row.id+'<span><img src=/sfm'+row.userProfile.imageUrl+' width="120px" height="120px" border="0" /></span></a>';                    
+                	return data;
+                },
+                "targets": 0
+            },
             {
                
-                "render": function ( data, type, row ) {
-                    return '<a href=edituser/'+row.id+'>'+row.firstName+ ' '+ row.middleName +' '+ row.lastName+ ' / '+ row.fatherName +'</a>';
+                "render": function ( data, type, row ) {               	
+                	return '<a href=edituser/'+row.id+'>'+row.firstName+ ' '+ row.middleName +' '+ row.lastName+ ' / '+ row.fatherName +'</a>';
                 },
                 "targets": 1
             },{

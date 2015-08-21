@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -123,7 +124,7 @@ public class UserProfile implements java.io.Serializable {
 
 	@Column(name = "imageURL", length = 100)
 	public String getImageUrl() {
-		return this.imageUrl;
+		return StringUtils.isEmpty(this.imageUrl)?"/images/noimage.jpg": this.imageUrl;
 	}
 
 	public void setImageUrl(String imageUrl) {
