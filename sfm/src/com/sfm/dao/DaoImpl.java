@@ -8,7 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
@@ -193,11 +192,11 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 			String SQL="Select u.id id," +
 					"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
 					"u.fatherName fatherName,"+
-					"totalFees, " +
+					"studentfees totalFees, " +
 					"count(noOfInstallment)," +
 					"sum(paidFees) totalPaidFees," +
 					"sum(additionCharges) totalAdditionCharges," +
-					"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
+					"totalFees + totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
 					"nextPaymentDueDate nextDueDate, " +
 					"totalExpenses  " +
 					"from " +
@@ -217,14 +216,23 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 			session = getSession();
 			String searchParam = param != null? getSearchCreteria(param):"";
 			String orderByParam = param != null? getOrderBy(param):"";
-			String SQL="SELECT * FROM (Select u.id id," +
+			String SQL="SELECT * FROM (SELECT id," +
+					"fullName," +
+					"fatherName," +
+					"totalFees," +
+					"noOfInstallment," +
+					"totalPaidFees," +
+					"IFNULL(totalAdditionCharges,0) totalAdditionCharges," +
+					"totalExpenses,"+
+					"IFNULL(totalFees + totalExpenses -(totalPaidFees + totalAdditionCharges),0) totalPendingFees," +
+					"nextDueDate"+
+					" FROM (Select u.id id," +
 					"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
 					"u.fatherName fatherName,"+
-					"totalFees, " +
-					"count(noOfInstallment)," +
-					"sum(paidFees) totalPaidFees," +
-					"sum(additionCharges) totalAdditionCharges," +
-					"totalFees+ IFNULL(sum(totalExpenses),0)-(IFNULL(sum(paidFees),0) + IFNULL(sum(additionCharges),0)) totalPendingFees," +
+					"studentfees totalFees, " +
+					"count(noOfInstallment) noOfInstallment," +
+					"IFNULL(sum(paidFees),0) totalPaidFees," +
+					"IFNULL(sum(additionCharges),0) totalAdditionCharges," +
 					"IFNULL(sum(totalExpenses),0) totalExpenses,"+					
 					"n.nextPaymentDueDate nextDueDate " +
 					"from " +
@@ -232,41 +240,26 @@ public class DaoImpl<T, PK extends Serializable> implements Dao {
 					"inner join User u on u.id=f.userId " +
 					"left outer join (select userId, sum(amount) totalExpenses from charges group by userId) ch on f.userId = ch.userId " +
 					"inner join (Select userId, nextPaymentDueDate from fees where nextPaymentDueDate IS NOT NULL group by userId)n on f.userId = n.userId " +				
-					"group by f.userId ) a " +searchParam + orderByParam;
+					"group by f.userId ) a ) b" +searchParam + orderByParam;
 			SQLQuery query = session.createSQLQuery(SQL);
 			if(param != null){
 				query.setFirstResult(param.getiDisplayStart());
 				query.setMaxResults(param.getiDisplayLength());	
 			}
 			List list = query.addEntity("f", CompoundFees.class).list();
-			return new Data(list,countParam(param),list.size());
+			return new Data(list,countParam(SQL,param),list.size());
 		}finally{
 			closeSession(session);
 		}
 	}
 
-	private int countParam(JQueryDataTableParamModel param) {
+	private int countParam(String SQL, JQueryDataTableParamModel param) {
 		try{
 			session = getSession();
 			String searchParam = param != null? getSearchCreteria(param):"";
 			String orderByParam = param != null? getOrderBy(param):"";
-			String SQL="SELECT count(distinct id) FROM (Select u.id id," +
-					"concat(u.firstName,' ',u.middleName,' ',u.lastname) fullName, " +
-					"u.fatherName fatherName,"+
-					"totalFees, " +
-					"count(noOfInstallment)," +
-					"sum(paidFees) totalPaidFees," +
-					"sum(additionCharges) totalAdditionCharges," +
-					"totalFees+ totalExpenses-(sum(paidFees) + sum(additionCharges)) totalPendingFees," +
-					"n.nextPaymentDueDate nextDueDate, " +
-					"totalExpenses  " +
-					"from " +
-					"fees f " +
-					"inner join User u on u.id=f.userId " +
-					"left outer join (select userId, sum(amount) totalExpenses from charges) ch on f.userId = ch.userId " +
-					"inner join (Select userId, nextPaymentDueDate from fees where nextPaymentDueDate IS NOT NULL group by userId)n on f.userId = n.userId " +				
-					"group by f.userId ) a " +searchParam + orderByParam;
-			BigInteger count = (BigInteger)session.createSQLQuery(SQL).uniqueResult();
+			String query ="Select count(*) from ("+SQL+" ) c";
+			BigInteger count = (BigInteger)session.createSQLQuery(query).uniqueResult();
 			return count.intValue();
 		}finally{
 			closeSession(session);
