@@ -6,3 +6,4 @@ Servers/Tomcat v7.0 Server at localhost-config/catalina.policy
 Servers/
 sfm/target/
 sfm/.gitignore
+sfm/database/
